@@ -1,0 +1,120 @@
+### Get User Data
+GET http://localhost:5000/users
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsIm5hbWEiOiJkd2lwIiwiZW1haWwiOiJrb3Rha2VsZWt0cm9uaWtAZ21haWwuY29tIiwicnNJZCI6IjMxNzQwNjMiLCJpYXQiOjE2NzI5NzQ3MTMsImV4cCI6MTY3MzA2MTExM30.yLEXr93n-48p1oY3qlnt3C_-5gCwtNt3LsfknWVjMrw
+
+### Get Data Rumah Sakit
+GET http://localhost:5000/rumahsakit/3174063
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsIm5hbWEiOiJkd2lwIiwiZW1haWwiOiIzMTc0MDYzIiwicnNJZCI6IjMxNzQwNjMiLCJpYXQiOjE2NzMzMTI3ODYsImV4cCI6MTY3MzMxMjg0Nn0.qcfLrQ3OzX_FshenoRQ_paNbekK7kJtp2c90toAhYKE
+
+### Insert New User
+POST http://localhost:5000/users
+Content-Type: application/json
+
+{
+    "nama": "dwip",
+    "email": "kotakelektronik@gmail.com",
+    "password": "12345",
+    "rsId": "3174063"
+}
+
+### Login
+POST http://localhost:5000/login
+Content-Type: application/json
+
+{
+    "userName": "3174063",
+    "password": "12345"
+}
+
+### Logut
+DELETE http://localhost:5000/logout
+
+### Get Token
+GET http://localhost:5000/token
+
+### Jenis Pelayanan RL 3.1
+GET http://localhost:5000/jenispelayanan?rlid=1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsIm5hbWEiOiJkd2lwIiwiZW1haWwiOiJrb3Rha2VsZWt0cm9uaWtAZ21haWwuY29tIiwicnNJZCI6IjMxNzQwNjMiLCJpYXQiOjE2NzI5NzQ3NDgsImV4cCI6MTY3MzA2MTE0OH0.yssXtzZyKNI4NB0PqMd52EnWE726lXzapFlOwWVsA4w
+
+### RL 3.1 READ
+GET http://localhost:5000/rltigatitiksatu?tahun=2022
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsIm5hbWEiOiJkd2lwIiwiZW1haWwiOiIzMTc0MDYzIiwicnNJZCI6IjMxNzQwNjMiLCJpYXQiOjE2NzMzMzg2NzEsImV4cCI6MTY3MzMzODczMX0.K9JpYry269TvCtFCy4LWpBPkNZCnPXBV32vT3zFdPNk
+
+### RL 3.1 Detail READ
+GET http://localhost:5000/rltigatitiksatudetail/76
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsIm5hbWEiOiJkd2lwIiwiZW1haWwiOiIzMTc0MDYzIiwicnNJZCI6IjMxNzQwNjMiLCJpYXQiOjE2NzM0MzA4MDMsImV4cCI6MTY3MzQzMDg2M30.qQcAe9hs8x4mixn6NHpVD00tnJQvWHEVJEQz4ZFvbkI
+
+
+### RL 3.1 CREATE
+POST http://localhost:5000/rltigatitiksatu
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsIm5hbWEiOiJkd2lwIiwiZW1haWwiOiIzMTc0MDYzIiwicnNJZCI6IjMxNzQwNjMiLCJpYXQiOjE2NzM0MzA5MDEsImV4cCI6MTY3MzQzMDk2MX0.1bV9REaGMzogaRw53Njj3HfSH_UOUWhMBPXLfzLrwDk
+
+{
+    "tahun": 1904,
+    "data": [
+        {
+            "jenisPelayananId": 1,
+            "jumlahPasienAwalTahun": 2,
+            "jumlahPasienMasuk": 3,
+            "pasienKeluarHidup": 4,
+            "kurangDari48Jam": 4,
+            "lebihDariAtauSamaDengan48Jam":5,
+            "jumlahLamaDirawat": 5,
+            "jumlahPasienAkhirTahun": 6,
+            "jumlahHariPerawatan": 7,
+            "kelasVVIP": 8,
+            "kelasVIP": 9,
+            "kelas1": 10,
+            "kelas2": 11,
+            "kelas3": 12,
+            "kelasKhusus": 13
+        },
+        {
+            "jenisPelayananId": 2,
+            "jumlahPasienAwalTahun": 3,
+            "jumlahPasienMasuk": 4,
+            "pasienKeluarHidup": 5,
+            "kurangDari48Jam": 6,
+            "lebihDariAtauSamaDengan48Jam":7,
+            "jumlahLamaDirawat": 5,
+            "jumlahPasienAkhirTahun": 6,
+            "jumlahHariPerawatan": 7,
+            "kelasVVIP": 8,
+            "kelasVIP": 9,
+            "kelas1": 10,
+            "kelas2": 11,
+            "kelas3": 12,
+            "kelasKhusus": 13
+        }
+    ]
+}
+
+### RL 3.1 UPDATE
+PATCH http://localhost:5000/rltigatitiksatu/76
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsIm5hbWEiOiJkd2lwIiwiZW1haWwiOiIzMTc0MDYzIiwicnNJZCI6IjMxNzQwNjMiLCJpYXQiOjE2NzM0MzMxMjQsImV4cCI6MTY3MzQzMzE4NH0.f6sHngwkkjkscw3OuSFRvsyl7RAKNzUTbHOHq6YVgyg
+
+{
+    "jumlahPasienAwalTahun": 100,
+    "jumlahPasienMasuk": 31,
+    "pasienKeluarHidup": 4,
+    "kurangDari48Jam": 4,
+    "lebihDariAtauSamaDengan48Jam":5,
+    "jumlahLamaDirawat": 5,
+    "jumlahPasienAkhirTahun": 6,
+    "jumlahHariPerawatan": 7,
+    "kelasVVIP": 8,
+    "kelasVIP": 9,
+    "kelas1": 10,
+    "kelas2": 11,
+    "kelas3": 12,
+    "kelasKhusus": 13
+}
+
+
+### RL 3.1 DELETE
+DELETE http://localhost:5000/rltigatitiksatu/42
+
+
+### RL 3.7

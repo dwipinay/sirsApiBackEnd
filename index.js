@@ -4,6 +4,9 @@ import { databaseRSOnline } from "./config/Database.js"
 import router from "./routes/index.js"
 import cookieParser from "cookie-parser"
 import cors from "cors"
+import { verifyToken } from './middleware/VerifyToken.js'
+import { getDataUser, insertDataUser, login, logout } from './controllers/UsersController.js'
+
 
 const app = express()
 
@@ -14,8 +17,16 @@ try {
     console.log(error)
 }
 
-app.use(cors( {credentials: true, origin: ['http://localhost:3000', 'http://localhost']}))
-// app.use(cors( {credentials: true}))
+app.use(cors( {credentials: true, origin: ['http://localhost:3000']}))
+
+// app.use(function(req, res, next){
+//     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+//     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+//     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+//     res.setHeader('Access-Control-Allow-Credentials', true);
+//     next();
+// })
+
 app.use(cookieParser())
 app.use(express.json())
 app.use(router)

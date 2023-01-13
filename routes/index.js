@@ -12,31 +12,30 @@ import { insertDataRLTigaTitikTujuh , getDataRLTigaTitikTujuh,getRLTigaTitikTuju
     from '../controllers/RLTigaTitikTujuhController.js'
 import { getKegiatan } from '../controllers/JenisKegiatanController.js'
 
-
 const router = express.Router()
 
 // Rumah Sakit
-router.get('/rumahsakit/:id', verifyToken, getDataRumahSakit)
+router.get('/api/rumahsakit/:id', verifyToken, getDataRumahSakit)
 
 // User
-router.get('/users', verifyToken, getDataUser)
-router.post('/users', insertDataUser)
+router.get('/api/users', verifyToken, getDataUser)
+router.post('/api/users', insertDataUser)
 
 // Token
-router.post('/login', login)
-router.delete('/logout', logout)
-router.get('/token', refreshToken)
+router.post('/api/login', login)
+router.delete('/api/logout', logout)
+router.get('/api/token', refreshToken)
 
 // Jenis Pelayanan RL 3.1
-router.get('/jenispelayanan', verifyToken,
+router.get('/api/jenispelayanan', verifyToken,
     getDataJenisPelayanan)
 
 // RL 3.1
-router.post('/rltigatitiksatu', verifyToken, insertDataRLTigaTitikSatu)
-router.get('/rltigatitiksatu', verifyToken, getDataRLTigaTitikSatu)
-router.get('/rltigatitiksatudetail/:id', verifyToken, getDataRLTigaTitikSatuDetailById)
-router.patch('/rltigatitiksatu/:id', verifyToken, updateDataRLTigaTitikSatu)
-router.delete('/rltigatitiksatu/:id', deleteDataRLTigaTitikSatu)
+router.post('/api/rltigatitiksatu', verifyToken, insertDataRLTigaTitikSatu)
+router.get('/api/rltigatitiksatu', verifyToken, getDataRLTigaTitikSatu)
+router.get('/api/rltigatitiksatudetail/:id', verifyToken, getDataRLTigaTitikSatuDetailById)
+router.patch('/api/rltigatitiksatu/:id', verifyToken, updateDataRLTigaTitikSatu)
+router.delete('/api/rltigatitiksatu/:id', deleteDataRLTigaTitikSatu)
 
 // RL 3.7
 router.post('/rltigatitiktujuh', verifyToken, insertDataRLTigaTitikTujuh)

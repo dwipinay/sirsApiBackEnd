@@ -1,13 +1,13 @@
 ### Get User Data
-GET http://localhost:5000/users
+GET http://localhost:5000/api/users
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsIm5hbWEiOiJkd2lwIiwiZW1haWwiOiJrb3Rha2VsZWt0cm9uaWtAZ21haWwuY29tIiwicnNJZCI6IjMxNzQwNjMiLCJpYXQiOjE2NzI5NzQ3MTMsImV4cCI6MTY3MzA2MTExM30.yLEXr93n-48p1oY3qlnt3C_-5gCwtNt3LsfknWVjMrw
 
 ### Get Data Rumah Sakit
-GET http://localhost:5000/rumahsakit/3174063
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsIm5hbWEiOiJkd2lwIiwiZW1haWwiOiIzMTc0MDYzIiwicnNJZCI6IjMxNzQwNjMiLCJpYXQiOjE2NzMzMTI3ODYsImV4cCI6MTY3MzMxMjg0Nn0.qcfLrQ3OzX_FshenoRQ_paNbekK7kJtp2c90toAhYKE
+GET http://localhost/api/rumahsakit/3174063
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDMzLCJuYW1hIjoiUlMgS2Fua2VyIERoYXJtYWlzIiwiZW1haWwiOiIzMTc0MDYzIiwicnNJZCI6IjMxNzQwNjMiLCJpYXQiOjE2NzM1NzI4OTcsImV4cCI6MTY3MzU3Mjk1N30.vnu39hF1y4K9J8PzPtV40mA0L6RUcTRsYNVi3bxKzyU
 
 ### Insert New User
-POST http://localhost:5000/users
+POST http://localhost/api/users
 Content-Type: application/json
 
 {
@@ -18,7 +18,7 @@ Content-Type: application/json
 }
 
 ### Login
-POST http://localhost:5000/login
+POST http://localhost/api/login
 Content-Type: application/json
 
 {
@@ -27,26 +27,26 @@ Content-Type: application/json
 }
 
 ### Logut
-DELETE http://localhost:5000/logout
+DELETE http://localhost/api/logout
 
 ### Get Token
-GET http://localhost:5000/token
+GET http://localhost/api/token
 
 ### Jenis Pelayanan RL 3.1
-GET http://localhost:5000/jenispelayanan?rlid=1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsIm5hbWEiOiJkd2lwIiwiZW1haWwiOiJrb3Rha2VsZWt0cm9uaWtAZ21haWwuY29tIiwicnNJZCI6IjMxNzQwNjMiLCJpYXQiOjE2NzI5NzQ3NDgsImV4cCI6MTY3MzA2MTE0OH0.yssXtzZyKNI4NB0PqMd52EnWE726lXzapFlOwWVsA4w
+GET http://localhost/api/jenispelayanan?rlid=1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDMzLCJuYW1hIjoiUlMgS2Fua2VyIERoYXJtYWlzIiwiZW1haWwiOiIzMTc0MDYzIiwicnNJZCI6IjMxNzQwNjMiLCJpYXQiOjE2NzM0OTU3MDEsImV4cCI6MTY3MzQ5NTc2MX0.iVSj70JbIOlkcNTixg2Gln-DWiWwz9zg7o1JTORZ688
 
 ### RL 3.1 READ
-GET http://localhost:5000/rltigatitiksatu?tahun=2022
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsIm5hbWEiOiJkd2lwIiwiZW1haWwiOiIzMTc0MDYzIiwicnNJZCI6IjMxNzQwNjMiLCJpYXQiOjE2NzMzMzg2NzEsImV4cCI6MTY3MzMzODczMX0.K9JpYry269TvCtFCy4LWpBPkNZCnPXBV32vT3zFdPNk
+GET http://localhost/api/rltigatitiksatu?tahun=2022
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDMzLCJuYW1hIjoiUlMgS2Fua2VyIERoYXJtYWlzIiwiZW1haWwiOiIzMTc0MDYzIiwicnNJZCI6IjMxNzQwNjMiLCJpYXQiOjE2NzM0OTU3MzcsImV4cCI6MTY3MzQ5NTc5N30.Fgq_MATuTDUtjCni99GoZ1d8jIw2aoEI1dKVq4cziuM
 
 ### RL 3.1 Detail READ
-GET http://localhost:5000/rltigatitiksatudetail/76
+GET http://localhost/api/rltigatitiksatudetail/76
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsIm5hbWEiOiJkd2lwIiwiZW1haWwiOiIzMTc0MDYzIiwicnNJZCI6IjMxNzQwNjMiLCJpYXQiOjE2NzM0MzA4MDMsImV4cCI6MTY3MzQzMDg2M30.qQcAe9hs8x4mixn6NHpVD00tnJQvWHEVJEQz4ZFvbkI
 
 
 ### RL 3.1 CREATE
-POST http://localhost:5000/rltigatitiksatu
+POST http://localhost/api/rltigatitiksatu
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsIm5hbWEiOiJkd2lwIiwiZW1haWwiOiIzMTc0MDYzIiwicnNJZCI6IjMxNzQwNjMiLCJpYXQiOjE2NzM0MzA5MDEsImV4cCI6MTY3MzQzMDk2MX0.1bV9REaGMzogaRw53Njj3HfSH_UOUWhMBPXLfzLrwDk
 
@@ -91,7 +91,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsIm5hbWEiO
 }
 
 ### RL 3.1 UPDATE
-PATCH http://localhost:5000/rltigatitiksatu/76
+PATCH http://localhost/api/rltigatitiksatu/76
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsIm5hbWEiOiJkd2lwIiwiZW1haWwiOiIzMTc0MDYzIiwicnNJZCI6IjMxNzQwNjMiLCJpYXQiOjE2NzM0MzMxMjQsImV4cCI6MTY3MzQzMzE4NH0.f6sHngwkkjkscw3OuSFRvsyl7RAKNzUTbHOHq6YVgyg
 
@@ -114,7 +114,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsIm5hbWEiO
 
 
 ### RL 3.1 DELETE
-DELETE http://localhost:5000/rltigatitiksatu/42
+DELETE http://localhost/api/rltigatitiksatu/42
 
 
 ### RL 3.7

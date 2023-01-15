@@ -17,7 +17,7 @@ try {
     console.log(error)
 }
 
-app.use(cors( {credentials: true, origin: ['http://localhost:3000']}))
+app.use(cors( {credentials: true, origin: ['http://192.168.1.6']}))
 
 // app.use(function(req, res, next){
 //     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');

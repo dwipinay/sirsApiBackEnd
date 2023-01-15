@@ -15,27 +15,27 @@ import { getKegiatan } from '../controllers/JenisKegiatanController.js'
 const router = express.Router()
 
 // Rumah Sakit
-router.get('/api/rumahsakit/:id', verifyToken, getDataRumahSakit)
+router.get('/apisirs/rumahsakit/:id', verifyToken, getDataRumahSakit)
 
 // User
-router.get('/api/users', verifyToken, getDataUser)
-router.post('/api/users', insertDataUser)
+router.get('/apisirs/users', verifyToken, getDataUser)
+router.post('/apisirs/users', insertDataUser)
 
 // Token
-router.post('/api/login', login)
-router.delete('/api/logout', logout)
-router.get('/api/token', refreshToken)
+router.post('/apisirs/login', login)
+router.delete('/apisirs/logout', logout)
+router.get('/apisirs/token', refreshToken)
 
 // Jenis Pelayanan RL 3.1
-router.get('/api/jenispelayanan', verifyToken,
+router.get('/apisirs/jenispelayanan', verifyToken,
     getDataJenisPelayanan)
 
 // RL 3.1
-router.post('/api/rltigatitiksatu', verifyToken, insertDataRLTigaTitikSatu)
-router.get('/api/rltigatitiksatu', verifyToken, getDataRLTigaTitikSatu)
-router.get('/api/rltigatitiksatudetail/:id', verifyToken, getDataRLTigaTitikSatuDetailById)
-router.patch('/api/rltigatitiksatu/:id', verifyToken, updateDataRLTigaTitikSatu)
-router.delete('/api/rltigatitiksatu/:id', deleteDataRLTigaTitikSatu)
+router.post('/apisirs/rltigatitiksatu', verifyToken, insertDataRLTigaTitikSatu)
+router.get('/apisirs/rltigatitiksatu', verifyToken, getDataRLTigaTitikSatu)
+router.get('/apirltigatitiksatudetail/:id', verifyToken, getDataRLTigaTitikSatuDetailById)
+router.patch('/apisirs/rltigatitiksatu/:id', verifyToken, updateDataRLTigaTitikSatu)
+router.delete('/apisirs/rltigatitiksatu/:id', deleteDataRLTigaTitikSatu)
 
 // RL 3.7
 router.post('/rltigatitiktujuh', verifyToken, insertDataRLTigaTitikTujuh)
@@ -45,7 +45,7 @@ router.get('/rltigatitiktujuhdetail/:id',verifyToken, getRLTigaTitikTujuhById)
 router.patch('/rltigatitiktujuhdetail/:id',verifyToken, updateDataRLTigaTitikTujuh);
 router.delete('/rltigatitiktujuhdetail/:id', deleteDataRLTigaTitikTujuh);
 
-router.get('/getkegiatan', verifyToken, getKegiatan)
+router.get('/apisirs/getkegiatan', verifyToken, getKegiatan)
 
 
 export default router

@@ -18,7 +18,7 @@ Content-Type: application/json
 }
 
 ### Login
-POST http://localhost/apisirs/login
+POST http://202.70.136.86/apisirs/login
 Content-Type: application/json
 
 {
@@ -30,7 +30,7 @@ Content-Type: application/json
 DELETE http://localhost/apisirs/logout
 
 ### Get Token
-GET http://localhost/apisirs/token
+GET http://202.70.136.86/apisirs/token
 
 ### Jenis Pelayanan RL 3.1
 GET http://127.0.0.1/apisirs/jenispelayanan?rlid=1

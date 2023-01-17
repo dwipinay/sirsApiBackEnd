@@ -18,7 +18,7 @@ Content-Type: application/json
 }
 
 ### Login
-POST http://192.168.1.6/apisirs/login
+POST http://localhost/apisirs/login
 Content-Type: application/json
 
 {
@@ -33,16 +33,16 @@ DELETE http://localhost/apisirs/logout
 GET http://localhost/apisirs/token
 
 ### Jenis Pelayanan RL 3.1
-GET http://localhost/api/jenispelayanan?rlid=1
+GET http://127.0.0.1/apisirs/jenispelayanan?rlid=1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDMzLCJuYW1hIjoiUlMgS2Fua2VyIERoYXJtYWlzIiwiZW1haWwiOiIzMTc0MDYzIiwicnNJZCI6IjMxNzQwNjMiLCJpYXQiOjE2NzM0OTU3MDEsImV4cCI6MTY3MzQ5NTc2MX0.iVSj70JbIOlkcNTixg2Gln-DWiWwz9zg7o1JTORZ688
 
 ### RL 3.1 READ
-GET http://localhost/api/rltigatitiksatu?tahun=2022
+GET http://127.0.0.1/apisirs/rltigatitiksatu?tahun=2022
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDMzLCJuYW1hIjoiUlMgS2Fua2VyIERoYXJtYWlzIiwiZW1haWwiOiIzMTc0MDYzIiwicnNJZCI6IjMxNzQwNjMiLCJpYXQiOjE2NzM0OTU3MzcsImV4cCI6MTY3MzQ5NTc5N30.Fgq_MATuTDUtjCni99GoZ1d8jIw2aoEI1dKVq4cziuM
 
 ### RL 3.1 Detail READ
-GET http://localhost/api/rltigatitiksatudetail/76
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsIm5hbWEiOiJkd2lwIiwiZW1haWwiOiIzMTc0MDYzIiwicnNJZCI6IjMxNzQwNjMiLCJpYXQiOjE2NzM0MzA4MDMsImV4cCI6MTY3MzQzMDg2M30.qQcAe9hs8x4mixn6NHpVD00tnJQvWHEVJEQz4ZFvbkI
+GET http://localhost/apisirs/rltigatitiksatudetail/76
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsIm5hbWEiOiJkd2lwIiwiZW1haWwiOiJrb3Rha2VsZWt0cm9uaWtAZ21haWwuY29tIiwicnNJZCI6IjMxNzQwNjMiLCJpYXQiOjE2NzM4NzkxNDYsImV4cCI6MTY3Mzg3OTIwNn0.6-JyU6zqses3YCJxTOYrnhSVjtyxiAL-eIcVJqA8EW4
 
 
 ### RL 3.1 CREATE
@@ -91,13 +91,13 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsIm5hbWEiO
 }
 
 ### RL 3.1 UPDATE
-PATCH http://localhost/api/rltigatitiksatu/76
+PATCH http://localhost/apisirs/rltigatitiksatu/76
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsIm5hbWEiOiJkd2lwIiwiZW1haWwiOiIzMTc0MDYzIiwicnNJZCI6IjMxNzQwNjMiLCJpYXQiOjE2NzM0MzMxMjQsImV4cCI6MTY3MzQzMzE4NH0.f6sHngwkkjkscw3OuSFRvsyl7RAKNzUTbHOHq6YVgyg
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsIm5hbWEiOiJkd2lwIiwiZW1haWwiOiJrb3Rha2VsZWt0cm9uaWtAZ21haWwuY29tIiwicnNJZCI6IjMxNzQwNjMiLCJpYXQiOjE2NzM4NzkxNDYsImV4cCI6MTY3Mzg3OTIwNn0.6-JyU6zqses3YCJxTOYrnhSVjtyxiAL-eIcVJqA8EW4
 
 {
-    "jumlahPasienAwalTahun": 100,
-    "jumlahPasienMasuk": 31,
+    "jumlahPasienAwalTahun": 1,
+    "jumlahPasienMasuk": 3,
     "pasienKeluarHidup": 4,
     "kurangDari48Jam": 4,
     "lebihDariAtauSamaDengan48Jam":5,

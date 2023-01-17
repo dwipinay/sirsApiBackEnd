@@ -33,7 +33,7 @@ router.get('/apisirs/jenispelayanan', verifyToken,
 // RL 3.1
 router.post('/apisirs/rltigatitiksatu', verifyToken, insertDataRLTigaTitikSatu)
 router.get('/apisirs/rltigatitiksatu', verifyToken, getDataRLTigaTitikSatu)
-router.get('/apirltigatitiksatudetail/:id', verifyToken, getDataRLTigaTitikSatuDetailById)
+router.get('/apisirs/rltigatitiksatudetail/:id', verifyToken, getDataRLTigaTitikSatuDetailById)
 router.patch('/apisirs/rltigatitiksatu/:id', verifyToken, updateDataRLTigaTitikSatu)
 router.delete('/apisirs/rltigatitiksatu/:id', deleteDataRLTigaTitikSatu)
 

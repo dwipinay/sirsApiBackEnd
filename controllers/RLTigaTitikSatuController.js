@@ -126,7 +126,10 @@ export const insertDataRLTigaTitikSatu =  async (req, res) => {
             rs_id: req.user.rsId,
             tahun: req.body.tahun,
             user_id: req.user.id
-        }, { transaction })
+        }, { 
+            transaction,
+            updateOnDuplicate: ['tahun']
+        })
 
         const dataDetail = req.body.data.map((value, index) => {
             return {
@@ -152,7 +155,14 @@ export const insertDataRLTigaTitikSatu =  async (req, res) => {
             }
         })
 
-        const resultInsertDetail = await rlTigaTitikSatuDetail.bulkCreate(dataDetail, { transaction })
+        const resultInsertDetail = await rlTigaTitikSatuDetail.bulkCreate(dataDetail, { 
+            transaction,
+            updateOnDuplicate: ['jumlah_pasien_awal_tahun', 'pasien_keluar_hidup', 
+                'jumlah_pasien_masuk', 'kurang_dari_48_Jam', 'lebih_dari_atau_sama_dengan_48_jam',
+                'jumlah_lama_dirawat', 'jumlah_pasien_akhir_tahun', 'jumlah_hari_perawatan', 'kelas_VVIP',
+                'kelas_VIP', 'kelas_1', 'kelas_2', 'kelas_3', 'kelas_khusus'
+            ]
+        })
         await transaction.commit()
         res.status(201).send({
             status: true,
@@ -165,7 +175,7 @@ export const insertDataRLTigaTitikSatu =  async (req, res) => {
         res.status(400).send({
             status: false,
             message: "data not created",
-            error: "duplicate data"
+            error: error
         })
         if (transaction) {
             await transaction.rollback()
@@ -200,7 +210,7 @@ export const updateDataRLTigaTitikSatu = async(req,res)=>{
         });
         res.status(200).json({
             status: true,
-            message: "Data Updated"
+            message: update
         });
     }catch(error){
         console.log(error.message);

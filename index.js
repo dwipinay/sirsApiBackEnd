@@ -4,9 +4,6 @@ import { databaseRSOnline } from "./config/Database.js"
 import router from "./routes/index.js"
 import cookieParser from "cookie-parser"
 import cors from "cors"
-import { verifyToken } from './middleware/VerifyToken.js'
-import { getDataUser, insertDataUser, login, logout } from './controllers/UsersController.js'
-
 
 const app = express()
 
@@ -17,7 +14,7 @@ try {
     console.log(error)
 }
 
-app.use(cors( {credentials: true, origin: ['http://202.70.136.86']}))
+app.use(cors( {credentials: true, origin: [process.env.ORIGIN]}))
 
 // app.use(function(req, res, next){
 //     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');

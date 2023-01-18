@@ -2,7 +2,7 @@ import { jenisPelayanan } from '../models/JenisPelayanan.js'
 
 export const getDataJenisPelayanan = (req, res) => {
     jenisPelayanan.findAll({
-        attributes: ['id','nama'],
+        attributes: ['id','no','nama'],
         where: {
             rl_id: req.query.rlid
         }

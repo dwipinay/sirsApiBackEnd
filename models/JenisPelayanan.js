@@ -9,6 +9,9 @@ export const jenisPelayanan = databaseSIRS.define('jenis_pelayanan', {
     rl_id: {
         type: DataTypes.INTEGER
     },
+    no: {
+        type: DataTypes.INTEGER
+    },
     nama: {
         type: DataTypes.STRING
     }

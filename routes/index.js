@@ -9,6 +9,10 @@ import { getDataRumahSakit } from '../controllers/RumahSakitController.js'
 import { getDataRLTigaTitikSatu, getDataRLTigaTitikSatuDetailById,
     insertDataRLTigaTitikSatu, updateDataRLTigaTitikSatu, deleteDataRLTigaTitikSatu } from '../controllers/RLTigaTitikSatuController.js'
 
+// RL 3.4
+import { getDataRLTigaTitikEmpat, getRLTigaTitikEmpatById, 
+    insertDataRLTigaTitikEmpat, updateDataRLTigaTitikEmpat, deleteDataRLTigaTitikEmpat } from '../controllers/RLTigaTitikEmpatController.js'
+
 // RL 3.7
 import { insertDataRLTigaTitikTujuh , getDataRLTigaTitikTujuh,getRLTigaTitikTujuhById, 
     getDataRLTigaTitikTujuhDetail, updateDataRLTigaTitikTujuh, deleteDataRLTigaTitikTujuh} 
@@ -39,6 +43,13 @@ router.get('/apisirs/rltigatitiksatu', verifyToken, getDataRLTigaTitikSatu)
 router.get('/apisirs/rltigatitiksatudetail/:id', verifyToken, getDataRLTigaTitikSatuDetailById)
 router.patch('/apisirs/rltigatitiksatu/:id', verifyToken, updateDataRLTigaTitikSatu)
 router.delete('/apisirs/rltigatitiksatu/:id', deleteDataRLTigaTitikSatu)
+
+// RL 3.4
+router.post('/apisirs/rltigatitikempat', verifyToken, insertDataRLTigaTitikEmpat)
+router.get('/apisirs/rltigatitikempat', verifyToken, getDataRLTigaTitikEmpat)
+router.get('/apisirs/rltigatitikempatdetail/:id',verifyToken, getRLTigaTitikEmpatById)
+router.delete('/apisirs/rltigatitikempat/:id', deleteDataRLTigaTitikEmpat)
+router.patch('/apisirs/rltigatitikempatdetail/:id',verifyToken, updateDataRLTigaTitikEmpat)
 
 // RL 3.7
 router.post('/apisirs/rltigatitiktujuh', verifyToken, insertDataRLTigaTitikTujuh)

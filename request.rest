@@ -22,7 +22,7 @@ POST http://localhost/apisirs/login
 Content-Type: application/json
 
 {
-    "userName": "kotakelektronik@gmail.com",
+    "userName": "3174063",
     "password": "12345"
 }
 
@@ -38,7 +38,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsIm5hbWEiO
 
 ### RL 3.1 READ
 GET http://127.0.0.1/apisirs/rltigatitiksatu?tahun=2022
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDMzLCJuYW1hIjoiUlMgS2Fua2VyIERoYXJtYWlzIiwiZW1haWwiOiIzMTc0MDYzIiwicnNJZCI6IjMxNzQwNjMiLCJpYXQiOjE2NzM0OTU3MzcsImV4cCI6MTY3MzQ5NTc5N30.Fgq_MATuTDUtjCni99GoZ1d8jIw2aoEI1dKVq4cziuM
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsIm5hbWEiOiJkd2lwIiwiZW1haWwiOiJrb3Rha2VsZWt0cm9uaWtAZ21haWwuY29tIiwicnNJZCI6IjMxNzQwNjMiLCJpYXQiOjE2NzQwMzk0NzIsImV4cCI6MTY3NDAzOTUzMn0.bBxexSzBlvKaehUsY-SRkcoyNQlUo7EWZw4BKT3zhD8
 
 ### RL 3.1 Detail READ
 GET http://localhost/apisirs/rltigatitiksatudetail/76
@@ -112,9 +112,46 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsIm5hbWEiO
     "kelasKhusus": 13
 }
 
-
 ### RL 3.1 DELETE
 DELETE http://localhost/api/rltigatitiksatu/42
 
 
-### RL 3.7
+
+###RL 3.7 CREATE
+POST  http://localhost/apisirs/rltigatitiktujuh
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDMzLCJuYW1hIjoiUlMgS2Fua2VyIERoYXJtYWlzIiwiZW1haWwiOiIzMTc0MDYzIiwicnNJZCI6IjMxNzQwNjMiLCJpYXQiOjE2NzQxODg0NDIsImV4cCI6MTY3NDE4ODUwMn0.JGtwmTGKB7asawgqWP63PEk_-PViYdmtJbUrpRpwTwk
+
+{
+    "tahun": 2000,
+    "data": [
+        {
+            "jenisKegiatanId": 2,
+            "jumlah": 13
+            
+        },
+        {
+            "jenisKegiatanId": 2,
+            "jumlah": 13
+        }
+    ]
+}
+
+### RL 3.7 READ
+GET http://localhost/apisirs/rltigatitiktujuh?tahun=2000
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDMzLCJuYW1hIjoiUlMgS2Fua2VyIERoYXJtYWlzIiwiZW1haWwiOiIzMTc0MDYzIiwicnNJZCI6IjMxNzQwNjMiLCJpYXQiOjE2NzQxODg1MzIsImV4cCI6MTY3NDE4ODU5Mn0.cqf_4IWK9TLsAKD4pG0xdlrMqJoHAB9hbz0zH-W2_R4
+
+### RL 3.7 Update
+PATCH http://localhost/apisirs/rltigatitiktujuhdetail/32
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDMzLCJuYW1hIjoiUlMgS2Fua2VyIERoYXJtYWlzIiwiZW1haWwiOiIzMTc0MDYzIiwicnNJZCI6IjMxNzQwNjMiLCJpYXQiOjE2NzQxODg2MTIsImV4cCI6MTY3NDE4ODY3Mn0.ktmPEvY_YDwDZrGNhf-AWW29hlPjIs5GqktWRe8geDw
+
+{  
+    "rl_tiga_titik_tujuh_id": 69,
+    "user_id": 433,
+    "jenis_kegiatan_id": 2,
+    "jumlah": 15
+}
+
+### RL 3.7 Delete
+DELETE  http://localhost/apisirs/rltigatitiktujuhdetail/54

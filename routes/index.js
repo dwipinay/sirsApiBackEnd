@@ -3,19 +3,20 @@ import { getDataUser, insertDataUser, login, logout } from '../controllers/Users
 import { verifyToken } from '../middleware/VerifyToken.js'
 import { refreshToken } from '../controllers/RefreshToken.js'
 import { getDataJenisPelayanan } from '../controllers/JenisPelayananController.js'
+// RL 3.1
 import { getDataRLTigaTitikSatu, getDataRLTigaTitikSatuDetailById,
     insertDataRLTigaTitikSatu, updateDataRLTigaTitikSatu, deleteDataRLTigaTitikSatu } from '../controllers/RLTigaTitikSatuController.js'
-import { getDataRumahSakit } from '../controllers/RumahSakitController.js'
 
 // RL 3.7
-import { insertDataRLTigaTitikTujuh , getDataRLTigaTitikTujuh,getRLTigaTitikTujuhById, getDataRLTigaTitikTujuhDetail, updateDataRLTigaTitikTujuh, deleteDataRLTigaTitikTujuh} 
+import { insertDataRLTigaTitikTujuh , getDataRLTigaTitikTujuh,getRLTigaTitikTujuhById, 
+    getDataRLTigaTitikTujuhDetail, updateDataRLTigaTitikTujuh, deleteDataRLTigaTitikTujuh} 
     from '../controllers/RLTigaTitikTujuhController.js'
 import { getKegiatan } from '../controllers/JenisKegiatanController.js'
 
 const router = express.Router()
 
 // Rumah Sakit
-router.get('/apisirs/rumahsakit/:id', verifyToken, getDataRumahSakit)
+// router.get('/apisirs/rumahsakit/:id', verifyToken, getDataRumahSakit)
 
 // User
 router.get('/apisirs/users', verifyToken, getDataUser)
@@ -38,12 +39,12 @@ router.patch('/apisirs/rltigatitiksatu/:id', verifyToken, updateDataRLTigaTitikS
 router.delete('/apisirs/rltigatitiksatu/:id', deleteDataRLTigaTitikSatu)
 
 // RL 3.7
-router.post('/rltigatitiktujuh', verifyToken, insertDataRLTigaTitikTujuh)
-router.get('/rltigatitiktujuh', verifyToken, getDataRLTigaTitikTujuh)
-router.get('/rltigatitiktujuhdetail',verifyToken, getDataRLTigaTitikTujuhDetail)
-router.get('/rltigatitiktujuhdetail/:id',verifyToken, getRLTigaTitikTujuhById)
-router.patch('/rltigatitiktujuhdetail/:id',verifyToken, updateDataRLTigaTitikTujuh);
-router.delete('/rltigatitiktujuhdetail/:id', deleteDataRLTigaTitikTujuh);
+router.post('/apisirs/rltigatitiktujuh', verifyToken, insertDataRLTigaTitikTujuh)
+router.get('/apisirs/rltigatitiktujuh', verifyToken, getDataRLTigaTitikTujuh)
+router.get('/apisirs/rltigatitiktujuhdetail',verifyToken, getDataRLTigaTitikTujuhDetail)
+router.get('/apisirs/rltigatitiktujuhdetail/:id',verifyToken, getRLTigaTitikTujuhById)
+router.patch('/apisirs/rltigatitiktujuhdetail/:id',verifyToken, updateDataRLTigaTitikTujuh)
+router.delete('/apisirs/rltigatitiktujuhdetail/:id', deleteDataRLTigaTitikTujuh)
 
 router.get('/apisirs/getkegiatan', verifyToken, getKegiatan)
 

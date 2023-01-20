@@ -14,7 +14,8 @@ export const getDataRLTigaTitikSatu = (req, res) => {
             include: {
                 model: jenisPelayanan
             }
-        }
+        },
+        order: [[{ model: rlTigaTitikSatuDetail }, 'jenis_pelayanan_id', 'ASC']]
     })
     .then((results) => {
         res.status(200).send({

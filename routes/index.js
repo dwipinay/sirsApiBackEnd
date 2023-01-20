@@ -3,6 +3,7 @@ import { getDataUser, insertDataUser, login, logout } from '../controllers/Users
 import { verifyToken } from '../middleware/VerifyToken.js'
 import { refreshToken } from '../controllers/RefreshToken.js'
 import { getDataJenisPelayanan } from '../controllers/JenisPelayananController.js'
+import { getDataJenisKegiatan } from '../controllers/JenisKegiatanController.js'
 import { getDataRumahSakit } from '../controllers/RumahSakitController.js'
 
 // RL 3.1
@@ -36,6 +37,10 @@ router.get('/apisirs/token', refreshToken)
 // Jenis Pelayanan RL 3.1
 router.get('/apisirs/jenispelayanan', verifyToken,
     getDataJenisPelayanan)
+
+// Jenis Kegiatan
+router.get('/apisirs/jeniskegiatan', verifyToken,
+getDataJenisKegiatan)
 
 // RL 3.1
 router.post('/apisirs/rltigatitiksatu', verifyToken, insertDataRLTigaTitikSatu)

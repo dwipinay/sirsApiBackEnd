@@ -3,6 +3,8 @@ import { getDataUser, insertDataUser, login, logout } from '../controllers/Users
 import { verifyToken } from '../middleware/VerifyToken.js'
 import { refreshToken } from '../controllers/RefreshToken.js'
 import { getDataJenisPelayanan } from '../controllers/JenisPelayananController.js'
+import { getDataRumahSakit } from '../controllers/RumahSakitController.js'
+
 // RL 3.1
 import { getDataRLTigaTitikSatu, getDataRLTigaTitikSatuDetailById,
     insertDataRLTigaTitikSatu, updateDataRLTigaTitikSatu, deleteDataRLTigaTitikSatu } from '../controllers/RLTigaTitikSatuController.js'
@@ -16,7 +18,7 @@ import { getKegiatan } from '../controllers/JenisKegiatanController.js'
 const router = express.Router()
 
 // Rumah Sakit
-// router.get('/apisirs/rumahsakit/:id', verifyToken, getDataRumahSakit)
+router.get('/apisirs/rumahsakit/:id', verifyToken, getDataRumahSakit)
 
 // User
 router.get('/apisirs/users', verifyToken, getDataUser)

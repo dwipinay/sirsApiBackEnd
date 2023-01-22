@@ -11,10 +11,13 @@ export const getDataRLTigaTitikSatu = (req, res) => {
         },
         include:{
             model: rlTigaTitikSatuDetail,
+            required: true,
             include: {
                 model: jenisPelayanan
             }
         },
+        raw: true,
+        // nest: true,
         order: [[{ model: rlTigaTitikSatuDetail }, 'jenis_pelayanan_id', 'ASC']]
     })
     .then((results) => {

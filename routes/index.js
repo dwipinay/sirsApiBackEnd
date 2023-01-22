@@ -1,10 +1,15 @@
 import express from 'express'
+
+// Token
 import { getDataUser, insertDataUser, login, logout } from '../controllers/UsersController.js'
 import { verifyToken } from '../middleware/VerifyToken.js'
 import { refreshToken } from '../controllers/RefreshToken.js'
+
+// References
+import { getDataRumahSakit } from '../controllers/RumahSakitController.js'
 import { getDataJenisPelayanan } from '../controllers/JenisPelayananController.js'
 import { getDataJenisKegiatan } from '../controllers/JenisKegiatanController.js'
-import { getDataRumahSakit } from '../controllers/RumahSakitController.js'
+import { getDataJenisTindakan } from '../controllers/JenisTindakanController.js'
 
 // RL 3.1
 import { getDataRLTigaTitikSatu, getDataRLTigaTitikSatuDetailById,
@@ -14,11 +19,22 @@ import { getDataRLTigaTitikSatu, getDataRLTigaTitikSatuDetailById,
 import { getDataRLTigaTitikEmpat, getRLTigaTitikEmpatById, 
     insertDataRLTigaTitikEmpat, updateDataRLTigaTitikEmpat, deleteDataRLTigaTitikEmpat } from '../controllers/RLTigaTitikEmpatController.js'
 
+// RL 3.5
+import { getDataRLTigaTitikLima, getRLTigaTitikLimaById, 
+    insertDataRLTigaTitikLima, updateDataRLTigaTitikLima, deleteDataRLTigaTitikLima } from '../controllers/RLTigaTitikLimaController.js'
+
 // RL 3.7
 import { insertDataRLTigaTitikTujuh , getDataRLTigaTitikTujuh,getRLTigaTitikTujuhById, 
     getDataRLTigaTitikTujuhDetail, updateDataRLTigaTitikTujuh, deleteDataRLTigaTitikTujuh} 
     from '../controllers/RLTigaTitikTujuhController.js'
-import { getKegiatan } from '../controllers/JenisKegiatanController.js'
+
+// RL 5.1
+import { getDataRLLimaTitikSatu, getRLLimaTitikSatuById, insertDataRLLimaTitikSatu, 
+    updateDataRLLimaTitikSatu, deleteDataRLLimaTitikSatu } from '../controllers/RLLimaTitikSatuController.js'
+
+// RL 5.2
+import { getDataRLLimaTitikDua, getRLLimaTitikDuaById, insertDataRLLimaTitikDua, 
+    updateDataRLLimaTitikDua, deleteDataRLLimaTitikDua } from '../controllers/RLLimaTitikDuaController.js'
 
 const router = express.Router()
 
@@ -34,13 +50,16 @@ router.post('/apisirs/login', login)
 router.delete('/apisirs/logout', logout)
 router.get('/apisirs/token', refreshToken)
 
-// Jenis Pelayanan RL 3.1
+// Jenis Pelayanan
 router.get('/apisirs/jenispelayanan', verifyToken,
     getDataJenisPelayanan)
 
 // Jenis Kegiatan
 router.get('/apisirs/jeniskegiatan', verifyToken,
 getDataJenisKegiatan)
+
+// Jenis Tindakan
+router.get('/apisirs/jenistindakan', getDataJenisTindakan)
 
 // RL 3.1
 router.post('/apisirs/rltigatitiksatu', verifyToken, insertDataRLTigaTitikSatu)
@@ -64,7 +83,25 @@ router.get('/apisirs/rltigatitiktujuhdetail/:id',verifyToken, getRLTigaTitikTuju
 router.patch('/apisirs/rltigatitiktujuhdetail/:id',verifyToken, updateDataRLTigaTitikTujuh)
 router.delete('/apisirs/rltigatitiktujuhdetail/:id', deleteDataRLTigaTitikTujuh)
 
-router.get('/apisirs/getkegiatan', verifyToken, getKegiatan)
+// RL 3.5
+router.post('/apisirs/rltigatitiklima', verifyToken, insertDataRLTigaTitikLima)
+router.get('/apisirs/rltigatitiklima', verifyToken, getDataRLTigaTitikLima)
+router.get('/apisirs/rltigatitiklimadetail/:id',verifyToken, getRLTigaTitikLimaById)
+router.delete('/apisirs/rltigatitiklima/:id', deleteDataRLTigaTitikLima)
+router.patch('/apisirs/rltigatitiklimadetail/:id',verifyToken, updateDataRLTigaTitikLima)
 
+// RL 5.1
+router.post('/apisirs/rllimatitiksatu', verifyToken, insertDataRLLimaTitikSatu)
+router.get('/apisirs/rllimatitiksatu', verifyToken, getDataRLLimaTitikSatu)
+router.get('/apisirs/rllimatitiksatudetail/:id',verifyToken, getRLLimaTitikSatuById)
+router.delete('/apisirs/rllimatitiksatu/:id', deleteDataRLLimaTitikSatu)
+router.patch('/apisirs/rllimatitiksatudetail/:id',verifyToken, updateDataRLLimaTitikSatu)
+
+// RL 5.2
+router.post('/apisirs/rllimatitikdua', verifyToken, insertDataRLLimaTitikDua)
+router.get('/apisirs/rllimatitikdua', verifyToken, getDataRLLimaTitikDua)
+router.get('/apisirs/rllimatitikduadetail/:id',verifyToken, getRLLimaTitikDuaById)
+router.delete('/apisirs/rllimatitikdua/:id', deleteDataRLLimaTitikDua)
+router.patch('/apisirs/rllimatitikduadetail/:id',verifyToken, updateDataRLLimaTitikDua)
 
 export default router

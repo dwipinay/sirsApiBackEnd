@@ -1,21 +1,21 @@
 import { databaseSIRS } from '../config/Database.js'
-import { rlTigaTitikEmpatHeader, rlTigaTitikEmpatDetail, jenisKegiatan } from '../models/RLTigaTitikEmpat.js'
+import { rlTigaTitikLimaHeader, rlTigaTitikLimaDetail, jenisKegiatan } from '../models/RLTigaTitikLima.js'
 import Joi from 'joi'
 
-export const getDataRLTigaTitikEmpat = (req, res) => {
-    rlTigaTitikEmpatHeader.findAll({
+export const getDataRLTigaTitikLima = (req, res) => {
+    rlTigaTitikLimaHeader.findAll({
         attributes: ['id','tahun'],
         where:{
             rs_id: req.user.rsId,
             tahun: req.query.tahun
         },
         include:{
-            model: rlTigaTitikEmpatDetail,
+            model: rlTigaTitikLimaDetail,
             include: {
                 model: jenisKegiatan
             }
         },
-        order: [[{ model: rlTigaTitikEmpatDetail }, 'jenis_kegiatan_id', 'ASC']]
+        order: [[{ model: rlTigaTitikLimaDetail }, 'jenis_kegiatan_id', 'ASC']]
     })
     .then((results) => {
         res.status(200).send({
@@ -33,7 +33,7 @@ export const getDataRLTigaTitikEmpat = (req, res) => {
     })
 }
 
-export const insertDataRLTigaTitikEmpat =  async (req, res) => {
+export const insertDataRLTigaTitikLima =  async (req, res) => {
     const schema = Joi.object({
         tahun: Joi.number().required(),
         data: Joi.array()
@@ -44,13 +44,10 @@ export const insertDataRLTigaTitikEmpat =  async (req, res) => {
                     rmBidan: Joi.number().required(),
                     rmPuskesmas: Joi.number().required(),
                     rmFaskesLainnya: Joi.number().required(),
-                    rmHidup: Joi.number().required(),
                     rmMati: Joi.number().required(),
                     rmTotal: Joi.number().required(),
-                    rnmHidup: Joi.number().required(),
                     rnmMati: Joi.number().required(),
                     rnmTotal: Joi.number().required(),
-                    nrHidup: Joi.number().required(),
                     nrMati: Joi.number().required(),
                     nrTotal: Joi.number().required(),
                     dirujuk: Joi.number().required()
@@ -70,7 +67,7 @@ export const insertDataRLTigaTitikEmpat =  async (req, res) => {
     let transaction
     try {
         transaction = await databaseSIRS.transaction()
-        const resultInsertHeader = await rlTigaTitikEmpatHeader.create({
+        const resultInsertHeader = await rlTigaTitikLimaHeader.create({
             rs_id: req.user.rsId,
             tahun: req.body.tahun,
             user_id: req.user.id
@@ -80,19 +77,16 @@ export const insertDataRLTigaTitikEmpat =  async (req, res) => {
             return {
                 rs_id: req.user.rsId,
                 tahun: req.body.tahun,
-                rl_tiga_titik_empat_id: resultInsertHeader.id,
+                rl_tiga_titik_lima_id: resultInsertHeader.id,
                 jenis_kegiatan_id: value.jenisKegiatanId,
                 rmRumahSakit: value.rmRumahSakit,
                 rmBidan: value.rmBidan,
                 rmPuskesmas: value.rmPuskesmas,
                 rmFaskesLainnya: value.rmFaskesLainnya,
-                rmHidup: value.rmHidup,
                 rmMati: value.rmMati,
                 rmTotal: value.rmTotal,
-                rnmHidup: value.rnmHidup,
                 rnmMati: value.rnmMati,
                 rnmTotal: value.rnmTotal,
-                nrHidup: value.nrHidup,
                 nrMati: value.nrMati,
                 nrTotal: value.nrTotal,
                 dirujuk: value.dirujuk,
@@ -100,7 +94,7 @@ export const insertDataRLTigaTitikEmpat =  async (req, res) => {
             }
         })
 
-        const resultInsertDetail = await rlTigaTitikEmpatDetail.bulkCreate(dataDetail, { 
+        const resultInsertDetail = await rlTigaTitikLimaDetail.bulkCreate(dataDetail, { 
             transaction,
             updateOnDuplicate: [
                 "rmRumahSakit",
@@ -141,9 +135,9 @@ export const insertDataRLTigaTitikEmpat =  async (req, res) => {
     }
 }
 
-export const updateDataRLTigaTitikEmpat = async(req,res)=>{
+export const updateDataRLTigaTitikLima = async(req,res)=>{
     try{
-        await rlTigaTitikEmpatDetail.update(req.body,{
+        await rlTigaTitikLimaDetail.update(req.body,{
             where:{
                 id: req.params.id
             }
@@ -154,9 +148,9 @@ export const updateDataRLTigaTitikEmpat = async(req,res)=>{
     }
 }
 
-export const deleteDataRLTigaTitikEmpat = async(req, res) => {
+export const deleteDataRLTigaTitikLima = async(req, res) => {
     try {
-        const count = await rlTigaTitikEmpatDetail.destroy({
+        const count = await rlTigaTitikLimaDetail.destroy({
             where: {
                 id: req.params.id
             }
@@ -176,8 +170,8 @@ export const deleteDataRLTigaTitikEmpat = async(req, res) => {
     }
 }
 
-export const getRLTigaTitikEmpatById = async(req,res)=>{
-    rlTigaTitikEmpatDetail.findOne({
+export const getRLTigaTitikLimaById = async(req,res)=>{
+    rlTigaTitikLimaDetail.findOne({
         where:{
             id:req.params.id
         },

@@ -15,14 +15,14 @@ export const jenisTindakan = databaseSIRS.define('jenis_tindakan', {
     nama: {
         type: DataTypes.STRING
     },
-    group_jenis_tindakan_id: {
+    jenis_tindakan_group_id: {
         type: DataTypes.INTEGER
     }
 }, {
     freezeTableName: true
 })
 
-export const groupJenisTindakan = databaseSIRS.define('group_jenis_tindakan', {
+export const jenisTindakanGroup = databaseSIRS.define('jenis_tindakan_group', {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true
@@ -34,13 +34,13 @@ export const groupJenisTindakan = databaseSIRS.define('group_jenis_tindakan', {
     freezeTableName: true
 })
 
-jenisTindakan.hasOne(groupJenisTindakan,{
+jenisTindakan.hasOne(jenisTindakanGroup,{
     foreignKey: 'id',
-    sourceKey: 'group_jenis_tindakan_id',
-    as: 'groupJenisTindakan'
+    sourceKey: 'jenis_tindakan_group_id',
+    as: 'jenisTindakanGroup'
 })
 
-groupJenisTindakan.belongsTo(jenisTindakan,{
+jenisTindakanGroup.belongsTo(jenisTindakan,{
     foreignKey: 'id',
-    sourceKey: 'group_jenis_tindakan_id'
+    sourceKey: 'jenis_tindakan_group_id'
 })

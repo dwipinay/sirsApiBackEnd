@@ -22,7 +22,7 @@ POST http://localhost/apisirs/login
 Content-Type: application/json
 
 {
-    "userName": "3174063",
+    "userName": "kotakelektronik@gmail.com",
     "password": "12345"
 }
 
@@ -42,14 +42,76 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsIm5hbWEiO
 GET http://localhost/apisirs/jenistindakan?rlid=9
 ##################################################
 
+### RL3.9 READ
+GET http://127.0.0.1/apisirs/rltigatitiksembilan?tahun=2022
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsIm5hbWEiOiJkd2lwIiwiZW1haWwiOiJrb3Rha2VsZWt0cm9uaWtAZ21haWwuY29tIiwicnNJZCI6IjMxNzQwNjMiLCJpYXQiOjE2NzQ0MDkxNDcsImV4cCI6MTY3NDQxMjc0N30.lmtOCd-ekqhToJ5IN3UvFM7JSdpGKa-ENlHd6Yhk4Gk
+
+### RL 1.3 READ
+GET http://127.0.0.1/apisirs/rlsatutitiktiga?tahun=2022
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsIm5hbWEiOiJkd2lwIiwiZW1haWwiOiJrb3Rha2VsZWt0cm9uaWtAZ21haWwuY29tIiwicnNJZCI6IjMxNzQwNjMiLCJpYXQiOjE2NzQ0NDYwOTUsImV4cCI6MTY3NDQ0OTY5NX0.zmmaPe4Uw3o-aYdjCi63HabctpZQkXiZZW2UuJ-U_bI
+
+### RL 3.1 Detail READ
+GET http://localhost/apisirs/rlsatutitiktigadetail/4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsIm5hbWEiOiJkd2lwIiwiZW1haWwiOiJrb3Rha2VsZWt0cm9uaWtAZ21haWwuY29tIiwicnNJZCI6IjMxNzQwNjMiLCJpYXQiOjE2NzQ0NTU2MTAsImV4cCI6MTY3NDQ1OTIxMH0.nTFL5HB8WX8gNUk3F3hY6KOyrktWDnO-oVE4B-vyAIM
+
+### RL 1.3 CREATE
+POST http://127.0.0.1/apisirs/rlsatutitiktiga
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsIm5hbWEiOiJkd2lwIiwiZW1haWwiOiJrb3Rha2VsZWt0cm9uaWtAZ21haWwuY29tIiwicnNJZCI6IjMxNzQwNjMiLCJpYXQiOjE2NzQ0NDYwOTUsImV4cCI6MTY3NDQ0OTY5NX0.zmmaPe4Uw3o-aYdjCi63HabctpZQkXiZZW2UuJ-U_bI
+
+{
+    "tahun": 1904,
+    "data": [
+        {
+            "jenisPelayananId": 75,
+            "jumlahTempatTidur": 7,
+            "kelasVVIP": 8,
+            "kelasVIP": 9,
+            "kelas1": 10,
+            "kelas2": 11,
+            "kelas3": 12,
+            "kelasKhusus": 13
+        },
+        {
+            "jenisPelayananId": 76,
+            "jumlahTempatTidur": 9,
+            "kelasVVIP": 8,
+            "kelasVIP": 9,
+            "kelas1": 10,
+            "kelas2": 11,
+            "kelas3": 12,
+            "kelasKhusus": 13
+        }
+    ]
+}
+
+### RL 1.3 UPDATE
+PATCH  http://127.0.0.1/apisirs/rlsatutitiktiga/3
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsIm5hbWEiOiJkd2lwIiwiZW1haWwiOiJrb3Rha2VsZWt0cm9uaWtAZ21haWwuY29tIiwicnNJZCI6IjMxNzQwNjMiLCJpYXQiOjE2NzQ0NDYwOTUsImV4cCI6MTY3NDQ0OTY5NX0.zmmaPe4Uw3o-aYdjCi63HabctpZQkXiZZW2UuJ-U_bI
+
+{
+    "jumlahTempatTidur": 71,
+    "kelasVVIP": 8,
+    "kelasVIP": 9,
+    "kelas1": 10,
+    "kelas2": 11,
+    "kelas3": 12,
+    "kelasKhusus": 13
+}
+
+### RL 1.3 DELETE
+DELETE http://127.0.0.1/apisirs/rlsatutitiktiga/3
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsIm5hbWEiOiJkd2lwIiwiZW1haWwiOiJrb3Rha2VsZWt0cm9uaWtAZ21haWwuY29tIiwicnNJZCI6IjMxNzQwNjMiLCJpYXQiOjE2NzQ0NDYwOTUsImV4cCI6MTY3NDQ0OTY5NX0.zmmaPe4Uw3o-aYdjCi63HabctpZQkXiZZW2UuJ-U_bI
+
+
 ### RL 3.1 READ
 GET http://127.0.0.1/apisirs/rltigatitiksatu?tahun=2022
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsIm5hbWEiOiJkd2lwIiwiZW1haWwiOiJrb3Rha2VsZWt0cm9uaWtAZ21haWwuY29tIiwicnNJZCI6IjMxNzQwNjMiLCJpYXQiOjE2NzQyOTQ0MTgsImV4cCI6MTY3NDI5NDQ3OH0.kFN3RUNLliI1w0gOlLyqhJeqtkbiUv-EhxhYgx3xm-M
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsIm5hbWEiOiJkd2lwIiwiZW1haWwiOiJrb3Rha2VsZWt0cm9uaWtAZ21haWwuY29tIiwicnNJZCI6IjMxNzQwNjMiLCJpYXQiOjE2NzQ0MDU2MDUsImV4cCI6MTY3NDQwOTIwNX0.YDLbC6Gu9ydjrV2OAbP8Su_Ql6wYu40GBo5jbG6YvE0
 
 ### RL 3.1 Detail READ
 GET http://localhost/apisirs/rltigatitiksatudetail/76
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsIm5hbWEiOiJkd2lwIiwiZW1haWwiOiJrb3Rha2VsZWt0cm9uaWtAZ21haWwuY29tIiwicnNJZCI6IjMxNzQwNjMiLCJpYXQiOjE2NzM4NzkxNDYsImV4cCI6MTY3Mzg3OTIwNn0.6-JyU6zqses3YCJxTOYrnhSVjtyxiAL-eIcVJqA8EW4
-
 
 ### RL 3.1 CREATE
 POST http://localhost/api/rltigatitiksatu

@@ -15,6 +15,10 @@ import { getGolonganObat } from '../controllers/GolonganObatController.js'
 import { getNoUrut } from '../controllers/NoUrutController.js'
 import { getIcd10 } from '../controllers/Icd10Controller.js'
 
+// RL 1.3
+import { getDataRLSatuTitikTiga, getDataRLSatuTitikTigaDetailById,
+    insertDataRLSatuTitikTiga, updateDataRLSatuTitikTiga, deleteDataRLSatuTitikTiga } from '../controllers/RLSatuTitikTigaController.js'
+
 // RL 3.1
 import { getDataRLTigaTitikSatu, getDataRLTigaTitikSatuDetailById,
     insertDataRLTigaTitikSatu, updateDataRLTigaTitikSatu, deleteDataRLTigaTitikSatu } from '../controllers/RLTigaTitikSatuController.js'
@@ -26,6 +30,9 @@ import { getDataRLTigaTitikEmpat, getRLTigaTitikEmpatById,
 // RL 3.5
 import { getDataRLTigaTitikLima, getRLTigaTitikLimaById, 
     insertDataRLTigaTitikLima, updateDataRLTigaTitikLima, deleteDataRLTigaTitikLima } from '../controllers/RLTigaTitikLimaController.js'
+
+// RL 3.9
+import { getDataRLTigaTitikSembilan } from '../controllers/RLTigaTitikSembilanController.js'
 
 // RL 3.7
 import { insertDataRLTigaTitikTujuh , getDataRLTigaTitikTujuh,getRLTigaTitikTujuhById, 
@@ -81,6 +88,13 @@ getDataJenisKegiatan)
 // Jenis Tindakan
 router.get('/apisirs/jenistindakan', getDataJenisTindakan)
 
+// RL 1.3
+router.post('/apisirs/rlsatutitiktiga', verifyToken, insertDataRLSatuTitikTiga)
+router.get('/apisirs/rlsatutitiktiga', verifyToken, getDataRLSatuTitikTiga)
+router.get('/apisirs/rlsatutitiktigadetail/:id', verifyToken, getDataRLSatuTitikTigaDetailById)
+router.patch('/apisirs/rlsatutitiktiga/:id', verifyToken, updateDataRLSatuTitikTiga)
+router.delete('/apisirs/rlsatutitiktiga/:id', deleteDataRLSatuTitikTiga)
+
 // RL 3.1
 router.post('/apisirs/rltigatitiksatu', verifyToken, insertDataRLTigaTitikSatu)
 router.get('/apisirs/rltigatitiksatu', verifyToken, getDataRLTigaTitikSatu)
@@ -109,6 +123,9 @@ router.get('/apisirs/rltigatitiklima', verifyToken, getDataRLTigaTitikLima)
 router.get('/apisirs/rltigatitiklimadetail/:id',verifyToken, getRLTigaTitikLimaById)
 router.delete('/apisirs/rltigatitiklima/:id', deleteDataRLTigaTitikLima)
 router.patch('/apisirs/rltigatitiklimadetail/:id',verifyToken, updateDataRLTigaTitikLima)
+
+// RL 3.9
+router.get('/apisirs/rltigatitiksembilan', verifyToken, getDataRLTigaTitikSembilan)
 
 // RL 3.12
 router.post('/apisirs/rltigatitikduabelas', verifyToken, insertDataRLTigaTitikDuaBelas)

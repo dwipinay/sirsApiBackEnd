@@ -1,5 +1,5 @@
 import { Sequelize } from 'sequelize'
-import { jenisTindakan, groupJenisTindakan } from '../models/JenisTindakan.js'
+import { jenisTindakan, jenisTindakanGroup } from '../models/JenisTindakan.js'
 
 export const getDataJenisTindakan = (req, res) => {
     jenisTindakan.findAll({
@@ -12,8 +12,8 @@ export const getDataJenisTindakan = (req, res) => {
             rl_id: req.query.rlid
         },
         include: {
-            model: groupJenisTindakan,
-            as: 'groupJenisTindakan'
+            model: jenisTindakanGroup,
+            as: 'jenisTindakanGroup'
         },
         raw: true,
         nest: false

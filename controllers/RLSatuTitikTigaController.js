@@ -1,16 +1,16 @@
 import { databaseSIRS } from '../config/Database.js'
-import { rlTigaTitikSatuHeader, rlTigaTitikSatuDetail, jenisPelayanan } from '../models/RLTigaTitikSatu.js'
+import { rlSatuTitikTigaHeader, rlSatuTitikTigaDetail, jenisPelayanan } from '../models/RLSatuTitikTiga.js'
 import Joi from 'joi'
 
-export const getDataRLTigaTitikSatu = (req, res) => {
-    rlTigaTitikSatuHeader.findAll({
+export const getDataRLSatuTitikTiga = (req, res) => {
+    rlSatuTitikTigaHeader.findAll({
         attributes: ['id','tahun'],
         where:{
             rs_id: req.user.rsId,
             tahun: req.query.tahun
         },
         include:{
-            model: rlTigaTitikSatuDetail,
+            model: rlSatuTitikTigaDetail,
             required: true,
             include: {
                 model: jenisPelayanan
@@ -18,7 +18,7 @@ export const getDataRLTigaTitikSatu = (req, res) => {
         },
         // raw: true,
         // nest: true,
-        order: [[{ model: rlTigaTitikSatuDetail }, 'jenis_pelayanan_id', 'ASC']]
+        order: [[{ model: rlSatuTitikTigaDetail }, 'jenis_pelayanan_id', 'ASC']]
     })
     .then((results) => {
         res.status(200).send({
@@ -36,8 +36,8 @@ export const getDataRLTigaTitikSatu = (req, res) => {
     })
 }
 
-export const getDataRLTigaTitikSatuDetail = (req, res) => {
-    rlTigaTitikSatuDetail.findAll({
+export const getDataRLSatuTitikTigaDetail = (req, res) => {
+    rlSatuTitikTigaDetail.findAll({
         attributes: ['id','rl_tiga_titik_satu_id'],
     })
     .then((results) => {
@@ -56,8 +56,8 @@ export const getDataRLTigaTitikSatuDetail = (req, res) => {
     })
 }
 
-export const getDataRLTigaTitikSatuDetailById = async(req,res)=>{
-    rlTigaTitikSatuDetail.findOne({
+export const getDataRLSatuTitikTigaDetailById = async(req,res)=>{
+    rlSatuTitikTigaDetail.findOne({
         where:{
             id:req.params.id
         },
@@ -89,21 +89,14 @@ export const getDataRLTigaTitikSatuDetailById = async(req,res)=>{
     })
 }
 
-export const insertDataRLTigaTitikSatu =  async (req, res) => {
+export const insertDataRLSatuTitikTiga =  async (req, res) => {
     const schema = Joi.object({
         tahun: Joi.number().required(),
         data: Joi.array()
             .items(
                 Joi.object().keys({
                     jenisPelayananId: Joi.number().required(),
-                    jumlahPasienAwalTahun: Joi.number().required(),
-                    jumlahPasienMasuk: Joi.number().required(),
-                    pasienKeluarHidup: Joi.number().required(),
-                    kurangDari48Jam: Joi.number().required(),
-                    lebihDariAtauSamaDengan48Jam: Joi.number().required(),
-                    jumlahLamaDirawat: Joi.number().required(),
-                    jumlahPasienAkhirTahun: Joi.number().required(),
-                    jumlahHariPerawatan: Joi.number().required(),
+                    jumlahTempatTidur: Joi.number().required(),
                     kelasVVIP: Joi.number().required(),
                     kelasVIP: Joi.number().required(),
                     kelas1: Joi.number().required(),
@@ -126,7 +119,7 @@ export const insertDataRLTigaTitikSatu =  async (req, res) => {
     let transaction
     try {
         transaction = await databaseSIRS.transaction()
-        const resultInsertHeader = await rlTigaTitikSatuHeader.create({
+        const resultInsertHeader = await rlSatuTitikTigaHeader.create({
             rs_id: req.user.rsId,
             tahun: req.body.tahun,
             user_id: req.user.id
@@ -139,16 +132,9 @@ export const insertDataRLTigaTitikSatu =  async (req, res) => {
             return {
                 rs_id: req.user.rsId,
                 tahun: req.body.tahun,
-                rl_tiga_titik_satu_id: resultInsertHeader.id,
+                rl_satu_titik_tiga_id: resultInsertHeader.id,
                 jenis_pelayanan_id: value.jenisPelayananId,
-                jumlah_pasien_awal_tahun: value.jumlahPasienAwalTahun,
-                jumlah_pasien_masuk: value.jumlahPasienMasuk,
-                pasien_keluar_hidup: value.pasienKeluarHidup,
-                kurang_dari_48_Jam: value.kurangDari48Jam,
-                lebih_dari_atau_sama_dengan_48_jam: value.lebihDariAtauSamaDengan48Jam,
-                jumlah_lama_dirawat: value.jumlahLamaDirawat,
-                jumlah_pasien_akhir_tahun: value.jumlahPasienAkhirTahun,
-                jumlah_hari_perawatan: value.jumlahHariPerawatan,
+                jumlah_tempat_tidur: value.jumlahTempatTidur,
                 kelas_VVIP: value.kelasVVIP,
                 kelas_VIP: value.kelasVIP,
                 kelas_1: value.kelas1,
@@ -159,11 +145,9 @@ export const insertDataRLTigaTitikSatu =  async (req, res) => {
             }
         })
 
-        const resultInsertDetail = await rlTigaTitikSatuDetail.bulkCreate(dataDetail, { 
+        const resultInsertDetail = await rlSatuTitikTigaDetail.bulkCreate(dataDetail, { 
             transaction,
-            updateOnDuplicate: ['jumlah_pasien_awal_tahun', 'pasien_keluar_hidup', 
-                'jumlah_pasien_masuk', 'kurang_dari_48_Jam', 'lebih_dari_atau_sama_dengan_48_jam',
-                'jumlah_lama_dirawat', 'jumlah_pasien_akhir_tahun', 'jumlah_hari_perawatan', 'kelas_VVIP',
+            updateOnDuplicate: ['jumlah_tempat_tidur', 'kelas_VVIP',
                 'kelas_VIP', 'kelas_1', 'kelas_2', 'kelas_3', 'kelas_khusus'
             ]
         })
@@ -187,18 +171,11 @@ export const insertDataRLTigaTitikSatu =  async (req, res) => {
     }
 }
 
-export const updateDataRLTigaTitikSatu = async(req,res)=>{
+export const updateDataRLSatuTitikTiga = async(req,res)=>{
     try{
-        const update = await rlTigaTitikSatuDetail.update(
+        const update = await rlSatuTitikTigaDetail.update(
             {
-                jumlah_pasien_awal_tahun: req.body.jumlahPasienAwalTahun,
-                jumlah_pasien_masuk: req.body.jumlahPasienMasuk,
-                pasien_keluar_hidup: req.body.pasienKeluarHidup,
-                kurang_dari_48_Jam: req.body.kurangDari48Jam,
-                lebih_dari_atau_sama_dengan_48_jam: req.body.lebihDariAtauSamaDengan48Jam,
-                jumlah_lama_dirawat: req.body.jumlahLamaDirawat,
-                jumlah_pasien_akhir_tahun: req.body.jumlahPasienAkhirTahun,
-                jumlah_hari_perawatan: req.body.jumlahHariPerawatan,
+                jumlah_tempat_tidur: req.body.jumlahTempatTidur,
                 kelas_VVIP: req.body.kelasVVIP,
                 kelas_VIP:req.body.kelasVIP,
                 kelas_1: req.body.kelas1,
@@ -221,9 +198,9 @@ export const updateDataRLTigaTitikSatu = async(req,res)=>{
     }
 }
 
-export const deleteDataRLTigaTitikSatu = async(req, res) => {
+export const deleteDataRLSatuTitikTiga = async(req, res) => {
     try {
-        const count = await rlTigaTitikSatuDetail.destroy({
+        const count = await rlSatuTitikTigaDetail.destroy({
             where: {
                 id: req.params.id
             }

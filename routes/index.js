@@ -23,6 +23,22 @@ import { getDataRLSatuTitikTiga, getDataRLSatuTitikTigaDetailById,
 import { getDataRLTigaTitikSatu, getDataRLTigaTitikSatuDetailById,
     insertDataRLTigaTitikSatu, updateDataRLTigaTitikSatu, deleteDataRLTigaTitikSatu } from '../controllers/RLTigaTitikSatuController.js'
 
+// RL 3.2
+import { 
+    getDataRLTigaTitikDua, 
+    insertDataRLTigaTitikDua, 
+    deleteDataRLTigaTitikDua, 
+    getDataRLTigaTitikDuaDetail, 
+    updateDataRLTigaTitikDua } from '../controllers/RLTigaTitikDuaController.js'
+
+// RL 3.3
+import { getDataRLTigaTitikTiga, 
+    insertDataRLTigaTitikTiga, 
+    getDataRLTigaTitikTigaDetail, 
+    getRLTigaTitikTigaById, 
+    updateDataRLTigaTitikTiga, 
+    deleteDataRLTigaTitikTiga } from '../controllers/RLTigaTitikTigaController.js'
+
 // RL 3.4
 import { getDataRLTigaTitikEmpat, getRLTigaTitikEmpatById, 
     insertDataRLTigaTitikEmpat, updateDataRLTigaTitikEmpat, deleteDataRLTigaTitikEmpat } from '../controllers/RLTigaTitikEmpatController.js'
@@ -50,6 +66,22 @@ import { insertDataRLTigaTitikTigaBelasA, getDataRLTigaTitikTigaBelasA, getRLTig
 // RL 3.13B
 import { insertDataRLTigaTitikTigaBelasB, getDataRLTigaTitikTigaBelasB, getRLTigaTitikTigaBelasBById, 
     getDataRLTigaTitikTigaBelasBDetail, updateDataRLTigaTitikTigaBelasB ,deleteDataRLTigaTitikTigaBelasB } from '../controllers/RLTigaTitikTigaBelasBController.js'
+
+// RL 3.14
+import { getDataRLTigaTitikEmpatBelas, 
+    insertDataRLTigaTitikEmpatBelas, 
+    getDataRLTigaTitikEmpatBelasDetail, 
+    getRLTigaTitikEmpatBelasById, 
+    updateDataRLTigaTitikEmpatBelas, 
+    deleteDataRLTigaTitikEmpatBelas } from '../controllers/RLTigaTitikEmpatBelasController.js'
+
+// RL 3.15
+import { getDataRLTigaTitikLimaBelas, 
+    insertDataRLTigaTitikLimaBelas, 
+    getDataRLTigaTitikLimaBelasDetail, 
+    getRLTigaTitikLimaBelasById, 
+    updateDataRLTigaTitikLimaBelas, 
+    deleteDataRLTigaTitikLimaBelas } from '../controllers/RLTigaTitikLimaBelasController.js'
 
 // RL 5.1
 import { getDataRLLimaTitikSatu, getRLLimaTitikSatuById, insertDataRLLimaTitikSatu, 
@@ -102,6 +134,21 @@ router.get('/apisirs/rltigatitiksatudetail/:id', verifyToken, getDataRLTigaTitik
 router.patch('/apisirs/rltigatitiksatu/:id', verifyToken, updateDataRLTigaTitikSatu)
 router.delete('/apisirs/rltigatitiksatu/:id', deleteDataRLTigaTitikSatu)
 
+// RL 3.2
+router.post('/apisirs/rltigatitikdua', verifyToken, insertDataRLTigaTitikDua)
+router.get('/apisirs/rltigatitikdua', verifyToken, getDataRLTigaTitikDua)
+router.delete('/rltigatitikdua/:id', deleteDataRLTigaTitikDua)
+router.get('/apisirs/rltigatitikduadetail/:id',verifyToken, getDataRLTigaTitikDuaDetail)
+router.patch('/apisirs/rltigatitikduadetail/:id',verifyToken, updateDataRLTigaTitikDua)
+
+// RL 3.3
+router.post('/apisirs/rltigatitiktiga', verifyToken, insertDataRLTigaTitikTiga)
+router.get('/apisirs/rltigatitiktiga', verifyToken, getDataRLTigaTitikTiga)
+router.delete('/apisirs/rltigatitiktigadetail/:id', deleteDataRLTigaTitikTiga)
+router.get('/apisirs/rltigatitiktigadetail',verifyToken, getDataRLTigaTitikTigaDetail)
+router.get('/apisirs/rltigatitiktigadetail/:id',verifyToken, getRLTigaTitikTigaById)
+router.patch('/apisirs/rltigatitiktigadetail/:id',verifyToken, updateDataRLTigaTitikTiga)
+
 // RL 3.4
 router.post('/apisirs/rltigatitikempat', verifyToken, insertDataRLTigaTitikEmpat)
 router.get('/apisirs/rltigatitikempat', verifyToken, getDataRLTigaTitikEmpat)
@@ -145,7 +192,6 @@ router.patch('/apisirs/rltigatitiktigabelasadetail/:id',verifyToken, updateDataR
 router.delete('/apisirs/rltigatitiktigabelasadetail/:id', deleteDataRLTigaTitikTigaBelasA);
 router.get('/apisirs/getgolonganobat', verifyToken, getGolonganObat)
 
-
 // RL 3.13b
 router.post('/apisirs/rltigatitiktigabelasb', verifyToken, insertDataRLTigaTitikTigaBelasB)
 router.get('/apisirs/rltigatitiktigabelasb', verifyToken, getDataRLTigaTitikTigaBelasB)
@@ -154,6 +200,22 @@ router.get('/apisirs/rltigatitiktigabelasbdetail/:id',verifyToken, getRLTigaTiti
 router.patch('/apisirs/rltigatitiktigabelasbdetail/:id',verifyToken, updateDataRLTigaTitikTigaBelasB);
 router.delete('/apisirs/rltigatitiktigabelasbdetail/:id', deleteDataRLTigaTitikTigaBelasB);
 router.get('/apisirs/getgolonganobat', verifyToken, getGolonganObat)
+
+// RL 3.14
+router.post('/apisirs/rltigatitikempatbelas', verifyToken, insertDataRLTigaTitikEmpatBelas)
+router.get('/apisirs/rltigatitikempatbelas', verifyToken, getDataRLTigaTitikEmpatBelas)
+router.delete('/apisirs/rltigatitikempatbelasdetail/:id', verifyToken, deleteDataRLTigaTitikEmpatBelas)
+router.get('/apisirs/rltigatitikempatbelasdetail/:id',verifyToken, getDataRLTigaTitikEmpatBelasDetail)
+router.get('/apisirs/rltigatitikempatbelasdetail/:id',verifyToken, getRLTigaTitikEmpatBelasById)
+router.patch('/apisirs/rltigatitikempatbelasdetail/:id',verifyToken, updateDataRLTigaTitikEmpatBelas)
+
+// RL 3.15
+router.post('/apisirs/rltigatitiklimabelas', verifyToken, insertDataRLTigaTitikLimaBelas)
+router.get('/apisirs/rltigatitiklimabelas', verifyToken, getDataRLTigaTitikLimaBelas)
+router.delete('/apisirs/rltigatitiklimabelasdetail/:id', deleteDataRLTigaTitikLimaBelas)
+router.get('/apisirs/rltigatitiklimabelasdetail/:id',verifyToken, getDataRLTigaTitikLimaBelasDetail)
+router.get('/apisirs/rltigatitiklimabelasdetail/:id',verifyToken, getRLTigaTitikLimaBelasById)
+router.patch('/apisirs/rltigatitiklimabelasdetail/:id',verifyToken, updateDataRLTigaTitikLimaBelas)
 
 // RL 5.1
 router.post('/apisirs/rllimatitiksatu', verifyToken, insertDataRLLimaTitikSatu)

@@ -34,6 +34,11 @@ GET http://localhost/apisirs/token
 
 ### Reference
 ##################################################
+### Jenis Kegiatan
+GET http://localhost/apisirs/jeniskegiatan?rlid=7
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsIm5hbWEiOiJkd2lwIiwiZW1haWwiOiJrb3Rha2VsZWt0cm9uaWtAZ21haWwuY29tIiwicnNJZCI6IjMxNzQwNjMiLCJpYXQiOjE2NzQ1NDAyMDcsImV4cCI6MTY3NDU0MzgwN30.N6JNLsy9S-yNcXbUS2G-Xop0VB2w-_nvWG0vzk_WRK4
+
+
 ### Jenis Pelayanan
 GET http://localhost/apisirs/jenispelayanan?rlid=1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsIm5hbWEiOiJkd2lwIiwiZW1haWwiOiJrb3Rha2VsZWt0cm9uaWtAZ21haWwuY29tIiwicnNJZCI6IjMxNzQwNjMiLCJpYXQiOjE2NzQwMzcxMDEsImV4cCI6MTY3NDAzNzE2MX0.T_4ek7zpmyzCq-CIK6sWUrqjgukVyVlhJCmFuLI20lk

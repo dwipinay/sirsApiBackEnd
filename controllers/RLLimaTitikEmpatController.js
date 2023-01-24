@@ -180,7 +180,7 @@ export const insertDataRLLimaTitikEmpat =  async (req, res) => {
             { 
                 
                 transaction, 
-                updateOnDuplicate: ['kasus_baru_Lk','kasus_baru_Pr',
+                updateOnDuplicate: ['kode_icd_10','deskripsi','kasus_baru_Lk','kasus_baru_Pr',
                 'jumlah_kasus_baru', 'jumlah_kunjungan']
             })
             

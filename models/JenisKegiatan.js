@@ -18,3 +18,21 @@ export const jenisKegiatan = databaseSIRS.define('jenis_kegiatan', {
 }, {
     freezeTableName: true
 })
+
+export const groupJenisKegiatan = databaseSIRS.define("group_jenis_kegiatan", {
+    no: {
+        type: DataTypes.STRING,
+    },
+    nama: {
+        type: DataTypes.STRING,
+    },
+    group_jenis_kegiatan_header_id: {
+        type: DataTypes.INTEGER,
+    }
+})
+
+export const groupJenisKegiatanHeader = databaseSIRS.define("group_jenis_kegiatan_header", {
+    nama: {
+        type: DataTypes.STRING,
+    }
+})

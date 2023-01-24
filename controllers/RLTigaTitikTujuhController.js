@@ -14,7 +14,8 @@ export const getDataRLTigaTitikTujuh = (req, res) => {
             model: rlTigaTitikTujuhDetail,
             include: {
                 model: jenisKegiatan
-            }
+            },
+        order: [[{ model: jenisKegiatan }, 'no', 'DESC']]
         }
     })
     .then((results) => {
@@ -55,16 +56,12 @@ export const getDataRLTigaTitikTujuhDetail = (req, res) => {
 
 export const getRLTigaTitikTujuhById = async(req,res)=>{
     rlTigaTitikTujuhDetail.findOne({
+       
         where:{
-            // rs_id: req.user.rsId,
-            // tahun: req.query.tahun
             id:req.params.id
         },
         include:{
             model: jenisKegiatan
-            // include: {
-            //     model: jenisKegiatan
-            // }
         }
     })
     .then((results) => {
@@ -116,13 +113,13 @@ export const insertDataRLTigaTitikTujuh =  async (req, res) => {
         data: Joi.array()
             .items(
                 Joi.object().keys({
-                    jenisKegiatanId: Joi.number().required(),
-                    jumlah: Joi.number().required()
+                    jenisKegiatanId: Joi.number(),
+                    jumlah: Joi.number().min(0)
                     
-                }).required()
+                })
             ).required()
     })
-    console.log(req.user.rsId);
+//console.log(req);
     const { error, value } =  schema.validate(req.body)
     if (error) {
         res.status(404).send({
@@ -141,20 +138,26 @@ export const insertDataRLTigaTitikTujuh =  async (req, res) => {
             user_id: req.user.id
         }, { transaction })
 
-       
-
         const dataDetail = req.body.data.map((value, index) => {
             return {
                 rl_tiga_titik_tujuh_id: resultInsertHeader.id,
                 jenis_kegiatan_id: value.jenisKegiatanId,
-                jumlah: value.jumlah,
+                jumlah: value.jumlah, 
                 rs_id: req.user.rsId,
                 tahun: req.body.tahun,
                 user_id: req.user.id
             }
         })
 
-        const resultInsertDetail = await rlTigaTitikTujuhDetail.bulkCreate(dataDetail, { transaction })
+        const resultInsertDetail = await rlTigaTitikTujuhDetail.bulkCreate(dataDetail, 
+            
+            { 
+                
+                transaction, 
+                updateOnDuplicate: ['jumlah']
+            })
+            
+        
         await transaction.commit()
         res.status(201).send({
             status: true,
@@ -164,9 +167,21 @@ export const insertDataRLTigaTitikTujuh =  async (req, res) => {
             }
         })
     } catch (error) {
-        console.log(error)
+        console.log(error.code)
         if (transaction) {
             await transaction.rollback()
+            if(error.name === 'SequelizeUniqueConstraintError'){
+                res.status(400).send({
+                    status: false,
+                    message: "Fail Duplicate Entry"
+                    // reason: 'Duplicate Entry'
+                })
+            } else {
+                res.status(400).send({
+                    status: false,
+                    message: "error"
+                })
+            }
         }
     }
 }

@@ -122,7 +122,7 @@ export const insertDataRLTigaTitikTujuh =  async (req, res) => {
                 }).required()
             ).required()
     })
-//console.log(req);
+    console.log(req.user.rsId);
     const { error, value } =  schema.validate(req.body)
     if (error) {
         res.status(404).send({
@@ -141,11 +141,15 @@ export const insertDataRLTigaTitikTujuh =  async (req, res) => {
             user_id: req.user.id
         }, { transaction })
 
+       
+
         const dataDetail = req.body.data.map((value, index) => {
             return {
                 rl_tiga_titik_tujuh_id: resultInsertHeader.id,
                 jenis_kegiatan_id: value.jenisKegiatanId,
                 jumlah: value.jumlah,
+                rs_id: req.user.rsId,
+                tahun: req.body.tahun,
                 user_id: req.user.id
             }
         })

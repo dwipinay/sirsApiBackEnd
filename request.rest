@@ -193,7 +193,7 @@ DELETE http://localhost/api/rltigatitiksatu/42
 ###RL 3.7 CREATE
 POST  http://localhost/apisirs/rltigatitiktujuh
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDMzLCJuYW1hIjoiUlMgS2Fua2VyIERoYXJtYWlzIiwiZW1haWwiOiIzMTc0MDYzIiwicnNJZCI6IjMxNzQwNjMiLCJpYXQiOjE2NzQxODg0NDIsImV4cCI6MTY3NDE4ODUwMn0.JGtwmTGKB7asawgqWP63PEk_-PViYdmtJbUrpRpwTwk
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsIm5hbWEiOiJkd2lwIiwiZW1haWwiOiJrb3Rha2VsZWt0cm9uaWtAZ21haWwuY29tIiwicnNJZCI6IjMxNzQwNjMiLCJpYXQiOjE2NzQ1NDc1MjgsImV4cCI6MTY3NDU1MTEyOH0.I_S_56Jl4OkTNEjVqhUoWG5LU-eLKXDtsGUfE2_VDDE
 
 {
     "tahun": 2000,

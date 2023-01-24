@@ -30,6 +30,12 @@ export const rlTigaTitikTujuhDetail = databaseSIRS.define(
         },
         jumlah: {
             type: DataTypes.INTEGER,
+        },
+        rs_id: {
+            type: DataTypes.STRING,
+        },
+        tahun: {
+            type: DataTypes.INTEGER,
         }
     },
 );

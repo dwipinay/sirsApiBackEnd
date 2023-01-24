@@ -1,5 +1,5 @@
 import { databaseSIRS } from '../config/Database.js'
-import { rlTigaTitikSepuluhHeader, rlTigaTitikSepuluhDetail, jenisKegiatan } from '../models/RlTigaTitikSepuluh.js'
+import { rlTigaTitikSepuluhHeader, rlTigaTitikSepuluhDetail, jenisKegiatan } from '../models/RLTigaTitikSepuluh.js'
 import Joi from 'joi'
 
 

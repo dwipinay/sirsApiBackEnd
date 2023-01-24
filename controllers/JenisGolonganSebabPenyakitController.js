@@ -1,5 +1,5 @@
 import { or, Sequelize } from "sequelize";
-import { jenisGolonganSebabPenyakit } from "../models/jenisGolonganSebabPenyakit.js";
+import { jenisGolonganSebabPenyakit } from "../models/JenisGolonganSebabPenyakit.js";
 const Op = Sequelize.Op
 
 export const getDataJenisGolonganSebabPenyakit = (req, res) => {

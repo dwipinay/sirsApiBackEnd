@@ -1,5 +1,5 @@
 import { databaseSIRS } from '../config/Database.js'
-import { rlTigaTitikSebelasHeader, rlTigaTitikSebelasDetail, jenisPelayanan } from '../models/rlTigaTitikSebelas.js'
+import { rlTigaTitikSebelasHeader, rlTigaTitikSebelasDetail, jenisPelayanan } from '../models/RLTigaTitikSebelas.js'
 import Joi from 'joi'
 
 export const getDatarlTigaTitikSebelas = (req, res) => {

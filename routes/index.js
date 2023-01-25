@@ -8,6 +8,7 @@ import { refreshToken } from '../controllers/RefreshToken.js'
 // References
 import { getDataRumahSakit } from '../controllers/RumahSakitController.js'
 import { getDataJenisPelayanan } from '../controllers/JenisPelayananController.js'
+import { getDataCaraPembayaran } from '../controllers/CaraPembayaranController.js'
 import { getDataJenisSpesialis } from '../controllers/JenisSpesialisController.js'
 import { getDataJenisKegiatan, getDataJenisKegiatanLab } from '../controllers/JenisKegiatanController.js'
 import { getDataJenisTindakan, getDataGroupJenisTindakan } from '../controllers/JenisGroupTindakanController.js'
@@ -156,6 +157,10 @@ router.get('/apisirs/token', refreshToken)
 router.get('/apisirs/jenispelayanan', verifyToken,
     getDataJenisPelayanan)
 
+// Cara Pembayaran
+router.get('/apisirs/carapembayaran', verifyToken,
+    getDataCaraPembayaran)
+
 // Jenis Kegiatan
 router.get('/apisirs/jeniskegiatan', verifyToken,
 getDataJenisKegiatan)
@@ -218,7 +223,7 @@ router.delete('/apisirs/rltigatitiksatu/:id', deleteDataRLTigaTitikSatu)
 // RL 3.2
 router.post('/apisirs/rltigatitikdua', verifyToken, insertDataRLTigaTitikDua)
 router.get('/apisirs/rltigatitikdua', verifyToken, getDataRLTigaTitikDua)
-router.delete('/rltigatitikdua/:id', deleteDataRLTigaTitikDua)
+router.delete('/apisirs/rltigatitikdua/:id', deleteDataRLTigaTitikDua)
 router.get('/apisirs/rltigatitikduadetail/:id',verifyToken, getDataRLTigaTitikDuaDetail)
 router.patch('/apisirs/rltigatitikduadetail/:id',verifyToken, updateDataRLTigaTitikDua)
 

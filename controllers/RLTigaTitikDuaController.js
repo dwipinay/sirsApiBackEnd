@@ -94,9 +94,9 @@ export const insertDataRLTigaTitikDua =  async (req, res) => {
                 'mati_di_ugd',
                 'doa'
                 ]
-         })
+        })
 
-        console.log(resultInsertDetail[0].id)
+        // console.log(resultInsertDetail[0].id)
         await transaction.commit()
         res.status(201).send({
             status: true,
@@ -131,7 +131,7 @@ export const deleteDataRLTigaTitikDua = async(req, res) => {
         res.status(404).send({
             status: false,
             message: error
-        })
+        }) 
     }
 }
 
@@ -173,6 +173,37 @@ export const getDataRLTigaTitikDuaDetail = (req, res) => {
     })
 }
 
+export const getRLTigaTitikDuaById = async(req,res)=>{
+    rlTigaTitikDuaDetail.findOne({
+       
+        where:{
+            // rs_id: req.user.rsId,
+            // tahun: req.query.tahun
+            id:req.params.id
+        },
+        include:{
+            model: jenisPelayanan
+            // include: {
+            //     model: jenisKegiatan
+            // }
+        }
+    })
+    .then((results) => {
+        res.status(200).send({
+            status: true,
+            message: "data found",
+            data: results
+        })
+    })
+    .catch((err) => {
+        res.status(422).send({
+            status: false,
+            message: err
+        })
+        return
+    })
+}
+
 export const updateDataRLTigaTitikDua = async (req, res) => {
     try {
         const data = req.body
@@ -183,22 +214,22 @@ export const updateDataRLTigaTitikDua = async (req, res) => {
                         id: req.params.id
                     }
                 }
-            )
-            res.status(201).send({
-                status: true,
-                message: "data Updated",
-            })
-        } catch (error){
+                )
+                res.status(201).send({
+                    status: true,
+                    message: "Data Diperbaharui",
+                })
+            } catch (error){
+                res.status(400).send({
+                    status:false,
+                    message: "Gagal Memperbaharui Data"
+                })
+            }
+        }  catch (error) {
+            console.log(error.message)
             res.status(400).send({
                 status:false,
-                message: "Update Data Fail"
+                message: "Gagal Memperbaharui Data"
             })
-        }
-    }  catch (error) {
-        console.log(error.message)
-        res.status(400).send({
-            status:false,
-            message: "Update Data Fail"
-        })
     }
 }

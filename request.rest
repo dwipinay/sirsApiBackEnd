@@ -228,3 +228,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDMzLCJuYW1hI
 
 ### RL 3.7 Delete
 DELETE  http://localhost/apisirs/rltigatitiktujuhdetail/54
+
+### RL 3.2 Delete
+
+DELETE  http://localhost/apisirs/rltigatitikdua/123
+uthorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsIm5hbWEiOiJkd2lwIiwiZW1haWwiOiJrb3Rha2VsZWt0cm9uaWtAZ21haWwuY29tIiwicnNJZCI6IjMxNzQwNjMiLCJpYXQiOjE2NzQ2MTkzNTcsImV4cCI6MTY3NDYyMjk1N30.0m0oUhZ6aSoERvz35TexUsjmJSxFIYc2gpExYfGyQ3c

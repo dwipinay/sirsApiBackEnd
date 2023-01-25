@@ -95,13 +95,13 @@ console.log("sini");
   
 console.log(req.body);
   const schema = Joi.object({
-      tahun: Joi.required(),
-      los: Joi.required(),
-      bor: Joi.required(),
-      toi: Joi.required(),
-      bto: Joi.required(),
-      ndr: Joi.required(),
-      gdr: Joi.required(),
+      tahun: Joi.number().required(),
+      los: Joi.number().required(),
+      bor: Joi.number().required(),
+      toi: Joi.number().required(),
+      bto: Joi.number().required(),
+      ndr: Joi.number().required(),
+      gdr: Joi.number().required(),
       rataKunjungan: Joi.number().required(),
       
   })

@@ -4,7 +4,7 @@ import jsonWebToken from 'jsonwebtoken'
 export const refreshToken = (req, res) => {
     const refreshToken = req.cookies.refreshToken
     if(!refreshToken) {
-        res.status(401).json({
+        res.status(403).json({
             status: false,
             message: 'Unauthorized'
         })
@@ -17,7 +17,7 @@ export const refreshToken = (req, res) => {
     })
     .then((results) => {
         if(!results[0]) {
-            res.status(401).json({
+            res.status(403).json({
                 status: false,
                 message: 'Unauthorized'
             })
@@ -25,11 +25,17 @@ export const refreshToken = (req, res) => {
         }
         jsonWebToken.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, jwtRes) => {
             if (err) return res.sendStatus(403)
+            // const payloadObject = {
+            //     id: results[0].id,
+            //     nama: results[0].nama,
+            //     email: results[0].email,
+            //     rsId: results[0].rs_id
+            // }
             const payloadObject = {
-                id: results[0].id,
-                nama: results[0].nama,
-                email: results[0].email,
-                rsId: results[0].rs_id
+                id: jwtRes.id,
+                nama: jwtRes.nama,
+                email: jwtRes.email,
+                rsId: jwtRes.rsId
             }
             const accessToken = jsonWebToken.sign(payloadObject, process.env.ACCESS_TOKEN_SECRET, {expiresIn: process.env.ACCESS_TOKEN_EXPIRESIN})
             res.json({ accessToken })

@@ -81,7 +81,8 @@ export const login = (req, res) => {
                 .then(() => {
                     res.cookie('refreshToken', refreshToken, {
                         httpOnly: true,
-                        maxAge: 24 * 60 * 60 * 1000
+                        // maxAge: 24 * 60 * 60 * 1000
+                        maxAge: 1000 * 60 * 60 * 24
                     })
                     res.status(201).send({
                         status: true,

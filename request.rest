@@ -18,11 +18,11 @@ Content-Type: application/json
 }
 
 ### Login
-POST http://localhost/apisirs/login
+POST http://103.74.143.46:5000/apisirs/login
 Content-Type: application/json
 
 {
-    "userName": "kotakelektronik@gmail.com",
+    "userName": "3174063",
     "password": "12345"
 }
 

@@ -12,7 +12,8 @@ export const rlTigaTitikTujuh = databaseSIRS.define(
       },
       user_id: {
         type: DataTypes.INTEGER,
-      }
+      },
+
     },
   );
   
@@ -36,12 +37,25 @@ export const rlTigaTitikTujuh = databaseSIRS.define(
       },
       rs_id: {
         type: DataTypes.INTEGER,
-      }
+      },
+    //   created_at: {
+    //     type: DataTypes.DATE,
+    //   },
+    //   modified_at: {
+    //     type: DataTypes.DATE,
+    //   },
     },
    
   );
   export const jenisKegiatan = databaseSIRS.define('jenis_kegiatan', 
     {
+      id:{
+        type: DataTypes.INTEGER,
+        primaryKey: true
+    },
+    group_jenis_kegiatan_id: {
+        type: DataTypes.INTEGER,
+    },
         nama: {
             type: DataTypes.STRING
         },
@@ -52,16 +66,24 @@ export const rlTigaTitikTujuh = databaseSIRS.define(
 )
 
 
-rlTigaTitikTujuh.hasMany(rlTigaTitikTujuhDetail, {
-    foreignKey:'rl_tiga_titik_tujuh_id'
-})
-rlTigaTitikTujuhDetail.belongsTo(rlTigaTitikTujuh, {
-    foreignKey:'id'
+export const jenisGroupKegiatanHeader = databaseSIRS.define('group_jenis_kegiatan_header', {
+  id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true
+  },
+  nama:{
+      type: DataTypes.STRING
+  },    
+ 
 })
 
-jenisKegiatan.hasMany(rlTigaTitikTujuhDetail, {
-    foreignKey:'id'
-})
-rlTigaTitikTujuhDetail.belongsTo(jenisKegiatan, {
-    foreignKey:'jenis_kegiatan_id'
-})
+
+rlTigaTitikTujuh.hasMany(rlTigaTitikTujuhDetail, {foreignKey:'rl_tiga_titik_tujuh_id'})
+rlTigaTitikTujuhDetail.belongsTo(rlTigaTitikTujuh, {foreignKey:'id'})
+
+jenisKegiatan.hasMany(rlTigaTitikTujuhDetail, {foreignKey: 'id'})
+rlTigaTitikTujuhDetail.belongsTo(jenisKegiatan, {foreignKey: 'jenis_kegiatan_id'})
+
+jenisGroupKegiatanHeader.hasMany(jenisKegiatan, {foreignKey: 'id'})
+jenisKegiatan.belongsTo(jenisGroupKegiatanHeader, {foreignKey: 'group_jenis_kegiatan_id'})
+

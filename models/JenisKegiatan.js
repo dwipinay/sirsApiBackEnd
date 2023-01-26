@@ -36,3 +36,18 @@ export const groupJenisKegiatanHeader = databaseSIRS.define("group_jenis_kegiata
         type: DataTypes.STRING,
     }
 })
+export const jenisGroupKegiatanHeader = databaseSIRS.define('group_jenis_kegiatan_header', {
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true
+    },
+    
+    nama: {
+        type: DataTypes.STRING
+    }
+}, {
+    freezeTableName: true
+})
+
+jenisGroupKegiatanHeader.hasMany(jenisKegiatan, {foreignKey: 'id'})
+jenisKegiatan.belongsTo(jenisGroupKegiatanHeader, {foreignKey: 'group_jenis_kegiatan_id'})

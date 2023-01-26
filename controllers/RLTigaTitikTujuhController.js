@@ -1,7 +1,7 @@
 import { databaseSIRS } from '../config/Database.js'
-import { rlTigaTitikTujuh, rlTigaTitikTujuhDetail, jenisKegiatan } from '../models/RLTigaTitikTujuh.js'
+import { rlTigaTitikTujuh, rlTigaTitikTujuhDetail, jenisGroupKegiatanHeader } from '../models/RLTigaTitikTujuh.js'
 import Joi from 'joi'
-
+import { jenisKegiatan } from '../models/JenisKegiatan.js'
 
 export const getDataRLTigaTitikTujuh = (req, res) => {
     rlTigaTitikTujuh.findAll({
@@ -13,9 +13,13 @@ export const getDataRLTigaTitikTujuh = (req, res) => {
         include:{
             model: rlTigaTitikTujuhDetail,
             include: {
-                model: jenisKegiatan
+                model: jenisKegiatan,
+                
+            include: {
+                model: jenisGroupKegiatanHeader
             },
-        order: [[{ model: jenisKegiatan }, 'no', 'DESC']]
+            },
+        order: [[{ model: jenisGroupKegiatanHeader }, 'no', 'DESC']]
         }
     })
     .then((results) => {

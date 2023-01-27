@@ -4,7 +4,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsIm5hbWEiO
 
 ### Get Data Rumah Sakit
 GET http://localhost/apisirs/rumahsakit/3174063
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsIm5hbWEiOiJkd2lwIiwiZW1haWwiOiJrb3Rha2VsZWt0cm9uaWtAZ21haWwuY29tIiwicnNJZCI6IjMxNzQwNjMiLCJpYXQiOjE2NzQ2NTc4MjYsImV4cCI6MTY3NDY1Nzg4Nn0.DOFNYalso8lDB5XXYkwqc1XyaE8dGYjlxPBW3kM9N9Q
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDMzLCJuYW1hIjoiUlMgS2Fua2VyIERoYXJtYWlzIiwiZW1haWwiOiIzMTc0MDYzIiwicnNJZCI6IjMxNzQwNjMiLCJpYXQiOjE2NzQ4MTI5ODMsImV4cCI6MTY3NDgxMjk4OH0.5e4XCSbGByAQyIOL23KTpJscz7SDacyMa19CNCCtZAU
 
 ### Insert New User
 POST http://localhost/api/users
@@ -18,7 +18,7 @@ Content-Type: application/json
 }
 
 ### Login
-POST http://103.74.143.46:5000/apisirs/login
+POST http://localhost:5000/apisirs/login
 Content-Type: application/json
 
 {
@@ -47,9 +47,27 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsIm5hbWEiO
 GET http://localhost/apisirs/jenistindakan?rlid=9
 ##################################################
 
+### RL 1.2 post
+POST http://localhost:5000/apisirs/rlsatutitikdua 
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDMzLCJuYW1hIjoiUlMgS2Fua2VyIERoYXJtYWlzIiwiZW1haWwiOiIzMTc0MDYzIiwicnNJZCI6IjMxNzQwNjMiLCJpYXQiOjE2NzQ4MTQyMDQsImV4cCI6MTY3NDgxNzIwNH0.r6mr_m1FTowyBtI4auf8MN-rBItDEhJEqitjOfYysH8
+
+{
+    "tahun" : 2023, 
+    "bor" : 0, 
+    "los" : 0, 
+    "bto" : 0,
+    "toi" : 0, 
+    "ndr" : 0, 
+    "gdr" : 0, 
+    "rataKunjungan": 0
+}
+
+
+
 ### RL3.9 READ
-GET http://127.0.0.1/apisirs/rltigatitiksembilan?tahun=2022
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsIm5hbWEiOiJkd2lwIiwiZW1haWwiOiJrb3Rha2VsZWt0cm9uaWtAZ21haWwuY29tIiwicnNJZCI6IjMxNzQwNjMiLCJpYXQiOjE2NzQ0MDkxNDcsImV4cCI6MTY3NDQxMjc0N30.lmtOCd-ekqhToJ5IN3UvFM7JSdpGKa-ENlHd6Yhk4Gk
+GET http://localhost/apisirs/rltigatitiksembilan?tahun=2022
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDMzLCJuYW1hIjoiUlMgS2Fua2VyIERoYXJtYWlzIiwiZW1haWwiOiIzMTc0MDYzIiwicnNJZCI6IjMxNzQwNjMiLCJpYXQiOjE2NzQ4MTI5MjcsImV4cCI6MTY3NDgxMjkzMn0.rLZlRPq07FFsaCj7bCq_wL7bpP3D6lbwV6jzVzNdtOI
 
 ### RL 1.3 READ
 GET http://127.0.0.1/apisirs/rlsatutitiktiga?tahun=2022
@@ -89,6 +107,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsIm5hbWEiO
         }
     ]
 }
+
+
 
 ### RL 1.3 UPDATE
 PATCH  http://127.0.0.1/apisirs/rlsatutitiktiga/3
@@ -209,6 +229,27 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsIm5hbWEiO
         }
     ]
 }
+
+###RL 3.7 CREATE
+POST  http://localhost/apisirs/rltigatitiktujuh
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsIm5hbWEiOiJkd2lwIiwiZW1haWwiOiJrb3Rha2VsZWt0cm9uaWtAZ21haWwuY29tIiwicnNJZCI6IjMxNzQwNjMiLCJpYXQiOjE2NzQ1NDc1MjgsImV4cCI6MTY3NDU1MTEyOH0.I_S_56Jl4OkTNEjVqhUoWG5LU-eLKXDtsGUfE2_VDDE
+
+{
+    "tahun": 2000,
+    "data": [
+        {
+            "jenisKegiatanId": 2,
+            "jumlah": 13
+            
+        },
+        {
+            "jenisKegiatanId": 2,
+            "jumlah": 13
+        }
+    ]
+}
+
 
 ### RL 3.7 READ
 GET http://localhost/apisirs/rltigatitiktujuh?tahun=2000

@@ -3,6 +3,7 @@ import { rlTigaTitikTujuh, rlTigaTitikTujuhDetail, jenisGroupKegiatanHeader } fr
 import Joi from 'joi'
 import { jenisKegiatan } from '../models/JenisKegiatan.js'
 
+
 export const getDataRLTigaTitikTujuh = (req, res) => {
     rlTigaTitikTujuh.findAll({
         attributes: ['id','tahun'],

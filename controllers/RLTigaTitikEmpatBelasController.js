@@ -71,7 +71,7 @@ export const insertDataRLTigaTitikEmpatBelas =  async (req, res) => {
             user_id: req.user.id
         }, { 
             transaction
-        })
+         })
 
         const dataDetail = req.body.data.map((value, index) => {
             return {
@@ -91,7 +91,7 @@ export const insertDataRLTigaTitikEmpatBelas =  async (req, res) => {
                 user_id: req.user.id 
             }
         })
-
+ 
         const resultInsertDetail = await rlTigaTitikEmpatBelasDetail.bulkCreate(dataDetail, { 
             transaction, 
             updateOnDuplicate:[
@@ -219,6 +219,7 @@ export const updateDataRLTigaTitikEmpatBelas = async(req,res)=>{
 
 export const getRLTigaTitikEmpatBelasById = async(req,res)=>{
     rlTigaTitikEmpatBelasDetail.findOne({
+       
         where:{
             // rs_id: req.user.rsId,
             // tahun: req.query.tahun
@@ -246,3 +247,7 @@ export const getRLTigaTitikEmpatBelasById = async(req,res)=>{
         return
     })
 }
+ 
+
+
+

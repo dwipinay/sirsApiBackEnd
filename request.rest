@@ -274,3 +274,22 @@ DELETE  http://localhost/apisirs/rltigatitiktujuhdetail/54
 
 DELETE  http://localhost/apisirs/rltigatitikdua/123
 uthorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsIm5hbWEiOiJkd2lwIiwiZW1haWwiOiJrb3Rha2VsZWt0cm9uaWtAZ21haWwuY29tIiwicnNJZCI6IjMxNzQwNjMiLCJpYXQiOjE2NzQ2MTkzNTcsImV4cCI6MTY3NDYyMjk1N30.0m0oUhZ6aSoERvz35TexUsjmJSxFIYc2gpExYfGyQ3c
+
+### RL 3.2 CREATE POST 
+http://localhost/apisirs/rltigatitikdua 
+Content-Type: application/json 
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.yJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDMzLCJuYW1hIjoiUlMgS2Fua2VyIERoYXJtYWlzIiwiZW1haWwiOiIzMTc0MDYzIiwicnNJZCI6IjMxNzQwNjMiLCJpYXQiOjE2NzQ4MjIxMzEsImV4cCI6MTY3NDgyMjczMX0.NKCE7uH_67rC-wKzbKRd8owd4AIW9PlAZ9WzUCSNub8
+
+{
+"tahun": 1902, 
+"data": [
+    {
+        "jenisPelayananId": 2, 
+        "totalPasienRujukan": 2, 
+        "totalPasienNonRujukan": 4, 
+        "tindakLanjutPelayananDirawat": 5, 
+        "tindakLanjutPelayananDirujuk": 5, 
+        "matiDiUGD": 3, 
+        "doa": 3
+    }]
+}

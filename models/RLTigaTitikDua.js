@@ -37,6 +37,9 @@ export const rlTigaTitikDuaDetail = databaseSIRS.define('rl_tiga_titik_dua_detai
     tindak_lanjut_pelayanan_dirawat: {
         type: DataTypes.INTEGER
     },
+    tindak_lanjut_pelayanan_dirujuk: {
+        type: DataTypes.INTEGER
+    },
     tindak_lanjut_pelayanan_pulang: {
         type: DataTypes.INTEGER
     },

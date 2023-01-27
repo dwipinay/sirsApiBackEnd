@@ -73,7 +73,11 @@ export const jenisGroupKegiatanHeader = databaseSIRS.define('group_jenis_kegiata
   },
   nama:{
       type: DataTypes.STRING
-  },    
+  },  
+    
+    no: {
+        type: DataTypes.STRING
+    }  
  
 })
 

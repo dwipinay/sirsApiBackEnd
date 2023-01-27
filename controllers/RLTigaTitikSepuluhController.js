@@ -126,7 +126,7 @@ export const insertDataRLTigaTitikSepuluh =  async (req, res) => {
         })
         return
     }
-    // console.log(req.user);
+
     let transaction
     try {
         transaction = await databaseSIRS.transaction()
@@ -136,7 +136,7 @@ export const insertDataRLTigaTitikSepuluh =  async (req, res) => {
             user_id: req.user.id
         }, { 
             transaction
-         })
+        })
 
         const dataDetail = req.body.data.map((value, index) => {
             return {
@@ -154,7 +154,6 @@ export const insertDataRLTigaTitikSepuluh =  async (req, res) => {
             updateOnDuplicate:['jumlah']
         })
 
-        console.log(resultInsertDetail[0].id)
         await transaction.commit()
         res.status(201).send({
             status: true,

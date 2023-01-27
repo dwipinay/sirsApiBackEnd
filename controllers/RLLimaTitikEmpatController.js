@@ -2,9 +2,11 @@ import { databaseSIRS } from '../config/Database.js'
 import { rlLimaTitikEmpat, rlLimaTitikEmpatDetail, noUrut } from '../models/RLLimaTitikEmpat.js'
 import Joi from 'joi'
 
+
 export const getDataRLLimaTitikEmpat = (req, res) => {
     rlLimaTitikEmpat.findAll({
         attributes: ['id','tahun'],
+       
         where:{
             rs_id: req.user.rsId,
             tahun: req.query.tahun
@@ -67,6 +69,7 @@ export const getDataRLLimaTitikEmpatDetail = (req, res) => {
 
 export const getRLLimaTitikEmpatById = async(req,res)=>{
     rlLimaTitikEmpatDetail.findOne({
+       
         where:{
             // rs_id: req.user.rsId,
             // tahun: req.query.tahun
@@ -130,7 +133,7 @@ export const insertDataRLLimaTitikEmpat =  async (req, res) => {
             .items(
                 Joi.object().keys({
                     noUrutId: Joi.number(),
-                    kodeIcd10: Joi.string(),
+                    kodeIcd10: Joi.string().required(),
                     deskripsi: Joi.string(),
                     kasusBaruLk: Joi.number().min(0),
                     kasusBaruPr: Joi.number().min(0),
@@ -140,7 +143,6 @@ export const insertDataRLLimaTitikEmpat =  async (req, res) => {
                 })
             ).required()
     })
-//console.log(req);
     const { error, value } =  schema.validate(req.body)
     if (error) {
         res.status(404).send({
@@ -176,7 +178,9 @@ export const insertDataRLLimaTitikEmpat =  async (req, res) => {
             }
         })
 
+        if (dataDetail[0].jumlah_kunjungan >= dataDetail[0].jumlah_kasus_baru ) {
         const resultInsertDetail = await rlLimaTitikEmpatDetail.bulkCreate(dataDetail, 
+            
             { 
                 
                 transaction, 
@@ -193,6 +197,12 @@ export const insertDataRLLimaTitikEmpat =  async (req, res) => {
                 id: resultInsertHeader.id
             }
         })
+    } else {
+        res.status(400).send({
+        status: false,
+        message: "Data Jumlah Kunjungan kurang dari jumlah kasus baru"
+        })
+    }
     } catch (error) {
         console.log(error)
         if (transaction) {

@@ -57,7 +57,7 @@ export const login = (req, res) => {
         }
         bcrypt.compare(req.body.password, results[0].password, (error, compareResult) => {
             if (compareResult == false) {
-                res.status(401).send({
+                res.status(404).send({
                     status: false,
                     message: 'wrong password'
                 })

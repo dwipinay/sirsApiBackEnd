@@ -18,12 +18,12 @@ Content-Type: application/json
 }
 
 ### Login
-POST http://localhost:5000/apisirs/login
+POST http://sirs6.kemkes.go.id/apisirs/login
 Content-Type: application/json
 
 {
-    "userName": "3174063",
-    "password": "12345"
+    "userName": "317406",
+    "password": "1234"
 }
 
 ### Logut

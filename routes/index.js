@@ -1,7 +1,7 @@
 import express from 'express'
 
 // Token
-import { getDataUser, insertDataUser, login, logout } from '../controllers/UsersController.js'
+import { getDataUser, insertDataUser, login, logout, changePassword } from '../controllers/UsersController.js'
 import { verifyToken } from '../middleware/VerifyToken.js'
 import { refreshToken } from '../controllers/RefreshToken.js'
 
@@ -147,6 +147,7 @@ router.get('/apisirs/rumahsakit/:id', verifyToken, getDataRumahSakit)
 // User
 router.get('/apisirs/users', verifyToken, getDataUser)
 router.post('/apisirs/users', insertDataUser)
+router.patch('/apisirs/users/:id/admin', verifyToken, changePassword)
 
 // Token
 router.post('/apisirs/login', login)

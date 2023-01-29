@@ -88,6 +88,7 @@ export const login = (req, res) => {
                         status: true,
                         message: "access token created",
                         data: {
+                            name: results[0].nama,
                             access_token: accessToken
                         }
                     })
@@ -203,4 +204,63 @@ export const insertDataUser = (req, res) => {
             })
         })
     })
+}
+
+export const changePassword = async (req, res) => {
+    const schema = Joi.object({
+        passwordLama: Joi.string()
+            .required(),
+        passwordBaru: Joi.string()
+            .required(),
+        passwordBaruConfirmation: Joi.string()
+            .required().valid(Joi.ref('passwordBaru'))
+    })
+
+    const { error, value } =  schema.validate(req.body)
+    
+    if (error) {
+        res.status(404).send({
+            status: false,
+            message: error.details[0].message
+        })
+        return
+    }
+
+    try {
+        const passwordLama = await users.findOne({
+            attributes: ['password'],
+            where: {
+                id: req.params.id
+            }
+        })
+
+        const compareResult = await bcrypt.compare(req.body.passwordLama, passwordLama.dataValues.password)
+        if (!compareResult) {
+            res.status(404).json({
+                status: false,
+                message: 'password lama tidak sesuai'
+            })
+            return
+        }
+
+        const saltRound = 10
+        const plainPassword = req.body.passwordBaru
+        const password = await bcrypt.hash(plainPassword, saltRound)
+        const update = await users.update(
+            {
+                password: password
+            },
+            {
+                where: {
+                    id: req.params.id
+                }
+            }
+        )
+        res.status(200).json({
+            status: true,
+            message: update
+        })
+    } catch (error) {
+        console.log(error.message);
+    }
 }

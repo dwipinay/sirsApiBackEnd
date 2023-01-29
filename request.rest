@@ -4,7 +4,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsIm5hbWEiO
 
 ### Get Data Rumah Sakit
 GET http://localhost/apisirs/rumahsakit/3174063
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDMzLCJuYW1hIjoiUlMgS2Fua2VyIERoYXJtYWlzIiwiZW1haWwiOiIzMTc0MDYzIiwicnNJZCI6IjMxNzQwNjMiLCJpYXQiOjE2NzQ4MTI5ODMsImV4cCI6MTY3NDgxMjk4OH0.5e4XCSbGByAQyIOL23KTpJscz7SDacyMa19CNCCtZAU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDMzLCJuYW1hIjoiUlMgS2Fua2VyIERoYXJtYWlzIiwiZW1haWwiOiIzMTc0MDYzIiwicnNJZCI6IjMxNzQwNjMiLCJpYXQiOjE2NzQ5NTkyMTksImV4cCI6MTY3NDk2MDExOX0.B26S0hQh72A2aAjpv_6u8ATlfoqrqHjx675zyeixeHY
 
 ### Insert New User
 POST http://localhost/api/users
@@ -17,13 +17,24 @@ Content-Type: application/json
     "rsId": "3174063"
 }
 
+### Change Password
+PATCH http://localhost/apisirs/users/26/admin
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsIm5hbWEiOiJkd2lwIiwiZW1haWwiOiJrb3Rha2VsZWt0cm9uaWtAZ21haWwuY29tIiwicnNJZCI6IjMxNzQwNjMiLCJpYXQiOjE2NzQ5NTY5MDMsImV4cCI6MTY3NDk1NzgwM30.e32VRqRf09zZ9r886mMHF680JsB_ztuY-7sW8HpFoO4
+
+{
+    "passwordLama": "12345",
+    "passwordBaru": "123",
+    "passwordBaruConfirmation": "123"
+}
+
 ### Login
-POST http://sirs6.kemkes.go.id/apisirs/login
+POST http://localhost/apisirs/login
 Content-Type: application/json
 
 {
-    "userName": "317406",
-    "password": "1234"
+    "userName": "3174063",
+    "password": "12345"
 }
 
 ### Logut
@@ -36,7 +47,7 @@ GET http://localhost/apisirs/token
 ##################################################
 ### Jenis Kegiatan
 GET http://localhost/apisirs/jeniskegiatan?rlid=7
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsIm5hbWEiOiJkd2lwIiwiZW1haWwiOiJrb3Rha2VsZWt0cm9uaWtAZ21haWwuY29tIiwicnNJZCI6IjMxNzQwNjMiLCJpYXQiOjE2NzQ1NDAyMDcsImV4cCI6MTY3NDU0MzgwN30.N6JNLsy9S-yNcXbUS2G-Xop0VB2w-_nvWG0vzk_WRK4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsIm5hbWEiOiJkd2lwIiwiZW1haWwiOiJrb3Rha2VsZWt0cm9uaWtAZ21haWwuY29tIiwicnNJZCI6IjMxNzQwNjMiLCJpYXQiOjE2NzQ5MTk0NTEsImV4cCI6MTY3NDkxOTQ1Nn0.-1A4azc18gchTJ44LQKl6rowPVPFcL9JVisQEeiN2VU
 
 
 ### Jenis Pelayanan
@@ -63,19 +74,17 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDMzLCJuYW1hI
     "rataKunjungan": 0
 }
 
-
-
 ### RL3.9 READ
 GET http://localhost/apisirs/rltigatitiksembilan?tahun=2022
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDMzLCJuYW1hIjoiUlMgS2Fua2VyIERoYXJtYWlzIiwiZW1haWwiOiIzMTc0MDYzIiwicnNJZCI6IjMxNzQwNjMiLCJpYXQiOjE2NzQ4MTI5MjcsImV4cCI6MTY3NDgxMjkzMn0.rLZlRPq07FFsaCj7bCq_wL7bpP3D6lbwV6jzVzNdtOI
 
 ### RL 1.3 READ
-GET http://127.0.0.1/apisirs/rlsatutitiktiga?tahun=2022
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsIm5hbWEiOiJkd2lwIiwiZW1haWwiOiJrb3Rha2VsZWt0cm9uaWtAZ21haWwuY29tIiwicnNJZCI6IjMxNzQwNjMiLCJpYXQiOjE2NzQ0NDYwOTUsImV4cCI6MTY3NDQ0OTY5NX0.zmmaPe4Uw3o-aYdjCi63HabctpZQkXiZZW2UuJ-U_bI
+GET http://localhost/apisirs/rlsatutitiktiga?tahun=2022
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsIm5hbWEiOiJkd2lwIiwiZW1haWwiOiJrb3Rha2VsZWt0cm9uaWtAZ21haWwuY29tIiwicnNJZCI6IjMxNzQwNjMiLCJpYXQiOjE2NzQ5MjAxOTMsImV4cCI6MTY3NDkyMDQ5M30.kkirnreeRucqIbvcyWLzCo69CyiuNiDYS5R2wpk7ew4
 
 ### RL 3.1 Detail READ
 GET http://localhost/apisirs/rlsatutitiktigadetail/4
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsIm5hbWEiOiJkd2lwIiwiZW1haWwiOiJrb3Rha2VsZWt0cm9uaWtAZ21haWwuY29tIiwicnNJZCI6IjMxNzQwNjMiLCJpYXQiOjE2NzQ0NTU2MTAsImV4cCI6MTY3NDQ1OTIxMH0.nTFL5HB8WX8gNUk3F3hY6KOyrktWDnO-oVE4B-vyAIM
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsIm5hbWEiOiJkd2lwIiwiZW1haWwiOiJrb3Rha2VsZWt0cm9uaWtAZ21haWwuY29tIiwicnNJZCI6IjMxNzQwNjMiLCJpYXQiOjE2NzQ5MTk2MjcsImV4cCI6MTY3NTAwNjAyN30.vF7OHTyzTxhPy0hF_8VVaE1Zf7BKLi6vGXYUpT8pyRk
 
 ### RL 1.3 CREATE
 POST http://127.0.0.1/apisirs/rlsatutitiktiga

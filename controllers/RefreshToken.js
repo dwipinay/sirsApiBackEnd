@@ -25,12 +25,6 @@ export const refreshToken = (req, res) => {
         }
         jsonWebToken.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, jwtRes) => {
             if (err) return res.sendStatus(403)
-            // const payloadObject = {
-            //     id: results[0].id,
-            //     nama: results[0].nama,
-            //     email: results[0].email,
-            //     rsId: results[0].rs_id
-            // }
             const payloadObject = {
                 id: jwtRes.id,
                 nama: jwtRes.nama,

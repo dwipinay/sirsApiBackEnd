@@ -16,7 +16,7 @@ export const databaseSIRS = new Sequelize(process.env.DB_DATABASE_SIRS, process.
         max: 30,
         min: 0,
         acquire: 60000,
-        idle: 10000
+        idle: 5000
     }
 })
 
@@ -36,6 +36,6 @@ export const databaseRSOnline = new Sequelize(process.env.DB_DATABASE_RSONLINE, 
         max: 30,
         min: 0,
         acquire: 60000,
-        idle: 10000
+        idle: 5000
     }
 })

@@ -125,65 +125,66 @@ export const insertDataRLTigaTitikSatu =  async (req, res) => {
 
     let transaction
     try {
-        transaction = await databaseSIRS.transaction()
-        const resultInsertHeader = await rlTigaTitikSatuHeader.create({
-            rs_id: req.user.rsId,
-            tahun: req.body.tahun,
-            user_id: req.user.id
-        }, { 
-            transaction,
-            updateOnDuplicate: ['tahun']
-        })
-
-        const dataDetail = req.body.data.map((value, index) => {
-            return {
+        await databaseSIRS.transaction(async function (transaction){
+            const resultInsertHeader = await rlTigaTitikSatuHeader.create({
                 rs_id: req.user.rsId,
                 tahun: req.body.tahun,
-                rl_tiga_titik_satu_id: resultInsertHeader.id,
-                jenis_pelayanan_id: value.jenisPelayananId,
-                jumlah_pasien_awal_tahun: value.jumlahPasienAwalTahun,
-                jumlah_pasien_masuk: value.jumlahPasienMasuk,
-                pasien_keluar_hidup: value.pasienKeluarHidup,
-                kurang_dari_48_Jam: value.kurangDari48Jam,
-                lebih_dari_atau_sama_dengan_48_jam: value.lebihDariAtauSamaDengan48Jam,
-                jumlah_lama_dirawat: value.jumlahLamaDirawat,
-                jumlah_pasien_akhir_tahun: value.jumlahPasienAkhirTahun,
-                jumlah_hari_perawatan: value.jumlahHariPerawatan,
-                kelas_VVIP: value.kelasVVIP,
-                kelas_VIP: value.kelasVIP,
-                kelas_1: value.kelas1,
-                kelas_2: value.kelas2,
-                kelas_3: value.kelas3,
-                kelas_khusus: value.kelasKhusus,
                 user_id: req.user.id
-            }
-        })
+            }, { 
+                transaction
+            })
 
-        const resultInsertDetail = await rlTigaTitikSatuDetail.bulkCreate(dataDetail, { 
-            transaction,
-            updateOnDuplicate: ['jumlah_pasien_awal_tahun', 'pasien_keluar_hidup', 
-                'jumlah_pasien_masuk', 'kurang_dari_48_Jam', 'lebih_dari_atau_sama_dengan_48_jam',
-                'jumlah_lama_dirawat', 'jumlah_pasien_akhir_tahun', 'jumlah_hari_perawatan', 'kelas_VVIP',
-                'kelas_VIP', 'kelas_1', 'kelas_2', 'kelas_3', 'kelas_khusus'
-            ]
-        })
-        await transaction.commit()
-        res.status(201).send({
-            status: true,
-            message: "data created",
-            data: {
-                id: resultInsertHeader.id
-            }
+            const dataDetail = req.body.data.map((value, index) => {
+                return {
+                    rs_id: req.user.rsId,
+                    tahun: req.body.tahun,
+                    rl_tiga_titik_satu_id: resultInsertHeader.id,
+                    jenis_pelayanan_id: value.jenisPelayananId,
+                    jumlah_pasien_awal_tahun: value.jumlahPasienAwalTahun,
+                    jumlah_pasien_masuk: value.jumlahPasienMasuk,
+                    pasien_keluar_hidup: value.pasienKeluarHidup,
+                    kurang_dari_48_Jam: value.kurangDari48Jam,
+                    lebih_dari_atau_sama_dengan_48_jam: value.lebihDariAtauSamaDengan48Jam,
+                    jumlah_lama_dirawat: value.jumlahLamaDirawat,
+                    jumlah_pasien_akhir_tahun: value.jumlahPasienAkhirTahun,
+                    jumlah_hari_perawatan: value.jumlahHariPerawatan,
+                    kelas_VVIP: value.kelasVVIP,
+                    kelas_VIP: value.kelasVIP,
+                    kelas_1: value.kelas1,
+                    kelas_2: value.kelas2,
+                    kelas_3: value.kelas3,
+                    kelas_khusus: value.kelasKhusus,
+                    user_id: req.user.id
+                }
+            })
+
+            await rlTigaTitikSatuDetail.bulkCreate(dataDetail, { 
+                transaction,
+                updateOnDuplicate: ['jumlah_pasien_awal_tahun', 'pasien_keluar_hidup', 
+                    'jumlah_pasien_masuk', 'kurang_dari_48_Jam', 'lebih_dari_atau_sama_dengan_48_jam',
+                    'jumlah_lama_dirawat', 'jumlah_pasien_akhir_tahun', 'jumlah_hari_perawatan', 'kelas_VVIP',
+                    'kelas_VIP', 'kelas_1', 'kelas_2', 'kelas_3', 'kelas_khusus'
+                ]
+            })
+            
+            res.status(201).send({
+                status: true,
+                message: "data created",
+                data: {
+                    id: resultInsertHeader.id
+                }
+            })
+
+            return resultInsertHeader
         })
     } catch (error) {
+        console.log(error)
+        
         res.status(400).send({
             status: false,
             message: "data not created",
             error: error
         })
-        if (transaction) {
-            await transaction.rollback()
-        }
     }
 }
 

@@ -7,14 +7,14 @@ GET http://localhost/apisirs/rumahsakit/3174063
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDMzLCJuYW1hIjoiUlMgS2Fua2VyIERoYXJtYWlzIiwiZW1haWwiOiIzMTc0MDYzIiwicnNJZCI6IjMxNzQwNjMiLCJpYXQiOjE2NzQ5NTkyMTksImV4cCI6MTY3NDk2MDExOX0.B26S0hQh72A2aAjpv_6u8ATlfoqrqHjx675zyeixeHY
 
 ### Insert New User
-POST http://localhost/api/users
+POST http://localhost/apisirs/users
 Content-Type: application/json
 
 {
-    "nama": "dwip",
-    "email": "kotakelektronik@gmail.com",
+    "nama": "keane",
+    "email": "keane@gmail.com",
     "password": "12345",
-    "rsId": "3174063"
+    "rsId": null
 }
 
 ### Change Password
@@ -29,7 +29,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsIm5hbWEiO
 }
 
 ### Login
-POST http://localhost/apisirs/login
+POST http://sirs6.kemkes.go.id/apisirs/login
 Content-Type: application/json
 
 {

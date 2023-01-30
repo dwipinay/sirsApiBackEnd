@@ -197,7 +197,6 @@ export const insertDataRLTigaTitikLimaBelas =  async (req, res) => {
             ]
         })
 
-        console.log(resultInsertDetail[0].id)
         await transaction.commit()
         res.status(201).send({
             status: true,

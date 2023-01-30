@@ -39,7 +39,7 @@ export const getDataRLTigaTitikDua = (req, res) => {
 };
 
 export const insertDataRLTigaTitikDua = async (req, res) => {
-    console.log(req.body)
+    //console.log(req.body)
   const schema = Joi.object({
     tahun: Joi.number().required(),
     data: Joi.array()
@@ -261,7 +261,6 @@ export const updateDataRLTigaTitikDua = async (req, res) => {
         doa: data.doa,
     };
     
-    console.log(total, "ini", totaltindakan);
       if (total >= totaltindakan) {
         const update = await rlTigaTitikDuaDetail.update(dataUPdate, {
           where: {

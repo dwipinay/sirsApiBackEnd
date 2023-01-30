@@ -138,7 +138,6 @@ export const insertDataRLTigaTitikTiga =  async (req, res) => {
             updateOnDuplicate:['jumlah']
         })
 
-        console.log(resultInsertDetail[0].id)
         await transaction.commit()
         res.status(201).send({
             status: true,

@@ -1,5 +1,5 @@
 import { databaseSIRS } from '../config/Database.js'
-import { rlTigaTitikLimaHeader, rlTigaTitikLimaDetail, jenisKegiatan } from '../models/RLTigaTitikLima.js'
+import { rlTigaTitikLimaHeader, rlTigaTitikLimaDetail, jenisKegiatan, jenisGroupKegiatanHeader  } from '../models/RLTigaTitikLima.js'
 import Joi from 'joi'
 
 export const getDataRLTigaTitikLima = (req, res) => {
@@ -12,10 +12,21 @@ export const getDataRLTigaTitikLima = (req, res) => {
         include:{
             model: rlTigaTitikLimaDetail,
             include: {
-                model: jenisKegiatan
-            }
-        },
-        order: [[{ model: rlTigaTitikLimaDetail }, 'jenis_kegiatan_id', 'ASC']]
+                model: jenisKegiatan,
+                
+            include: {
+                model: jenisGroupKegiatanHeader
+            },
+            },
+            order: [[{ model: jenisGroupKegiatanHeader }, 'no', 'DESC']]
+        }
+        // include:{
+        //     model: rlTigaTitikLimaDetail,
+        //     include: {
+        //         model: jenisKegiatan
+        //     }
+        // },
+        // order: [[{ model: rlTigaTitikLimaDetail }, 'jenis_kegiatan_id', 'ASC']]
     })
     .then((results) => {
         res.status(200).send({

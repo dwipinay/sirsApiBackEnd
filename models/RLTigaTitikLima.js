@@ -68,22 +68,57 @@ export const rlTigaTitikLimaDetail = databaseSIRS.define('rl_tiga_titik_lima_det
 
 export const jenisKegiatan = databaseSIRS.define('jenis_kegiatan', 
     {
+        id:{
+        type: DataTypes.INTEGER,
+        primaryKey: true
+    },
+    group_jenis_kegiatan_id: {
+        type: DataTypes.INTEGER,
+    },
         nama: {
             type: DataTypes.STRING
+        },
+        no: {
+            type: DataTypes.NUMBER
         },
     }
 )
 
-rlTigaTitikLimaHeader.hasMany(rlTigaTitikLimaDetail, {
-    foreignKey:'rl_tiga_titik_lima_id'
-})
-rlTigaTitikLimaDetail.belongsTo(rlTigaTitikLimaHeader, {
-    foreignKey:'id'
+export const jenisGroupKegiatanHeader = databaseSIRS.define('group_jenis_kegiatan_header', {
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true
+    },
+    nama:{
+        type: DataTypes.STRING
+    },
+    no:{
+        type: DataTypes.STRING
+    }
+    
 })
 
-jenisKegiatan.hasMany(rlTigaTitikLimaDetail, {
-    foreignKey:'id'
-})
-rlTigaTitikLimaDetail.belongsTo(jenisKegiatan, {
-    foreignKey:'jenis_kegiatan_id'
-})
+
+rlTigaTitikLimaHeader.hasMany(rlTigaTitikLimaDetail, {foreignKey:'rl_tiga_titik_lima_id'})
+rlTigaTitikLimaDetail.belongsTo(rlTigaTitikLimaHeader, {foreignKey:'id'})
+
+jenisKegiatan.hasMany(rlTigaTitikLimaDetail, {foreignKey: 'id'})
+rlTigaTitikLimaDetail.belongsTo(jenisKegiatan, {foreignKey: 'jenis_kegiatan_id'})
+
+jenisGroupKegiatanHeader.hasMany(jenisKegiatan, {foreignKey: 'id'})
+jenisKegiatan.belongsTo(jenisGroupKegiatanHeader, {foreignKey: 'group_jenis_kegiatan_id'})
+
+
+// rlTigaTitikLimaHeader.hasMany(rlTigaTitikLimaDetail, {
+//     foreignKey:'rl_tiga_titik_lima_id'
+// })
+// rlTigaTitikLimaDetail.belongsTo(rlTigaTitikLimaHeader, {
+//     foreignKey:'id'
+// })
+
+// jenisKegiatan.hasMany(rlTigaTitikLimaDetail, {
+//     foreignKey:'id'
+// })
+// rlTigaTitikLimaDetail.belongsTo(jenisKegiatan, {
+//     foreignKey:'jenis_kegiatan_id'
+// })

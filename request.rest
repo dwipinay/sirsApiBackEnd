@@ -89,24 +89,14 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsIm5hbWEiO
 ### RL 1.3 CREATE
 POST http://sirs6.kemkes.go.id/apisirs/rlsatutitiktiga
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIsIm5hbWEiOiJSUyBVbXVtIERhZXJhaCBLYWJ1cGF0ZW4gQWNlaCBCZXNhciIsImVtYWlsIjoiMTEwODAxNSIsInJzSWQiOiIxMTA4MDE1IiwiaWF0IjoxNjc1MTUxNzY0LCJleHAiOjE2NzUxNTUzNjR9.fgYUuWu5HUFP48Q8jW0u8bcTKSkqJuyR7DPaSJJIMvQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIsIm5hbWEiOiJSUyBVbXVtIERhZXJhaCBLYWJ1cGF0ZW4gQWNlaCBCZXNhciIsImVtYWlsIjoiMTEwODAxNSIsInJzSWQiOiIxMTA4MDE1IiwiaWF0IjoxNjc1MTUyMjY3LCJleHAiOjE2NzUxNTU4Njd9.E12wICnfdU-umrVI30uN4DUVL5mkSqiuZvZbM-75Fco
 
 {
-    "tahun": 1904,
+    "tahun": 2021,
     "data": [
         {
-            "jenisPelayananId": 75,
+            "jenisPelayananId": 45,
             "jumlahTempatTidur": 7,
-            "kelasVVIP": 8,
-            "kelasVIP": 9,
-            "kelas1": 10,
-            "kelas2": 11,
-            "kelas3": 12,
-            "kelasKhusus": 13
-        },
-        {
-            "jenisPelayananId": 76,
-            "jumlahTempatTidur": 9,
             "kelasVVIP": 8,
             "kelasVIP": 9,
             "kelas1": 10,
@@ -301,4 +291,14 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.yJhbGciOiJIUzI1NiIsIn
         "matiDiUGD": 3, 
         "doa": 3
     }]
+}
+
+### RL 5.1
+POST http://sirs6.kemkes.go.id/apisirs/rllimatitiksatu
+Content-Type: application/json
+Authorization: 
+
+{
+    "tahun": "2022",
+    "tahun"
 }

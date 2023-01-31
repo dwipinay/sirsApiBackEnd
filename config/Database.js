@@ -13,9 +13,9 @@ export const databaseSIRS = new Sequelize(process.env.DB_DATABASE_SIRS, process.
     timezone: '+07:00', //for writing to database
     logging: false,
     pool: {
-        max: 100,
+        max: 30,
         min: 0,
-        acquire: 60000,
+        acquire: 30000,
         idle: 10000
     }
 })
@@ -35,7 +35,7 @@ export const databaseRSOnline = new Sequelize(process.env.DB_DATABASE_RSONLINE, 
     pool: {
         max: 30,
         min: 0,
-        acquire: 60000,
-        idle: 5000
+        acquire: 30000,
+        idle: 10000
     }
 })

@@ -33,7 +33,7 @@ POST http://sirs6.kemkes.go.id/apisirs/login
 Content-Type: application/json
 
 {
-    "userName": "3174063",
+    "userName": "1108015",
     "password": "12345"
 }
 
@@ -46,12 +46,12 @@ GET http://localhost/apisirs/token
 ### Reference
 ##################################################
 ### Jenis Kegiatan
-GET http://localhost/apisirs/jeniskegiatan?rlid=7
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsIm5hbWEiOiJkd2lwIiwiZW1haWwiOiJrb3Rha2VsZWt0cm9uaWtAZ21haWwuY29tIiwicnNJZCI6IjMxNzQwNjMiLCJpYXQiOjE2NzQ5MTk0NTEsImV4cCI6MTY3NDkxOTQ1Nn0.-1A4azc18gchTJ44LQKl6rowPVPFcL9JVisQEeiN2VU
+GET http://sirs6.kemkes.go.id/apisirs/jeniskegiatan?rlid=7
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIsIm5hbWEiOiJSUyBVbXVtIERhZXJhaCBLYWJ1cGF0ZW4gQWNlaCBCZXNhciIsImVtYWlsIjoiMTEwODAxNSIsInJzSWQiOiIxMTA4MDE1IiwiaWF0IjoxNjc1MTUxNzY0LCJleHAiOjE2NzUxNTUzNjR9.fgYUuWu5HUFP48Q8jW0u8bcTKSkqJuyR7DPaSJJIMvQ
 
 
 ### Jenis Pelayanan
-GET http://localhost/apisirs/jenispelayanan?rlid=1
+GET http://sirs6.kemkes.go.id/apisirs/jenispelayanan?rlid=1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsIm5hbWEiOiJkd2lwIiwiZW1haWwiOiJrb3Rha2VsZWt0cm9uaWtAZ21haWwuY29tIiwicnNJZCI6IjMxNzQwNjMiLCJpYXQiOjE2NzQwMzcxMDEsImV4cCI6MTY3NDAzNzE2MX0.T_4ek7zpmyzCq-CIK6sWUrqjgukVyVlhJCmFuLI20lk
 
 ### Jenis Tindakan
@@ -87,9 +87,9 @@ GET http://localhost/apisirs/rlsatutitiktigadetail/4
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsIm5hbWEiOiJkd2lwIiwiZW1haWwiOiJrb3Rha2VsZWt0cm9uaWtAZ21haWwuY29tIiwicnNJZCI6IjMxNzQwNjMiLCJpYXQiOjE2NzQ5MTk2MjcsImV4cCI6MTY3NTAwNjAyN30.vF7OHTyzTxhPy0hF_8VVaE1Zf7BKLi6vGXYUpT8pyRk
 
 ### RL 1.3 CREATE
-POST http://127.0.0.1/apisirs/rlsatutitiktiga
+POST http://sirs6.kemkes.go.id/apisirs/rlsatutitiktiga
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsIm5hbWEiOiJkd2lwIiwiZW1haWwiOiJrb3Rha2VsZWt0cm9uaWtAZ21haWwuY29tIiwicnNJZCI6IjMxNzQwNjMiLCJpYXQiOjE2NzQ0NDYwOTUsImV4cCI6MTY3NDQ0OTY5NX0.zmmaPe4Uw3o-aYdjCi63HabctpZQkXiZZW2UuJ-U_bI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIsIm5hbWEiOiJSUyBVbXVtIERhZXJhaCBLYWJ1cGF0ZW4gQWNlaCBCZXNhciIsImVtYWlsIjoiMTEwODAxNSIsInJzSWQiOiIxMTA4MDE1IiwiaWF0IjoxNjc1MTUxNzY0LCJleHAiOjE2NzUxNTUzNjR9.fgYUuWu5HUFP48Q8jW0u8bcTKSkqJuyR7DPaSJJIMvQ
 
 {
     "tahun": 1904,

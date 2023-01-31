@@ -6,7 +6,7 @@ export const rlLimaTitikEmpat = databaseSIRS.define("rl_lima_titik_empat",{
         type: DataTypes.STRING,
     },
     tahun: {
-        type: DataTypes.DATE,
+        type: DataTypes.DATEONLY,
     },
     user_id: {
         type: DataTypes.INTEGER,
@@ -43,7 +43,7 @@ export const rlLimaTitikEmpatDetail = databaseSIRS.define("rl_lima_titik_empat_d
         type: DataTypes.INTEGER,
     }, 
     tahun: {
-        type: DataTypes.DATE,
+        type: DataTypes.DATEONLY,
     },
     rs_id: {
         type: DataTypes.INTEGER,

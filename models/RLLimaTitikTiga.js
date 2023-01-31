@@ -9,17 +9,11 @@ export const rlLimaTitikTiga = databaseSIRS.define(
         type: DataTypes.STRING,
       },
       tahun: {
-        type: DataTypes.DATEONLY,
+        type: DataTypes.DATE,
       },
       user_id: {
         type: DataTypes.INTEGER,
-      },
-    //   created_at: {
-    //     type: DataTypes.DATE,
-    //   },
-    //   modified_at: {
-    //     type: DataTypes.DATE,
-    //   },
+      }
     },
   );
   
@@ -55,19 +49,12 @@ export const rlLimaTitikTiga = databaseSIRS.define(
         type: DataTypes.INTEGER,
       },
       tahun: {
-        type: DataTypes.DATEONLY,
+        type: DataTypes.DATE,
       },
       rs_id: {
         type: DataTypes.INTEGER,
-      },
-    //   created_at: {
-    //     type: DataTypes.DATE,
-    //   },
-    //   modified_at: {
-    //     type: DataTypes.DATE,
-    //   },
+      }
     },
-   
   );
   export const noUrut = databaseSIRS.define('no_urut', 
     {

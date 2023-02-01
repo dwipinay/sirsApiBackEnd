@@ -198,31 +198,31 @@ export const insertDataRLEmpatASebab = async (req, res) => {
       const resultInsertDetail = await rlEmpatASebabDetail.bulkCreate(
         dataDetail,
         {
-          transaction,
-          updateOnDuplicate: [
-            "jmlh_pas_hidup_mati_umur_sex_0_6hr_l",
-            "jmlh_pas_hidup_mati_umur_sex_0_6hr_p",
-            "jmlh_pas_hidup_mati_umur_sex_6_28hr_l",
-            "jmlh_pas_hidup_mati_umur_sex_6_28hr_p",
-            "jmlh_pas_hidup_mati_umur_sex_28hr_1th_l",
-            "jmlh_pas_hidup_mati_umur_sex_28hr_1th_p",
-            "jmlh_pas_hidup_mati_umur_sex_1_4th_l",
-            "jmlh_pas_hidup_mati_umur_sex_1_4th_p",
-            "jmlh_pas_hidup_mati_umur_sex_4_14th_l",
-            "jmlh_pas_hidup_mati_umur_sex_4_14th_p",
-            "jmlh_pas_hidup_mati_umur_sex_14_24th_l",
-            "jmlh_pas_hidup_mati_umur_sex_14_24th_p",
-            "jmlh_pas_hidup_mati_umur_sex_24_44th_l",
-            "jmlh_pas_hidup_mati_umur_sex_24_44th_p",
-            "jmlh_pas_hidup_mati_umur_sex_44_64th_l",
-            "jmlh_pas_hidup_mati_umur_sex_44_64th_p",
-            "jmlh_pas_hidup_mati_umur_sex_lebih_64th_l",
-            "jmlh_pas_hidup_mati_umur_sex_lebih_64th_p",
-            "jmlh_pas_keluar_hidup_mati_sex_l",
-            "jmlh_pas_keluar_hidup_mati_sex_p",
-            "jmlh_pas_keluar_hidup_mati_lp",
-            "jmlh_pas_keluar_mati",
-          ],
+          transaction
+          // updateOnDuplicate: [
+          //   "jmlh_pas_hidup_mati_umur_sex_0_6hr_l",
+          //   "jmlh_pas_hidup_mati_umur_sex_0_6hr_p",
+          //   "jmlh_pas_hidup_mati_umur_sex_6_28hr_l",
+          //   "jmlh_pas_hidup_mati_umur_sex_6_28hr_p",
+          //   "jmlh_pas_hidup_mati_umur_sex_28hr_1th_l",
+          //   "jmlh_pas_hidup_mati_umur_sex_28hr_1th_p",
+          //   "jmlh_pas_hidup_mati_umur_sex_1_4th_l",
+          //   "jmlh_pas_hidup_mati_umur_sex_1_4th_p",
+          //   "jmlh_pas_hidup_mati_umur_sex_4_14th_l",
+          //   "jmlh_pas_hidup_mati_umur_sex_4_14th_p",
+          //   "jmlh_pas_hidup_mati_umur_sex_14_24th_l",
+          //   "jmlh_pas_hidup_mati_umur_sex_14_24th_p",
+          //   "jmlh_pas_hidup_mati_umur_sex_24_44th_l",
+          //   "jmlh_pas_hidup_mati_umur_sex_24_44th_p",
+          //   "jmlh_pas_hidup_mati_umur_sex_44_64th_l",
+          //   "jmlh_pas_hidup_mati_umur_sex_44_64th_p",
+          //   "jmlh_pas_hidup_mati_umur_sex_lebih_64th_l",
+          //   "jmlh_pas_hidup_mati_umur_sex_lebih_64th_p",
+          //   "jmlh_pas_keluar_hidup_mati_sex_l",
+          //   "jmlh_pas_keluar_hidup_mati_sex_p",
+          //   "jmlh_pas_keluar_hidup_mati_lp",
+          //   "jmlh_pas_keluar_mati",
+          // ],
         }
       );
       await transaction.commit();
@@ -243,6 +243,17 @@ export const insertDataRLEmpatASebab = async (req, res) => {
     console.log(error);
     if (transaction) {
       await transaction.rollback();
+      if(error.name === 'SequelizeUniqueConstraintError'){
+        res.status(400).send({
+            status: false,
+            message: "Error Duplicate Entry"
+        })
+      } else {
+          res.status(400).send({
+              status: false,
+              message: error
+          })
+      }
     }
   }
 };

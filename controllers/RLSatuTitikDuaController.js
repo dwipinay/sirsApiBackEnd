@@ -134,8 +134,8 @@ export const insertDataRLSatuTitikDua = async (req, res) => {
         }
 
         const resultInsertDetail = await rlSatuTitikDuaDetail.create(dataDetail, {
-            transaction,
-            updateOnDuplicate: ['bor', 'los', 'bto', 'toi', 'ndr', 'gdr', 'rata_kunjungan']
+            transaction
+            // updateOnDuplicate: ['bor', 'los', 'bto', 'toi', 'ndr', 'gdr', 'rata_kunjungan']
         })
         await transaction.commit()
         res.status(201).send({
@@ -149,6 +149,17 @@ export const insertDataRLSatuTitikDua = async (req, res) => {
         console.log(error)
         if (transaction) {
             await transaction.rollback()
+        }
+        if(error.name === 'SequelizeUniqueConstraintError'){
+            res.status(400).send({
+                status: false,
+                message: "Error Duplicate Entry"
+            })
+        } else {
+            res.status(400).send({
+                status: false,
+                message: error
+            })
         }
     }
 }

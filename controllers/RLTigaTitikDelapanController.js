@@ -180,8 +180,8 @@ export const insertDataRLTigaTitikDelapan = async (req, res) => {
     });
 
     await rlTigaTitikDelapanDetail.bulkCreate(dataDetail, {
-      transaction,
-      updateOnDuplicate: ["jumlah"],
+      transaction
+      // updateOnDuplicate: ["jumlah"],
     });
 
     await transaction.commit();
@@ -196,6 +196,17 @@ export const insertDataRLTigaTitikDelapan = async (req, res) => {
     console.log(error);
     if (transaction) {
       await transaction.rollback();
+      if(error.name === 'SequelizeUniqueConstraintError'){
+        res.status(400).send({
+            status: false,
+            message: "Error Duplicate Entry"
+        })
+      } else {
+          res.status(400).send({
+              status: false,
+              message: error
+          })
+      }
     }
   }
 };

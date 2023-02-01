@@ -137,7 +137,7 @@ export const insertDataRLTigaTitikDuaBelas =  async (req, res) => {
                 })
             ).required()
     })
-//console.log(req);
+
     const { error, value } =  schema.validate(req.body)
     if (error) {
         res.status(404).send({
@@ -180,14 +180,13 @@ export const insertDataRLTigaTitikDuaBelas =  async (req, res) => {
         })
 
         const resultInsertDetail = await rlTigaTitikDuaBelasDetail.bulkCreate(dataDetail, { 
-            
-            transaction,
-            updateOnDuplicate: ['konseling_anc','konseling_pasca_persalinan', 
-            'kb_baru_bukan_rujukan', 'kb_baru_rujukan_inap','kb_baru_rujukan_jalan', 'kb_baru_total','kb_baru_pasca_persalinan',
-            'kb_baru_abortus','kb_baru_lainnya','kunjungan_ulang','keluhan_efek_samping_jumlah','keluhan_efek_samping_dirujuk']
+            transaction
+            // updateOnDuplicate: ['konseling_anc','konseling_pasca_persalinan', 
+            // 'kb_baru_bukan_rujukan', 'kb_baru_rujukan_inap','kb_baru_rujukan_jalan', 'kb_baru_total','kb_baru_pasca_persalinan',
+            // 'kb_baru_abortus','kb_baru_lainnya','kunjungan_ulang','keluhan_efek_samping_jumlah','keluhan_efek_samping_dirujuk']
         })
         
-            await transaction.commit()
+        await transaction.commit()
         res.status(201).send({
             status: true,
             message: "data created",
@@ -202,13 +201,12 @@ export const insertDataRLTigaTitikDuaBelas =  async (req, res) => {
             if(error.name === 'SequelizeUniqueConstraintError'){
                 res.status(400).send({
                     status: false,
-                    message: "Fail Duplicate Entry"
-                    // reason: 'Duplicate Entry'
+                    message: "Error Duplicate Entry"
                 })
             } else {
                 res.status(400).send({
                     status: false,
-                    message: "error"
+                    message: error
                 })
             }
         }

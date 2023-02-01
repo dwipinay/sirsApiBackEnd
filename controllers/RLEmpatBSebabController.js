@@ -94,31 +94,33 @@ export const insertDataRLEmpatBSebab = async(req, res) => {
 
         if (dataDetail[0].jumlah_kunjungan >= dataDetail[0].jumlah_kasus_baru ) {
                 const resultInsertDetail = await rlEmpatBSebabDetail.bulkCreate(dataDetail, { 
-                    transaction,
-                    updateOnDuplicate: [
-                        'jmlh_pas_kasus_umur_sex_0_6hr_l',
-                        'jmlh_pas_kasus_umur_sex_0_6hr_p',
-                        'jmlh_pas_kasus_umur_sex_6_28hr_l',
-                        'jmlh_pas_kasus_umur_sex_6_28hr_p',
-                        'jmlh_pas_kasus_umur_sex_28hr_1th_l',
-                        'jmlh_pas_kasus_umur_sex_28hr_1th_p',
-                        'jmlh_pas_kasus_umur_sex_1_4th_l',
-                        'jmlh_pas_kasus_umur_sex_1_4th_p',
-                        'jmlh_pas_kasus_umur_sex_4_14th_l',
-                        'jmlh_pas_kasus_umur_sex_4_14th_p',
-                        'jmlh_pas_kasus_umur_sex_14_24th_l',
-                        'jmlh_pas_kasus_umur_sex_14_24th_p',
-                        'jmlh_pas_kasus_umur_sex_24_44th_l',
-                        'jmlh_pas_kasus_umur_sex_24_44th_p',
-                        'jmlh_pas_kasus_umur_sex_44_64th_l',
-                        'jmlh_pas_kasus_umur_sex_44_64th_p',
-                        'jmlh_pas_kasus_umur_sex_lebih_64th_l',
-                        'jmlh_pas_kasus_umur_sex_lebih_64th_p',
-                        'kasus_baru_l',
-                        'kasus_baru_p',
-                        'jumlah_kasus_baru',
-                        'jumlah_kunjungan'
-                    ] })
+                    transaction
+                    // updateOnDuplicate: [
+                    //     'jmlh_pas_kasus_umur_sex_0_6hr_l',
+                    //     'jmlh_pas_kasus_umur_sex_0_6hr_p',
+                    //     'jmlh_pas_kasus_umur_sex_6_28hr_l',
+                    //     'jmlh_pas_kasus_umur_sex_6_28hr_p',
+                    //     'jmlh_pas_kasus_umur_sex_28hr_1th_l',
+                    //     'jmlh_pas_kasus_umur_sex_28hr_1th_p',
+                    //     'jmlh_pas_kasus_umur_sex_1_4th_l',
+                    //     'jmlh_pas_kasus_umur_sex_1_4th_p',
+                    //     'jmlh_pas_kasus_umur_sex_4_14th_l',
+                    //     'jmlh_pas_kasus_umur_sex_4_14th_p',
+                    //     'jmlh_pas_kasus_umur_sex_14_24th_l',
+                    //     'jmlh_pas_kasus_umur_sex_14_24th_p',
+                    //     'jmlh_pas_kasus_umur_sex_24_44th_l',
+                    //     'jmlh_pas_kasus_umur_sex_24_44th_p',
+                    //     'jmlh_pas_kasus_umur_sex_44_64th_l',
+                    //     'jmlh_pas_kasus_umur_sex_44_64th_p',
+                    //     'jmlh_pas_kasus_umur_sex_lebih_64th_l',
+                    //     'jmlh_pas_kasus_umur_sex_lebih_64th_p',
+                    //     'kasus_baru_l',
+                    //     'kasus_baru_p',
+                    //     'jumlah_kasus_baru',
+                    //     'jumlah_kunjungan'
+                    // ] 
+                })
+
                 await transaction.commit()
                 res.status(201).send({
                     status: true,
@@ -138,6 +140,17 @@ export const insertDataRLEmpatBSebab = async(req, res) => {
         console.log(error)
         if(transaction){
             await transaction.rollback()
+            if(error.name === 'SequelizeUniqueConstraintError'){
+                res.status(400).send({
+                    status: false,
+                    message: "Error Duplicate Entry"
+                })
+            } else {
+                res.status(400).send({
+                    status: false,
+                    message: error
+                })
+            }
         }
     }
 }

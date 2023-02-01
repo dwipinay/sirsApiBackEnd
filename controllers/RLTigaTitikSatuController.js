@@ -159,12 +159,12 @@ export const insertDataRLTigaTitikSatu =  async (req, res) => {
             })
 
             await rlTigaTitikSatuDetail.bulkCreate(dataDetail, { 
-                transaction,
-                updateOnDuplicate: ['jumlah_pasien_awal_tahun', 'pasien_keluar_hidup', 
-                    'jumlah_pasien_masuk', 'kurang_dari_48_Jam', 'lebih_dari_atau_sama_dengan_48_jam',
-                    'jumlah_lama_dirawat', 'jumlah_pasien_akhir_tahun', 'jumlah_hari_perawatan', 'kelas_VVIP',
-                    'kelas_VIP', 'kelas_1', 'kelas_2', 'kelas_3', 'kelas_khusus'
-                ]
+                transaction
+                // updateOnDuplicate: ['jumlah_pasien_awal_tahun', 'pasien_keluar_hidup', 
+                //     'jumlah_pasien_masuk', 'kurang_dari_48_Jam', 'lebih_dari_atau_sama_dengan_48_jam',
+                //     'jumlah_lama_dirawat', 'jumlah_pasien_akhir_tahun', 'jumlah_hari_perawatan', 'kelas_VVIP',
+                //     'kelas_VIP', 'kelas_1', 'kelas_2', 'kelas_3', 'kelas_khusus'
+                // ]
             })
             
             res.status(201).send({
@@ -178,13 +178,18 @@ export const insertDataRLTigaTitikSatu =  async (req, res) => {
             return resultInsertHeader
         })
     } catch (error) {
-        console.log(error)
-        
-        res.status(400).send({
-            status: false,
-            message: "data not created",
-            error: error
-        })
+        // console.log(error.name)
+        if(error.name === 'SequelizeUniqueConstraintError'){
+            res.status(400).send({
+                status: false,
+                message: "Error Duplicate Entry"
+            })
+        } else {
+            res.status(400).send({
+                status: false,
+                message: error
+            })
+        }
     }
 }
 

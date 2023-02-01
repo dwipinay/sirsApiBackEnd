@@ -147,8 +147,8 @@ export const insertDataRLTigaTitikSebelas =  async (req, res) => {
         })
 
         const resultInsertDetail = await rlTigaTitikSebelasDetail.bulkCreate(dataDetail, { 
-            transaction, 
-            updateOnDuplicate:['jumlah']
+            transaction
+            // updateOnDuplicate:['jumlah']
         })
 
         // console.log(resultInsertDetail[0].id)
@@ -164,6 +164,17 @@ export const insertDataRLTigaTitikSebelas =  async (req, res) => {
         console.log(error)
         if (transaction) {
             await transaction.rollback()
+            if(error.name === 'SequelizeUniqueConstraintError'){
+                res.status(400).send({
+                    status: false,
+                    message: "Error Duplicate Entry"
+                })
+            } else {
+                res.status(400).send({
+                    status: false,
+                    message: error
+                })
+            }
         }
     }
 }

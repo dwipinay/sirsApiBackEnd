@@ -101,23 +101,23 @@ export const insertDataRLTigaTitikEmpat =  async (req, res) => {
         })
 
         const resultInsertDetail = await rlTigaTitikEmpatDetail.bulkCreate(dataDetail, { 
-            transaction,
-            updateOnDuplicate: [
-                "rmRumahSakit",
-                "rmBidan",
-                "rmPuskesmas",
-                "rmFaskesLainnya",
-                "rmHidup",
-                "rmMati",
-                "rmTotal",
-                "rnmHidup",
-                "rnmMati",
-                "rnmTotal",
-                "nrHidup",
-                "nrMati",
-                "nrTotal",
-                "dirujuk",
-            ],
+            transaction
+            // updateOnDuplicate: [
+            //     "rmRumahSakit",
+            //     "rmBidan",
+            //     "rmPuskesmas",
+            //     "rmFaskesLainnya",
+            //     "rmHidup",
+            //     "rmMati",
+            //     "rmTotal",
+            //     "rnmHidup",
+            //     "rnmMati",
+            //     "rnmTotal",
+            //     "nrHidup",
+            //     "nrMati",
+            //     "nrTotal",
+            //     "dirujuk",
+            // ],
         })
         // console.log(resultInsertDetail[0].id)
         await transaction.commit()
@@ -130,13 +130,19 @@ export const insertDataRLTigaTitikEmpat =  async (req, res) => {
         })
     } catch (error) {
         // console.log(error)
-        res.status(400).send({
-            status: false,
-            message: "data not created",
-            error: "duplicate data"
-        })
         if (transaction) {
             await transaction.rollback()
+            if(error.name === 'SequelizeUniqueConstraintError'){
+                res.status(400).send({
+                    status: false,
+                    message: "Error Duplicate Entry"
+                })
+            } else {
+                res.status(400).send({
+                    status: false,
+                    message: error
+                })
+            }
         }
     }
 }

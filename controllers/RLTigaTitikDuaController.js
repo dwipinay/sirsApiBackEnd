@@ -111,16 +111,16 @@ export const insertDataRLTigaTitikDua = async (req, res) => {
       const resultInsertDetail = await rlTigaTitikDuaDetail.bulkCreate(
         dataDetail,
         {
-          transaction,
-          updateOnDuplicate: [
-            "total_pasien_rujukan",
-            "total_pasien_non_rujukan",
-            "tindak_lanjut_pelayanan_dirawat",
-            "tindak_lanjut_pelayanan_dirujuk",
-            "tindak_lanjut_pelayanan_pulang",
-            "mati_di_ugd",
-            "doa",
-          ],
+          transaction
+          // updateOnDuplicate: [
+          //   "total_pasien_rujukan",
+          //   "total_pasien_non_rujukan",
+          //   "tindak_lanjut_pelayanan_dirawat",
+          //   "tindak_lanjut_pelayanan_dirujuk",
+          //   "tindak_lanjut_pelayanan_pulang",
+          //   "mati_di_ugd",
+          //   "doa",
+          // ],
         }
       );
 
@@ -142,6 +142,17 @@ export const insertDataRLTigaTitikDua = async (req, res) => {
     console.log(error);
     if (transaction) {
       await transaction.rollback();
+      if(error.name === 'SequelizeUniqueConstraintError'){
+        res.status(400).send({
+            status: false,
+            message: "Error Duplicate Entry"
+        })
+      } else {
+          res.status(400).send({
+              status: false,
+              message: error
+          })
+      }
     }
   }
 };

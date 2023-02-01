@@ -198,15 +198,14 @@ export const insertDataRLLimaTitikTiga = async (req, res) => {
 
     const resultInsertDetail = await rlLimaTitikTigaDetail.bulkCreate(
       dataDetail,
-
       {
-        transaction,
-        updateOnDuplicate: [
-          "pasien_keluar_hidup_menurut_jeniskelamin_lk",
-          "pasien_keluar_hidup_menurut_jeniskelamin_pr",
-          "pasien_keluar_mati_menurut_jeniskelamin_lk",
-          "pasien_keluar_mati_menurut_jeniskelamin_pr",
-        ],
+        transaction
+        // updateOnDuplicate: [
+        //   "pasien_keluar_hidup_menurut_jeniskelamin_lk",
+        //   "pasien_keluar_hidup_menurut_jeniskelamin_pr",
+        //   "pasien_keluar_mati_menurut_jeniskelamin_lk",
+        //   "pasien_keluar_mati_menurut_jeniskelamin_pr",
+        // ],
       }
     );
 
@@ -222,17 +221,16 @@ export const insertDataRLLimaTitikTiga = async (req, res) => {
     console.log(error);
     if (transaction) {
       await transaction.rollback();
-      if (error.name === "SequelizeUniqueConstraintError") {
+      if(error.name === 'SequelizeUniqueConstraintError'){
         res.status(400).send({
-          status: false,
-          message: "Fail Duplicate Entry",
-          // reason: 'Duplicate Entry'
-        });
+            status: false,
+            message: "Error Duplicate Entry"
+        })
       } else {
-        res.status(400).send({
-          status: false,
-          message: "error",
-        });
+          res.status(400).send({
+              status: false,
+              message: error
+          })
       }
     }
   }

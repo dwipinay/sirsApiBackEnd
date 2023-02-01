@@ -93,18 +93,18 @@ export const insertDataRLTigaTitikEmpatBelas =  async (req, res) => {
         })
  
         const resultInsertDetail = await rlTigaTitikEmpatBelasDetail.bulkCreate(dataDetail, { 
-            transaction, 
-            updateOnDuplicate:[
-            'rujukan_diterima_dari_puskesmas',
-            'rujukan_diterima_dari_fasilitas_kesehatan_lain',
-            'rujukan_diterima_dari_rs_lain',
-            'rujukan_dikembalikan_ke_puskesmas',
-            'rujukan_dikembalikan_ke_fasilitas_kesehatan_lain',
-            'rujukan_dikembalikan_ke_rs_asal',
-            'dirujukan_pasien_rujukan',
-            'dirujuk_pasien_datang_sendiri',
-            'dirujuk_diterima_kembali'
-            ]
+            transaction
+            // updateOnDuplicate:[
+            // 'rujukan_diterima_dari_puskesmas',
+            // 'rujukan_diterima_dari_fasilitas_kesehatan_lain',
+            // 'rujukan_diterima_dari_rs_lain',
+            // 'rujukan_dikembalikan_ke_puskesmas',
+            // 'rujukan_dikembalikan_ke_fasilitas_kesehatan_lain',
+            // 'rujukan_dikembalikan_ke_rs_asal',
+            // 'dirujukan_pasien_rujukan',
+            // 'dirujuk_pasien_datang_sendiri',
+            // 'dirujuk_diterima_kembali'
+            // ]
         })
 
         await transaction.commit()
@@ -119,6 +119,17 @@ export const insertDataRLTigaTitikEmpatBelas =  async (req, res) => {
         console.log(error)
         if (transaction) {
             await transaction.rollback()
+            if(error.name === 'SequelizeUniqueConstraintError'){
+                res.status(400).send({
+                    status: false,
+                    message: "Error Duplicate Entry"
+                })
+            } else {
+                res.status(400).send({
+                    status: false,
+                    message: error
+                })
+            }
         }
     }
 }

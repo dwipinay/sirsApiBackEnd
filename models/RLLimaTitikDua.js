@@ -7,7 +7,7 @@ export const rlLimaTitikDuaHeader = databaseSIRS.define('rl_lima_titik_dua',
             type: DataTypes.STRING
         },
         tahun: {
-            type: DataTypes.DATE
+            type: DataTypes.DATEONLY
         },
         user_id: {
             type: DataTypes.INTEGER

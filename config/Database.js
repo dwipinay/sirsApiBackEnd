@@ -9,6 +9,7 @@ export const databaseSIRS = new Sequelize(process.env.DB_DATABASE_SIRS, process.
     },
     dialectOptions: {
         // useUTC: false
+	connectTimeout: 60000
     },
     timezone: '+07:00', //for writing to database
     logging: false,
@@ -29,6 +30,7 @@ export const databaseRSOnline = new Sequelize(process.env.DB_DATABASE_RSONLINE, 
     },
     dialectOptions: {
         // useUTC: false
+	connectTimeout: 60000
     },
     timezone: '+07:00', //for writing to database
     logging: false,

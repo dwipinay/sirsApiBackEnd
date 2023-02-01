@@ -11,6 +11,9 @@ export const noUrut = databaseSIRS.define('no_urut', {
     },
     no: {
         type: DataTypes.INTEGER
+    },
+    nama: {
+        type: DataTypes.STRING
     }
 }, {
     freezeTableName: true

@@ -3,7 +3,7 @@ import { databaseSIRS } from '../config/Database.js'
 
 export const getNoUrut= (req, res) => {
     noUrut.findAll({
-        attributes: ['id','no'],
+        attributes: ['id','no', 'nama'],
         where: {
             rl_id: 25
         }

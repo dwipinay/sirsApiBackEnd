@@ -175,7 +175,7 @@ export const insertDataRLTigaTitikTujuh =  async (req, res) => {
             if(error.name === 'SequelizeUniqueConstraintError'){
                 res.status(400).send({
                     status: false,
-                    message: "Error Duplicate Entry"
+                    message: "Duplicate Entry"
                 })
             } else {
                 res.status(400).send({

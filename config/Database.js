@@ -12,7 +12,7 @@ export const databaseSIRS = new Sequelize(process.env.DB_DATABASE_SIRS, process.
 	connectTimeout: 60000
     },
     timezone: '+07:00', //for writing to database
-    logging: false,
+    logging: true,
     pool: {
         max: 100,
         min: 0,

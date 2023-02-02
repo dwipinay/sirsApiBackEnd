@@ -109,16 +109,18 @@ export const insertDataRLSatuTitikDua = async (req, res) => {
         return
     }
 
-    let transaction
+    const transaction = await databaseSIRS.transaction()
+
     try {
-        transaction = await databaseSIRS.transaction()
+        
         const resultInsertHeader = await rlSatuTitikDuaHeader.create({
             rs_id: req.user.rsId,
             tahun: req.body.tahun,
             user_id: req.user.id
         }, {
-            transaction
+            transaction: transaction
         })
+
         const dataDetail = {
             "rs_id": req.user.rsId,
             "rl_satu_titik_dua_id": resultInsertHeader.id,
@@ -134,7 +136,7 @@ export const insertDataRLSatuTitikDua = async (req, res) => {
         }
 
         const resultInsertDetail = await rlSatuTitikDuaDetail.create(dataDetail, {
-            transaction
+            transaction: transaction
             // updateOnDuplicate: ['bor', 'los', 'bto', 'toi', 'ndr', 'gdr', 'rata_kunjungan']
         })
         await transaction.commit()
@@ -147,9 +149,7 @@ export const insertDataRLSatuTitikDua = async (req, res) => {
         })
     } catch (error) {
         console.log(error)
-        if (transaction) {
-            await transaction.rollback()
-        }
+        await transaction.rollback()
         if(error.name === 'SequelizeUniqueConstraintError'){
             res.status(400).send({
                 status: false,

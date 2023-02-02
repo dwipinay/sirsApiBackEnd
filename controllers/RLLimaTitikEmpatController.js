@@ -152,14 +152,13 @@ export const insertDataRLLimaTitikEmpat =  async (req, res) => {
         return
     }
 
-    let transaction;
+    const transaction = await databaseSIRS.transaction()
     try {
-        transaction = await databaseSIRS.transaction();
         const resultInsertHeader = await rlLimaTitikEmpat.create({
             rs_id: req.user.rsId,
             tahun: req.body.tahunDanBulan,
             user_id: req.user.id
-        }, { transaction })
+        }, { transaction: transaction })
 
         const dataDetail = req.body.data.map((value, index) => {
             let jumlahKasusBaru = value.kasusBaruLk + value.kasusBaruPr
@@ -178,14 +177,10 @@ export const insertDataRLLimaTitikEmpat =  async (req, res) => {
             }
         })
 
-        if (dataDetail[0].jumlah_kunjungan >= dataDetail[0].jumlah_kasus_baru ) {
         const resultInsertDetail = await rlLimaTitikEmpatDetail.bulkCreate(dataDetail,{   
-            transaction
-            // updateOnDuplicate: ['kode_icd_10','deskripsi','kasus_baru_Lk','kasus_baru_Pr',
-            // 'jumlah_kasus_baru', 'jumlah_kunjungan']
+            transaction: transaction
         })
-            
-        
+
         await transaction.commit()
         res.status(201).send({
             status: true,
@@ -194,27 +189,41 @@ export const insertDataRLLimaTitikEmpat =  async (req, res) => {
                 id: resultInsertHeader.id
             }
         })
-    } else {
-        res.status(400).send({
-        status: false,
-        message: "Data Jumlah Kunjungan kurang dari jumlah kasus baru"
-        })
-    }
+        //     if (dataDetail[0].jumlah_kunjungan >= dataDetail[0].jumlah_kasus_baru ) {
+        //         const resultInsertDetail = await rlLimaTitikEmpatDetail.bulkCreate(dataDetail,{   
+        //         transaction
+        //         // updateOnDuplicate: ['kode_icd_10','deskripsi','kasus_baru_Lk','kasus_baru_Pr',
+        //         // 'jumlah_kasus_baru', 'jumlah_kunjungan']
+        //     })
+                
+            
+        //     await transaction.commit()
+        //     res.status(201).send({
+        //         status: true,
+        //         message: "data created",
+        //         data: {
+        //             id: resultInsertHeader.id
+        //         }
+        //     })
+        // } else {
+        //     res.status(400).send({
+        //     status: false,
+        //     message: "Data Jumlah Kunjungan kurang dari jumlah kasus baru"
+        //     })
+        // }
     } catch (error) {
         console.log(error)
-        if (transaction) {
-            await transaction.rollback()
-            if(error.name === 'SequelizeUniqueConstraintError'){
-                res.status(400).send({
-                    status: false,
-                    message: "Duplicate Entry"
-                })
-            } else {
-                res.status(400).send({
-                    status: false,
-                    message: error
-                })
-            }
+        await transaction.rollback()
+        if(error.name === 'SequelizeUniqueConstraintError'){
+            res.status(400).send({
+                status: false,
+                message: "Duplicate Entry"
+            })
+        } else {
+            res.status(400).send({
+                status: false,
+                message: error
+            })
         }
     }
 }

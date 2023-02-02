@@ -75,14 +75,13 @@ export const insertDataRLTigaTitikLima =  async (req, res) => {
         return
     }
 
-    let transaction
+    const transaction = await databaseSIRS.transaction()
     try {
-        transaction = await databaseSIRS.transaction()
         const resultInsertHeader = await rlTigaTitikLimaHeader.create({
             rs_id: req.user.rsId,
             tahun: req.body.tahun,
             user_id: req.user.id
-        }, { transaction })
+        }, { transaction: transaction })
 
         const dataDetail = req.body.data.map((value, index) => {
             return {
@@ -106,7 +105,7 @@ export const insertDataRLTigaTitikLima =  async (req, res) => {
         })
 
         const resultInsertDetail = await rlTigaTitikLimaDetail.bulkCreate(dataDetail, { 
-            transaction
+            transaction: transaction
             // updateOnDuplicate: [
             //     "rmRumahSakit",
             //     "rmBidan",
@@ -134,20 +133,18 @@ export const insertDataRLTigaTitikLima =  async (req, res) => {
             }
         })
     } catch (error) {
-        // console.log(error)
-        if (transaction) {
-            await transaction.rollback()
-            if(error.name === 'SequelizeUniqueConstraintError'){
-                res.status(400).send({
-                    status: false,
-                    message: "Duplicate Entry"
-                })
-            } else {
-                res.status(400).send({
-                    status: false,
-                    message: error
-                })
-            }
+        console.log(error)
+        await transaction.rollback()
+        if(error.name === 'SequelizeUniqueConstraintError'){
+            res.status(400).send({
+                status: false,
+                message: "Duplicate Entry"
+            })
+        } else {
+            res.status(400).send({
+                status: false,
+                message: error
+            })
         }
     }
 }

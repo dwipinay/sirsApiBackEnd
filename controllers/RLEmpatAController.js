@@ -108,16 +108,15 @@ export const insertDataRLEmpatA = async (req, res) => {
     return;
   }
 
-  let transaction;
+  const transaction = await databaseSIRS.transaction()
   try {
-    transaction = await databaseSIRS.transaction();
     const resultInsertHeader = await rlEmpatAHeader.create(
       {
         rs_id: req.user.rsId,
         tahun: req.body.tahun,
         user_id: req.user.id,
       },
-      { transaction }
+      { transaction: transaction }
     );
 
     const dataDetail = req.body.data.map((value, index) => {
@@ -191,66 +190,77 @@ export const insertDataRLEmpatA = async (req, res) => {
       };
     });
 
-    if (
-      dataDetail[0].jmlh_pas_keluar_mati <=
-      dataDetail[0].jmlh_pas_keluar_hidup_mati_lp
-    ) {
-      const resultInsertDetail = await rlEmpatADetail.bulkCreate(dataDetail, {
-        transaction
-        // updateOnDuplicate: [
-        //   "jmlh_pas_hidup_mati_umur_sex_0_6hr_l",
-        //   "jmlh_pas_hidup_mati_umur_sex_0_6hr_p",
-        //   "jmlh_pas_hidup_mati_umur_sex_6_28hr_l",
-        //   "jmlh_pas_hidup_mati_umur_sex_6_28hr_p",
-        //   "jmlh_pas_hidup_mati_umur_sex_28hr_1th_l",
-        //   "jmlh_pas_hidup_mati_umur_sex_28hr_1th_p",
-        //   "jmlh_pas_hidup_mati_umur_sex_1_4th_l",
-        //   "jmlh_pas_hidup_mati_umur_sex_1_4th_p",
-        //   "jmlh_pas_hidup_mati_umur_sex_4_14th_l",
-        //   "jmlh_pas_hidup_mati_umur_sex_4_14th_p",
-        //   "jmlh_pas_hidup_mati_umur_sex_14_24th_l",
-        //   "jmlh_pas_hidup_mati_umur_sex_14_24th_p",
-        //   "jmlh_pas_hidup_mati_umur_sex_24_44th_l",
-        //   "jmlh_pas_hidup_mati_umur_sex_24_44th_p",
-        //   "jmlh_pas_hidup_mati_umur_sex_44_64th_l",
-        //   "jmlh_pas_hidup_mati_umur_sex_44_64th_p",
-        //   "jmlh_pas_hidup_mati_umur_sex_lebih_64th_l",
-        //   "jmlh_pas_hidup_mati_umur_sex_lebih_64th_p",
-        //   "jmlh_pas_keluar_hidup_mati_sex_l",
-        //   "jmlh_pas_keluar_hidup_mati_sex_p",
-        //   "jmlh_pas_keluar_hidup_mati_lp",
-        //   "jmlh_pas_keluar_mati",
-        // ],
-      });
-      await transaction.commit();
-      res.status(201).send({
-        status: true,
-        message: "data created",
-        data: {
-          id: resultInsertHeader.id,
-        },
-      });
-    } else {
-      res.status(400).send({
-        status: false,
-        message: "Data Jumlah Pasien Mati Lebih Dari Jumlah Pasien Hidup/Mati",
-      });
-    }
+
+    const resultInsertDetail = await rlEmpatADetail.bulkCreate(dataDetail, {
+      transaction: transaction
+    })
+    await transaction.commit();
+    res.status(201).send({
+      status: true,
+      message: "data created",
+      data: {
+        id: resultInsertHeader.id,
+      },
+    })
+
+    // if (
+    //   dataDetail[0].jmlh_pas_keluar_mati <=
+    //   dataDetail[0].jmlh_pas_keluar_hidup_mati_lp
+    // ) {
+    //   const resultInsertDetail = await rlEmpatADetail.bulkCreate(dataDetail, {
+    //     transaction
+    //     // updateOnDuplicate: [
+    //     //   "jmlh_pas_hidup_mati_umur_sex_0_6hr_l",
+    //     //   "jmlh_pas_hidup_mati_umur_sex_0_6hr_p",
+    //     //   "jmlh_pas_hidup_mati_umur_sex_6_28hr_l",
+    //     //   "jmlh_pas_hidup_mati_umur_sex_6_28hr_p",
+    //     //   "jmlh_pas_hidup_mati_umur_sex_28hr_1th_l",
+    //     //   "jmlh_pas_hidup_mati_umur_sex_28hr_1th_p",
+    //     //   "jmlh_pas_hidup_mati_umur_sex_1_4th_l",
+    //     //   "jmlh_pas_hidup_mati_umur_sex_1_4th_p",
+    //     //   "jmlh_pas_hidup_mati_umur_sex_4_14th_l",
+    //     //   "jmlh_pas_hidup_mati_umur_sex_4_14th_p",
+    //     //   "jmlh_pas_hidup_mati_umur_sex_14_24th_l",
+    //     //   "jmlh_pas_hidup_mati_umur_sex_14_24th_p",
+    //     //   "jmlh_pas_hidup_mati_umur_sex_24_44th_l",
+    //     //   "jmlh_pas_hidup_mati_umur_sex_24_44th_p",
+    //     //   "jmlh_pas_hidup_mati_umur_sex_44_64th_l",
+    //     //   "jmlh_pas_hidup_mati_umur_sex_44_64th_p",
+    //     //   "jmlh_pas_hidup_mati_umur_sex_lebih_64th_l",
+    //     //   "jmlh_pas_hidup_mati_umur_sex_lebih_64th_p",
+    //     //   "jmlh_pas_keluar_hidup_mati_sex_l",
+    //     //   "jmlh_pas_keluar_hidup_mati_sex_p",
+    //     //   "jmlh_pas_keluar_hidup_mati_lp",
+    //     //   "jmlh_pas_keluar_mati",
+    //     // ],
+    //   });
+    //   await transaction.commit();
+    //   res.status(201).send({
+    //     status: true,
+    //     message: "data created",
+    //     data: {
+    //       id: resultInsertHeader.id,
+    //     },
+    //   });
+    // } else {
+    //   res.status(400).send({
+    //     status: false,
+    //     message: "Data Jumlah Pasien Mati Lebih Dari Jumlah Pasien Hidup/Mati",
+    //   });
+    // }
   } catch (error) {
-    console.log(error);
-    if (transaction) {
-      await transaction.rollback();
-      if(error.name === 'SequelizeUniqueConstraintError'){
+    console.log(error)
+    await transaction.rollback()
+    if(error.name === 'SequelizeUniqueConstraintError'){
         res.status(400).send({
             status: false,
             message: "Duplicate Entry"
         })
-      } else {
-          res.status(400).send({
-              status: false,
-              message: error
-          })
-      }
+    } else {
+        res.status(400).send({
+            status: false,
+            message: error
+        })
     }
   }
 };

@@ -61,17 +61,16 @@ export const insertDataRLTigaTitikEmpatBelas =  async (req, res) => {
         })
         return
     }
-    // console.log(req.user);
-    let transaction
+
+    const transaction = await databaseSIRS.transaction()
     try {
-        transaction = await databaseSIRS.transaction()
         const resultInsertHeader = await rlTigaTitikEmpatBelasHeader.create({
             rs_id: req.user.rsId,
             tahun: req.body.tahun,
             user_id: req.user.id
         }, { 
-            transaction
-         })
+            transaction: transaction
+        })
 
         const dataDetail = req.body.data.map((value, index) => {
             return {
@@ -93,7 +92,7 @@ export const insertDataRLTigaTitikEmpatBelas =  async (req, res) => {
         })
  
         const resultInsertDetail = await rlTigaTitikEmpatBelasDetail.bulkCreate(dataDetail, { 
-            transaction
+            transaction: transaction
             // updateOnDuplicate:[
             // 'rujukan_diterima_dari_puskesmas',
             // 'rujukan_diterima_dari_fasilitas_kesehatan_lain',
@@ -117,19 +116,17 @@ export const insertDataRLTigaTitikEmpatBelas =  async (req, res) => {
         })
     } catch (error) {
         console.log(error)
-        if (transaction) {
-            await transaction.rollback()
-            if(error.name === 'SequelizeUniqueConstraintError'){
-                res.status(400).send({
-                    status: false,
-                    message: "Duplicate Entry"
-                })
-            } else {
-                res.status(400).send({
-                    status: false,
-                    message: error
-                })
-            }
+        await transaction.rollback()
+        if(error.name === 'SequelizeUniqueConstraintError'){
+            res.status(400).send({
+                status: false,
+                message: "Duplicate Entry"
+            })
+        } else {
+            res.status(400).send({
+                status: false,
+                message: error
+            })
         }
     }
 }

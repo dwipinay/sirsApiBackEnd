@@ -110,9 +110,7 @@ export const insertDataRLSatuTitikDua = async (req, res) => {
     }
 
     const transaction = await databaseSIRS.transaction()
-
     try {
-        
         const resultInsertHeader = await rlSatuTitikDuaHeader.create({
             rs_id: req.user.rsId,
             tahun: req.body.tahun,

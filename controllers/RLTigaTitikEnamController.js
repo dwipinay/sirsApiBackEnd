@@ -106,17 +106,14 @@ export const insertDataRLTigaTitikEnam = async (req, res) => {
         return
     }
 
-    let transaction
-
+    const transaction = await databaseSIRS.transaction()
     try {
-        transaction = await databaseSIRS.transaction()
         const resultInsertHeader = await rlTigaTitikEnamHeader.create({
             rs_id: req.user.rsId,
             tahun: req.body.tahun,
             user_id: req.user.id
-        }, { transaction })
+        }, { transaction: transaction })
 
-        // console.log(resultInsertHeader.id)
         const dataDetail = req.body.data.map((value, index) => {
             let totalall = value.khusus + value.besar + value.sedang + value.kecil
             return {
@@ -134,7 +131,7 @@ export const insertDataRLTigaTitikEnam = async (req, res) => {
         })
 
         const resultInsertDetail = await rlTigaTitikEnamDetail.bulkCreate(dataDetail,{ 
-            transaction
+            transaction: transaction
             // updateOnDuplicate: ['total', 'khusus', 'besar', 'sedang', 'kecil']
         })
         await transaction.commit()
@@ -146,19 +143,18 @@ export const insertDataRLTigaTitikEnam = async (req, res) => {
             }
         })
     } catch (error) {
-        if (transaction) {
-            await transaction.rollback()
-            if(error.name === 'SequelizeUniqueConstraintError'){
-                res.status(400).send({
-                    status: false,
-                    message: "Duplicate Entry"
-                })
-            } else {
-                res.status(400).send({
-                    status: false,
-                    message: error
-                })
-            }
+        console.log(error)
+        await transaction.rollback()
+        if(error.name === 'SequelizeUniqueConstraintError'){
+            res.status(400).send({
+                status: false,
+                message: "Duplicate Entry"
+            })
+        } else {
+            res.status(400).send({
+                status: false,
+                message: error
+            })
         }
     }
 }

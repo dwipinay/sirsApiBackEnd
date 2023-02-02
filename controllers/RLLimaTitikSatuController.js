@@ -34,7 +34,6 @@ export const getDataRLLimaTitikSatu = (req, res) => {
 }
 
 export const insertDataRLLimaTitikSatu =  async (req, res) => {
-    console.log(req.user)
     const schema = Joi.object({
         tahun: Joi.number().required(),
         tahunDanBulan: Joi.date().required(),
@@ -56,14 +55,13 @@ export const insertDataRLLimaTitikSatu =  async (req, res) => {
         return
     }
 
-    let transaction
+    const transaction = await databaseSIRS.transaction()
     try {
-        transaction = await databaseSIRS.transaction()
         const resultInsertHeader = await rlLimaTitikSatuHeader.create({
             rs_id: req.user.rsId,
             tahun: req.body.tahunDanBulan,
             user_id: req.user.id
-        }, { transaction })
+        }, { transaction: transaction })
 
         const dataDetail = req.body.data.map((value, index) => {
             return {
@@ -77,12 +75,11 @@ export const insertDataRLLimaTitikSatu =  async (req, res) => {
         })
 
         const resultInsertDetail = await rlLimaTitikSatuDetail.bulkCreate(dataDetail, { 
-            transaction
+            transaction: transaction
             // updateOnDuplicate: [
             //     "jumlah",
             // ],
         })
-        // console.log(resultInsertDetail[0].id)
         await transaction.commit()
         res.status(201).send({
             status: true,
@@ -93,19 +90,17 @@ export const insertDataRLLimaTitikSatu =  async (req, res) => {
         })
     } catch (error) {
         console.log(error)
-        if (transaction) {
-            await transaction.rollback()
-            if(error.name === 'SequelizeUniqueConstraintError'){
-                res.status(400).send({
-                    status: false,
-                    message: "Duplicate Entry"
-                })
-            } else {
-                res.status(400).send({
-                    status: false,
-                    message: error
-                })
-            }
+        await transaction.rollback()
+        if(error.name === 'SequelizeUniqueConstraintError'){
+            res.status(400).send({
+                status: false,
+                message: "Duplicate Entry"
+            })
+        } else {
+            res.status(400).send({
+                status: false,
+                message: error
+            })
         }
     }
 }

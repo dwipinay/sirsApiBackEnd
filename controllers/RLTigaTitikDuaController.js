@@ -69,16 +69,15 @@ export const insertDataRLTigaTitikDua = async (req, res) => {
     return;
   }
 
-  let transaction;
+  const transaction = await databaseSIRS.transaction()
   try {
-    transaction = await databaseSIRS.transaction();
     const resultInsertHeader = await rlTigaTitikDuaHeader.create(
       {
         rs_id: req.user.rsId,
         tahun: req.body.tahun,
         user_id: req.user.id,
       },
-      { transaction }
+      { transaction: transaction }
     );
 
     let total;
@@ -107,52 +106,75 @@ export const insertDataRLTigaTitikDua = async (req, res) => {
       };
     });
 
-    if (total >= totaltindakan) {
-      const resultInsertDetail = await rlTigaTitikDuaDetail.bulkCreate(
-        dataDetail,
-        {
-          transaction
-          // updateOnDuplicate: [
-          //   "total_pasien_rujukan",
-          //   "total_pasien_non_rujukan",
-          //   "tindak_lanjut_pelayanan_dirawat",
-          //   "tindak_lanjut_pelayanan_dirujuk",
-          //   "tindak_lanjut_pelayanan_pulang",
-          //   "mati_di_ugd",
-          //   "doa",
-          // ],
-        }
-      );
+    const resultInsertDetail = await rlTigaTitikDuaDetail.bulkCreate(
+      dataDetail,
+      {
+        transaction: transaction
+        // updateOnDuplicate: [
+        //   "total_pasien_rujukan",
+        //   "total_pasien_non_rujukan",
+        //   "tindak_lanjut_pelayanan_dirawat",
+        //   "tindak_lanjut_pelayanan_dirujuk",
+        //   "tindak_lanjut_pelayanan_pulang",
+        //   "mati_di_ugd",
+        //   "doa",
+        // ],
+      }
+    );
 
-      await transaction.commit();
-      res.status(201).send({
-        status: true,
-        message: "data created",
-        data: {
-          id: resultInsertHeader.id,
-        },
-      });
-    } else {
-      res.status(400).send({
-        status: false,
-        message: "Jumlah Tindak Lanjut Pelayanan Pulang Tidak Sesuai",
-      });
-    }
+    await transaction.commit()
+    res.status(201).send({
+      status: true,
+      message: "data created",
+      data: {
+        id: resultInsertHeader.id,
+      },
+    });
+    
+    // if (total >= totaltindakan) {
+    //   const resultInsertDetail = await rlTigaTitikDuaDetail.bulkCreate(
+    //     dataDetail,
+    //     {
+    //       transaction: transaction
+    //       // updateOnDuplicate: [
+    //       //   "total_pasien_rujukan",
+    //       //   "total_pasien_non_rujukan",
+    //       //   "tindak_lanjut_pelayanan_dirawat",
+    //       //   "tindak_lanjut_pelayanan_dirujuk",
+    //       //   "tindak_lanjut_pelayanan_pulang",
+    //       //   "mati_di_ugd",
+    //       //   "doa",
+    //       // ],
+    //     }
+    //   );
+
+    //   await transaction.commit()
+    //   res.status(201).send({
+    //     status: true,
+    //     message: "data created",
+    //     data: {
+    //       id: resultInsertHeader.id,
+    //     },
+    //   });
+    // } else {
+    //   res.status(400).send({
+    //     status: false,
+    //     message: "Jumlah Tindak Lanjut Pelayanan Pulang Tidak Sesuai",
+    //   });
+    // }
   } catch (error) {
-    console.log(error);
-    if (transaction) {
-      await transaction.rollback();
-      if(error.name === 'SequelizeUniqueConstraintError'){
+    console.log(error)
+    await transaction.rollback()
+    if(error.name === 'SequelizeUniqueConstraintError'){
         res.status(400).send({
             status: false,
             message: "Duplicate Entry"
         })
-      } else {
-          res.status(400).send({
-              status: false,
-              message: error
-          })
-      }
+    } else {
+        res.status(400).send({
+            status: false,
+            message: error
+        })
     }
   }
 };

@@ -117,7 +117,6 @@ export const insertDataRLSatuTitikTiga =  async (req, res) => {
     }
 
     const transaction = await databaseSIRS.transaction()
-
     try {
         const resultInsertHeader = await rlSatuTitikTigaHeader.create({
             rs_id: req.user.rsId,

@@ -147,14 +147,13 @@ export const insertDataRLTigaTitikDuaBelas =  async (req, res) => {
         return
     }
 
-    let transaction;
+    const transaction = await databaseSIRS.transaction()
     try {
-        transaction = await databaseSIRS.transaction();
         const resultInsertHeader = await rlTigaTitikDuaBelas.create({
             rs_id: req.user.rsId,
             tahun: req.body.tahun,
             user_id: req.user.id
-        }, { transaction })
+        }, { transaction: transaction })
 
         const dataDetail = req.body.data.map((value, index) => {
             let jumlahKbBaruTotal = value.kbBaruBukanRujukan + value.kbBaruRujukanInap + value.kbBaruRujukanJalan
@@ -180,7 +179,7 @@ export const insertDataRLTigaTitikDuaBelas =  async (req, res) => {
         })
 
         const resultInsertDetail = await rlTigaTitikDuaBelasDetail.bulkCreate(dataDetail, { 
-            transaction
+            transaction: transaction
             // updateOnDuplicate: ['konseling_anc','konseling_pasca_persalinan', 
             // 'kb_baru_bukan_rujukan', 'kb_baru_rujukan_inap','kb_baru_rujukan_jalan', 'kb_baru_total','kb_baru_pasca_persalinan',
             // 'kb_baru_abortus','kb_baru_lainnya','kunjungan_ulang','keluhan_efek_samping_jumlah','keluhan_efek_samping_dirujuk']
@@ -196,19 +195,17 @@ export const insertDataRLTigaTitikDuaBelas =  async (req, res) => {
         })
     } catch (error) {
         console.log(error)
-        if (transaction) {
-            await transaction.rollback()
-            if(error.name === 'SequelizeUniqueConstraintError'){
-                res.status(400).send({
-                    status: false,
-                    message: "Duplicate Entry"
-                })
-            } else {
-                res.status(400).send({
-                    status: false,
-                    message: error
-                })
-            }
+        await transaction.rollback()
+        if(error.name === 'SequelizeUniqueConstraintError'){
+            res.status(400).send({
+                status: false,
+                message: "Duplicate Entry"
+            })
+        } else {
+            res.status(400).send({
+                status: false,
+                message: error
+            })
         }
     }
 }

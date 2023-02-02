@@ -44,15 +44,15 @@ export const insertDataRLEmpatB = async(req, res) => {
         return
     }
 
-    let transaction
-
+    const transaction = await databaseSIRS.transaction()
     try {
-        transaction = await databaseSIRS.transaction()
         const resultInsertHeader = await rlEmpatBHeader.create({
             rs_id: req.user.rsId,
             tahun: req.body.tahun,
             user_id: req.user.id
-        }, { transaction })
+        }, { 
+            transaction: transaction
+        })
 
         const dataDetail = req.body.data.map((value, index) => {
             let jumlahL = value.jmlhPasKasusUmurSex0hr6hrL + value.jmlhPasKasusUmurSex6hr28hrL + value.jmlhPasKasusUmurSex28hr1thL + value.jmlhPasKasusUmurSex1th4thL + value.jmlhPasKasusUmurSex4th14thL + value.jmlhPasKasusUmurSex14th24thL + value.jmlhPasKasusUmurSex24th44thL + value.jmlhPasKasusUmurSex44th64L + value.jmlhPasKasusUmurSexLebih64L
@@ -89,67 +89,77 @@ export const insertDataRLEmpatB = async(req, res) => {
             }
         })
 
-        if (dataDetail[0].jumlah_kunjungan >= dataDetail[0].jumlah_kasus_baru ) {
-            const resultInsertDetail = await rlEmpatBDetail.bulkCreate(dataDetail, { 
-                transaction
-                // updateOnDuplicate: [
-                //     'jmlh_pas_kasus_umur_sex_0_6hr_l',
-                //     'jmlh_pas_kasus_umur_sex_0_6hr_p',
-                //     'jmlh_pas_kasus_umur_sex_6_28hr_l',
-                //     'jmlh_pas_kasus_umur_sex_6_28hr_p',
-                //     'jmlh_pas_kasus_umur_sex_28hr_1th_l',
-                //     'jmlh_pas_kasus_umur_sex_28hr_1th_p',
-                //     'jmlh_pas_kasus_umur_sex_1_4th_l',
-                //     'jmlh_pas_kasus_umur_sex_1_4th_p',
-                //     'jmlh_pas_kasus_umur_sex_4_14th_l',
-                //     'jmlh_pas_kasus_umur_sex_4_14th_p',
-                //     'jmlh_pas_kasus_umur_sex_14_24th_l',
-                //     'jmlh_pas_kasus_umur_sex_14_24th_p',
-                //     'jmlh_pas_kasus_umur_sex_24_44th_l',
-                //     'jmlh_pas_kasus_umur_sex_24_44th_p',
-                //     'jmlh_pas_kasus_umur_sex_44_64th_l',
-                //     'jmlh_pas_kasus_umur_sex_44_64th_p',
-                //     'jmlh_pas_kasus_umur_sex_lebih_64th_l',
-                //     'jmlh_pas_kasus_umur_sex_lebih_64th_p',
-                //     'kasus_baru_l',
-                //     'kasus_baru_p',
-                //     'jumlah_kasus_baru',
-                //     'jumlah_kunjungan'
-                // ] 
-            })
-            await transaction.commit()
-            res.status(201).send({
-                status: true,
-                message: "Data Created",
-                data: {
-                    id:resultInsertHeader.id
-                }
-            })
-        } else {
-            res.status(400).send({
-            status: false,
-            message: "Data Jumlah Kunjungan kurang dari jumlah kasus baru"
-            })
-        }
+        const resultInsertDetail = await rlEmpatBDetail.bulkCreate(dataDetail, { 
+            transaction: transaction
+        })
+
+        await transaction.commit()
+        res.status(201).send({
+            status: true,
+            message: "data created",
+            data: {
+                id: resultInsertHeader.id
+            }
+        })
+
+        // if (dataDetail[0].jumlah_kunjungan >= dataDetail[0].jumlah_kasus_baru ) {
+        //     const resultInsertDetail = await rlEmpatBDetail.bulkCreate(dataDetail, { 
+        //         transaction
+        //         // updateOnDuplicate: [
+        //         //     'jmlh_pas_kasus_umur_sex_0_6hr_l',
+        //         //     'jmlh_pas_kasus_umur_sex_0_6hr_p',
+        //         //     'jmlh_pas_kasus_umur_sex_6_28hr_l',
+        //         //     'jmlh_pas_kasus_umur_sex_6_28hr_p',
+        //         //     'jmlh_pas_kasus_umur_sex_28hr_1th_l',
+        //         //     'jmlh_pas_kasus_umur_sex_28hr_1th_p',
+        //         //     'jmlh_pas_kasus_umur_sex_1_4th_l',
+        //         //     'jmlh_pas_kasus_umur_sex_1_4th_p',
+        //         //     'jmlh_pas_kasus_umur_sex_4_14th_l',
+        //         //     'jmlh_pas_kasus_umur_sex_4_14th_p',
+        //         //     'jmlh_pas_kasus_umur_sex_14_24th_l',
+        //         //     'jmlh_pas_kasus_umur_sex_14_24th_p',
+        //         //     'jmlh_pas_kasus_umur_sex_24_44th_l',
+        //         //     'jmlh_pas_kasus_umur_sex_24_44th_p',
+        //         //     'jmlh_pas_kasus_umur_sex_44_64th_l',
+        //         //     'jmlh_pas_kasus_umur_sex_44_64th_p',
+        //         //     'jmlh_pas_kasus_umur_sex_lebih_64th_l',
+        //         //     'jmlh_pas_kasus_umur_sex_lebih_64th_p',
+        //         //     'kasus_baru_l',
+        //         //     'kasus_baru_p',
+        //         //     'jumlah_kasus_baru',
+        //         //     'jumlah_kunjungan'
+        //         // ] 
+        //     })
+        //     await transaction.commit()
+        //     res.status(201).send({
+        //         status: true,
+        //         message: "Data Created",
+        //         data: {
+        //             id:resultInsertHeader.id
+        //         }
+        //     })
+        // } else {
+        //     res.status(400).send({
+        //     status: false,
+        //     message: "Data Jumlah Kunjungan kurang dari jumlah kasus baru"
+        //     })
+        // }
     }
     catch (error) {
         console.log(error)
-        if(transaction){
-            await transaction.rollback()
-            if(error.name === 'SequelizeUniqueConstraintError'){
-                res.status(400).send({
-                    status: false,
-                    message: "Duplicate Entry"
-                })
-            } else {
-                res.status(400).send({
-                    status: false,
-                    message: error
-                })
-            }
+        await transaction.rollback()
+        if(error.name === 'SequelizeUniqueConstraintError'){
+            res.status(400).send({
+                status: false,
+                message: "Duplicate Entry"
+            })
+        } else {
+            res.status(400).send({
+                status: false,
+                message: error
+            })
         }
     }
-
 }
 
 export const getDataRLEmpatB = (req, res) => {

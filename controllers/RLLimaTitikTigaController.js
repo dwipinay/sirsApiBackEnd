@@ -56,6 +56,10 @@ export const getDataRLLimaTitikTigaDetail = (req, res) => {
         "pasien_keluar_mati_menurut_jeniskelamin_lk",
         "pasien_keluar_mati_menurut_jeniskelamin_pr",
       ],
+      where: {
+        rs_id: req.user.rsId,
+        tahun: req.query.tahun
+      }
     })
     .then((results) => {
       res.status(200).send({

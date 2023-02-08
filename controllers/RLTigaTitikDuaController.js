@@ -83,7 +83,7 @@ export const insertDataRLTigaTitikDua = async (req, res) => {
     let total;
     let totaltindakan;
     const dataDetail = req.body.data.map((value, index) => {
-      total = value.totalPasienNonRujukan + value.totalPasienNonRujukan;
+      total = value.totalPasienRujukan + value.totalPasienNonRujukan;
       totaltindakan =
         value.tindakLanjutPelayananDirawat +
         value.tindakLanjutPelayananDirujuk +
@@ -277,7 +277,7 @@ export const updateDataRLTigaTitikDua = async (req, res) => {
     try {
     
     const data = req.body;
-    let total = data.totalPasienNonRujukan + data.totalPasienNonRujukan;
+    let total = data.totalPasienRujukan + data.totalPasienNonRujukan;
     let totaltindakan =
     data.tindakLanjutPelayananDirawat +
     data.tindakLanjutPelayananDirujuk +

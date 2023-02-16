@@ -36,7 +36,7 @@ export const getDataRLTigaTitikTigaBelasA = (req, res) => {
 
 export const getDataRLTigaTitikTigaBelasADetail = (req, res) => {
     rlTigaTitikTigaBelasADetail.findAll({
-        attributes: ['id','rl_tiga_titik_tiga_belas_a_id','user_id','golongan_obat_id','rawat_jalan','igd','rawat_inap'],
+        attributes: ['id','rl_tiga_titik_tiga_belas_a_id','user_id','golongan_obat_id','jumlah_item_obat','jumlah_item_obat_rs','jumlah_item_obat_formulatorium'],
     })
     .then((results) => {
         res.status(200).send({
@@ -119,9 +119,9 @@ export const insertDataRLTigaTitikTigaBelasA =  async (req, res) => {
             .items(
                 Joi.object().keys({
                     golonganObatId: Joi.number(),
-                    rawatJalan: Joi.number().min(0),
-                    igd: Joi.number().min(0),
-                    rawatInap: Joi.number().min(0)
+                    jumlahItemObat: Joi.number().min(0),
+                    jumlahItemObatRs: Joi.number().min(0),
+                    jumlahItemObatFormulatorium: Joi.number().min(0)
                     
                 })
             ).required()
@@ -148,9 +148,9 @@ export const insertDataRLTigaTitikTigaBelasA =  async (req, res) => {
             return {
                 rl_tiga_titik_tiga_belas_a_id: resultInsertHeader.id,
                 golongan_obat_id: value.golonganObatId,
-                rawat_jalan: value.rawatJalan,
-                igd: value.igd,
-                rawat_inap: value.rawatInap,
+                jumlah_item_obat: value.jumlahItemObat,
+                jumlah_item_obat_rs: value.jumlahItemObatRs,
+                jumlah_item_obat_formulatorium: value.jumlahItemObatFormulatorium,
                 rs_id: req.user.rsId,
                 tahun: req.body.tahun,
                 user_id: req.user.id

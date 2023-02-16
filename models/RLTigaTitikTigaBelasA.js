@@ -35,13 +35,13 @@ export const rlTigaTitikTigaBelasA = databaseSIRS.define(
       golongan_obat_id: {
         type: DataTypes.INTEGER,
       },
-      rawat_jalan: {
+      jumlah_item_obat: {
         type: DataTypes.INTEGER,
       },
-      igd: {
+      jumlah_item_obat_rs: {
         type: DataTypes.INTEGER,
       },
-      rawat_inap: {
+      jumlah_item_obat_formulatorium: {
         type: DataTypes.INTEGER,
       },
       tahun: {

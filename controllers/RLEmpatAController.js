@@ -6,6 +6,7 @@ import {
 } from "../models/RLEmpatA.js";
 import Joi from "joi";
 import { jenisGolSebabPenyakit } from "../models/JenisGolSebabPenyakit.js";
+import { rumahSakit } from "../models/RumahSakit.js";
 
 export const getDataRLEmpatA = (req, res) => {
   rlEmpatAHeader
@@ -384,5 +385,98 @@ export const deleteDataRLEmpatA = async (req, res) => {
       status: false,
       message: error,
     });
+  }
+};
+
+export const getDataRLEmpatAKodeRSTahun = (req, res) => {
+  if (req.user.jenis_user_id == 2) {
+    rumahSakit
+      .findOne({
+        where: {
+          Propinsi: req.query.koders,
+          provinsi_id: req.user.rsId
+        },
+      })
+      .then((results) => {
+        const getkoders = results.dataValues.Propinsi;
+        rlEmpatADetail
+          .findAll({
+            where: {
+              rs_id: getkoders,
+              tahun: req.query.tahun,
+            },
+            include: {
+              model: jenisGolSebabPenyakitId,
+              attributes: ["no_dtd", "no_daftar_terperinci", "nama"],
+            },
+          })
+          .then((resultsdata) => {
+            res.status(200).send({
+              status: true,
+              message: "data found",
+              dataRS: results,
+              data: resultsdata,
+            });
+          })
+          .catch((err) => {
+            res.status(422).send({
+              status: false,
+              message: err,
+            });
+            return;
+          });
+      })
+      .catch((err) => {
+        res.status(422).send({
+          status: false,
+          message: err,
+        });
+        return;
+      });
+  }
+  else if (req.user.jenis_user_id == 3) {
+    rumahSakit
+      .findOne({
+        where: {
+          Propinsi: req.query.koders,
+          kab_kota_id: req.user.rsId
+        },
+      })
+      .then((results) => {
+        const getkoders = results.dataValues.Propinsi;
+        rlEmpatADetail
+          .findAll({
+            where: {
+              rs_id: getkoders,
+              tahun: req.query.tahun,
+            },
+            include: {
+              model: jenisGolSebabPenyakitId,
+              attributes: ["no_dtd", "no_daftar_terperinci", "nama"],
+            },
+          })
+          .then((resultsdata) => {
+            res.status(200).send({
+              status: true,
+              message: "data found",
+              dataRS: results,
+              data: resultsdata,
+            });
+          })
+          .catch((err) => {
+            res.status(422).send({
+              status: false,
+              message: err,
+            });
+            return;
+          });
+      })
+      .catch((err) => {
+        res.status(422).send({
+          status: false,
+          message: err,
+        });
+        return;
+      });
   }
 };

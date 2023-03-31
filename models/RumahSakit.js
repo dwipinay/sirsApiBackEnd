@@ -3,46 +3,75 @@ import { databaseRSOnline } from "../config/Database.js"
 
 export const rumahSakit = databaseRSOnline.define(`data`, 
     {
-        usrpwd2: {
-            type: DataTypes.STRING,
-            primaryKey: true
-        },
         RUMAH_SAKIT: {
             type: DataTypes.STRING
         },
         ALAMAT: {
             type: DataTypes.STRING
         },
-        link: {
+        provinsi_id: {
             type: DataTypes.STRING,
             unique: true,
+        },
+        kab_kota_id: {
+            type: DataTypes.STRING,
+        },
+        Propinsi:{
+            type:DataTypes.STRING,
+            primaryKey: true
         }
     }
 )
 
-export const propinsi = databaseRSOnline.define(`propinsi`, 
+export const propinsi = databaseRSOnline.define(`provinsi`, 
     {
-        propinsi_kode:  {
+        id:  {
             type: DataTypes.STRING,
             primaryKey: true
         },
-        propinsi_name: {
+        nama: {
             type: DataTypes.STRING
         }
     }
 )
 
-export const kabKota = databaseRSOnline.define(`kab/kota`,
+export const kabKota = databaseRSOnline.define(`kab_kota`,
     {
-        link: {
+        id: {
             type: DataTypes.STRING,
             primaryKey: true
         },
-        'KAB/KOTA': {
+        nama: {
+            type: DataTypes.STRING
+        },
+        provinsi_id: {
             type: DataTypes.STRING
         }
     }
 )
+
+export const dataRumahSakit = databaseRSOnline.define(`data`, 
+{
+    Propinsi:{
+        type: DataTypes.STRING
+    },
+    RUMAH_SAKIT: {
+        type: DataTypes.STRING
+    },
+    ALAMAT: {
+        type: DataTypes.STRING
+    },
+    provinsi_id:{
+        type: DataTypes.STRING,
+        primaryKey: true
+    },
+    kab_kota_id:{
+        type: DataTypes.STRING
+    },
+    KLS_RS:{
+        type:DataTypes.INTEGER
+    }
+})
 
 export const getData = (data, callback) => {
     const sqlSelect = 'SELECT ' + 
@@ -67,13 +96,13 @@ export const getData = (data, callback) => {
 }
 
 rumahSakit.hasOne(propinsi, { 
-    foreignKey: 'propinsi_kode',
-    sourceKey: 'usrpwd2',
+    foreignKey: 'id',
+    sourceKey: 'provinsi_id',
     as: 'propinsi'
 })
 
 rumahSakit.hasOne(kabKota, { 
-    foreignKey: 'link',
-    sourceKey: 'link',
+    foreignKey: 'id',
+    sourceKey: 'kab_kota_id',
     as: 'kabKota'
 })

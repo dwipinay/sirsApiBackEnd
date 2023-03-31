@@ -27,6 +27,7 @@ export const refreshToken = (req, res) => {
             if (err) return res.sendStatus(403)
             const payloadObject = {
                 id: jwtRes.id,
+                jenis_user_id: jwtRes.jenis_user_id,
                 nama: jwtRes.nama,
                 email: jwtRes.email,
                 rsId: jwtRes.rsId

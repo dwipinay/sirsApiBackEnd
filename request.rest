@@ -29,11 +29,11 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsIm5hbWEiO
 }
 
 ### Login
-POST http://localhost/apisirs/login
+POST http://localhost:5000/apisirs/loginadmin
 Content-Type: application/json
 
 {
-    "userName": "3174063",
+    "userName": "1111",
     "password": "12345"
 }
 
@@ -61,6 +61,11 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsIm5hbWEiO
 ### Jenis Tindakan
 GET http://localhost/apisirs/jenistindakan?rlid=9
 ##################################################
+
+### RL 5.3
+http://localhost:5000/apisirs/rltigatitiklimaadmin?koders=1110101&tahun=2022
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTA1MSwiamVuaXNfdXNlcl9pZCI6MywibmFtYSI6IkthYi4gQmlyZXVlbiIsImVtYWlsIjoiMTExMSIsInJzSWQiOiIxMTExIiwiaWF0IjoxNjgwMTg4ODA2LCJleHAiOjE2ODAxODk3MDZ9.YqkGcWg97-GvCw6IiGtB0EQLRgRAqcyeY8ZZ7ZSeO6E
+
 
 ### RL 1.2 post
 POST http://localhost:5000/apisirs/rlsatutitikdua 

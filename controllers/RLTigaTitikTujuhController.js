@@ -2,117 +2,118 @@ import { databaseSIRS } from '../config/Database.js'
 import { rlTigaTitikTujuh, rlTigaTitikTujuhDetail, jenisGroupKegiatanHeader } from '../models/RLTigaTitikTujuh.js'
 import Joi from 'joi'
 import { jenisKegiatan } from '../models/JenisKegiatan.js'
+import { rumahSakit } from "../models/RumahSakit.js";
 
 
 export const getDataRLTigaTitikTujuh = (req, res) => {
     rlTigaTitikTujuh.findAll({
-        attributes: ['id','tahun'],
-        where:{
+        attributes: ['id', 'tahun'],
+        where: {
             rs_id: req.user.rsId,
             tahun: req.query.tahun
         },
-        include:{
+        include: {
             model: rlTigaTitikTujuhDetail,
             include: {
                 model: jenisKegiatan,
-                
-            include: {
-                model: jenisGroupKegiatanHeader
+
+                include: {
+                    model: jenisGroupKegiatanHeader
+                },
             },
-            },
-        order: [[{ model: jenisGroupKegiatanHeader }, 'no', 'DESC']]
+            order: [[{ model: jenisGroupKegiatanHeader }, 'no', 'DESC']]
         }
     })
-    .then((results) => {
-        res.status(200).send({
-            status: true,
-            message: "data found",
-            data: results
+        .then((results) => {
+            res.status(200).send({
+                status: true,
+                message: "data found",
+                data: results
+            })
         })
-    })
-    .catch((err) => {
-        res.status(422).send({
-            status: false,
-            message: err
+        .catch((err) => {
+            res.status(422).send({
+                status: false,
+                message: err
+            })
+            return
         })
-        return
-    })
 }
 
 export const getDataRLTigaTitikTujuhDetail = (req, res) => {
     rlTigaTitikTujuhDetail.findAll({
-        attributes: ['id','rl_tiga_titik_tujuh_id','user_id','jenis_kegiatan_id','jumlah'],
+        attributes: ['id', 'rl_tiga_titik_tujuh_id', 'user_id', 'jenis_kegiatan_id', 'jumlah'],
     })
-    .then((results) => {
-        res.status(200).send({
-            status: true,
-            message: "data found",
-            data: results
+        .then((results) => {
+            res.status(200).send({
+                status: true,
+                message: "data found",
+                data: results
+            })
         })
-    })
-    .catch((err) => {
-        res.status(422).send({
-            status: false,
-            message: err
+        .catch((err) => {
+            res.status(422).send({
+                status: false,
+                message: err
+            })
+            return
         })
-        return
-    })
 }
 
-export const getRLTigaTitikTujuhById = async(req,res)=>{
+export const getRLTigaTitikTujuhById = async (req, res) => {
     rlTigaTitikTujuhDetail.findOne({
-       
-        where:{
-            id:req.params.id
+
+        where: {
+            id: req.params.id
         },
-        include:{
+        include: {
             model: jenisKegiatan
         }
     })
-    .then((results) => {
-        res.status(200).send({
-            status: true,
-            message: "data found",
-            data: results
+        .then((results) => {
+            res.status(200).send({
+                status: true,
+                message: "data found",
+                data: results
+            })
         })
-    })
-    .catch((err) => {
-        res.status(422).send({
-            status: false,
-            message: err
+        .catch((err) => {
+            res.status(422).send({
+                status: false,
+                message: err
+            })
+            return
         })
-        return
-    })
 }
 
-export const updateDataRLTigaTitikTujuh = async(req,res)=>{
-    try{
-        await rlTigaTitikTujuhDetail.update(req.body,{
-            where:{
+export const updateDataRLTigaTitikTujuh = async (req, res) => {
+    try {
+        await rlTigaTitikTujuhDetail.update(req.body, {
+            where: {
                 id: req.params.id
             }
         });
-        res.status(200).json({message: "RL Updated"});
-    }catch(error){
+        res.status(200).json({ message: "RL Updated" });
+    } catch (error) {
         console.log(error.message);
     }
 }
 
-export const deleteDataRLTigaTitikTujuh = async(req,res)=>{
-    try{
+export const deleteDataRLTigaTitikTujuh = async (req, res) => {
+    try {
         await rlTigaTitikTujuhDetail.destroy({
-            where:{
+            where: {
                 id: req.params.id
             }
         });
-        
-        res.status(200).json({message: "RL Deleted"});
-    }catch(error){
+
+        res.status(200).json({ message: "RL Deleted" });
+    } catch (error) {
         console.log(error.message);
     }
 }
 
-export const insertDataRLTigaTitikTujuh =  async (req, res) => {
+export const insertDataRLTigaTitikTujuh = async (req, res) => {
     const schema = Joi.object({
         tahun: Joi.number().required(),
         data: Joi.array()
@@ -120,12 +121,12 @@ export const insertDataRLTigaTitikTujuh =  async (req, res) => {
                 Joi.object().keys({
                     jenisKegiatanId: Joi.number(),
                     jumlah: Joi.number().min(0)
-                    
+
                 })
             ).required()
     })
-
-    const { error, value } =  schema.validate(req.body)
+    //console.log(req);
+    const { error, value } = schema.validate(req.body)
     if (error) {
         res.status(404).send({
             status: false,
@@ -134,31 +135,35 @@ export const insertDataRLTigaTitikTujuh =  async (req, res) => {
         return
     }
 
-    const transaction = await databaseSIRS.transaction()
+    let transaction;
     try {
+        transaction = await databaseSIRS.transaction();
         const resultInsertHeader = await rlTigaTitikTujuh.create({
             rs_id: req.user.rsId,
             tahun: req.body.tahun,
             user_id: req.user.id
-        }, { transaction: transaction })
+        }, { transaction })
 
         const dataDetail = req.body.data.map((value, index) => {
             return {
                 rl_tiga_titik_tujuh_id: resultInsertHeader.id,
                 jenis_kegiatan_id: value.jenisKegiatanId,
-                jumlah: value.jumlah, 
+                jumlah: value.jumlah,
                 rs_id: req.user.rsId,
                 tahun: req.body.tahun,
                 user_id: req.user.id
             }
         })
 
-        const resultInsertDetail = await rlTigaTitikTujuhDetail.bulkCreate(dataDetail,   
-        { 
-            transaction: transaction
-            // updateOnDuplicate: ['jumlah']
-        })
-            
+        const resultInsertDetail = await rlTigaTitikTujuhDetail.bulkCreate(dataDetail,
+
+            {
+
+                transaction,
+                updateOnDuplicate: ['jumlah']
+            })
+
+
         await transaction.commit()
         res.status(201).send({
             status: true,
@@ -168,18 +173,75 @@ export const insertDataRLTigaTitikTujuh =  async (req, res) => {
             }
         })
     } catch (error) {
-        console.log(error)
-        await transaction.rollback()
-        if(error.name === 'SequelizeUniqueConstraintError'){
-            res.status(400).send({
-                status: false,
-                message: "Duplicate Entry"
-            })
-        } else {
-            res.status(400).send({
-                status: false,
-                message: error
-            })
+        console.log(error.code)
+        if (transaction) {
+            await transaction.rollback()
+            if (error.name === 'SequelizeUniqueConstraintError') {
+                res.status(400).send({
+                    status: false,
+                    message: "Fail Duplicate Entry"
+                    // reason: 'Duplicate Entry'
+                })
+            } else {
+                res.status(400).send({
+                    status: false,
+                    message: "error"
+                })
+            }
         }
     }
 }
+
+export const getDataRLTigaTitikTujuhKodeRSTahun = (req, res) => {
+    rumahSakit.findOne({
+        where: {
+            Propinsi: req.query.koders
+        }
+    })
+        .then((results) => {
+            const getkoders = results.dataValues.Propinsi;
+            rlTigaTitikTujuh
+                .findAll({
+                    include: {
+                        model: rlTigaTitikTujuhDetail,
+                        where: {
+                            rs_id: getkoders,
+                            rs_id: req.query.koders,
+                            tahun: req.query.tahun,
+                        },
+                        include: {
+                            model: jenisKegiatan,
+
+                            include: {
+                                model: jenisGroupKegiatanHeader
+                            },
+                            // order: [
+                            //     [rlTigaTItikEnamSpesialis, 'no','ASC']
+                            // ]
+                        },
+                    }
+                })
+                .then((resultsdata) => {
+                    res.status(200).send({
+                        status: true,
+                        message: "data found",
+                        dataRS: results,
+                        data: resultsdata,
+                    });
+                })
+                .catch((err) => {
+                    res.status(422).send({
+                        status: false,
+                        message: err
+                    })
+                    return
+                })
+        })
+        .catch((err) => {
+            res.status(422).send({
+                status: false,
+                message: err,
+            });
+            return;
+        });
+}; 

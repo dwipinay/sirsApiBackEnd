@@ -5,6 +5,9 @@ export const users = databaseSIRS.define('users', {
     nama: {
         type: DataTypes.STRING
     },
+    jenis_user_id: {
+        type: DataTypes.STRING
+    },
     email: {
         type: DataTypes.STRING
     },

@@ -1,16 +1,17 @@
 import { databaseSIRS } from '../config/Database.js'
 import { rlTigaTitikDuaBelas, rlTigaTitikDuaBelasDetail, metoda } from '../models/RLTigaTitikDuaBelas.js'
 import Joi from 'joi'
+import { rumahSakit } from "../models/RumahSakit.js";
 
 
 export const getDataRLTigaTitikDuaBelas = (req, res) => {
     rlTigaTitikDuaBelas.findAll({
-        attributes: ['id','tahun'],
-        where:{
+        attributes: ['id', 'tahun'],
+        where: {
             rs_id: req.user.rsId,
             tahun: req.query.tahun
         },
-        include:{
+        include: {
             model: rlTigaTitikDuaBelasDetail,
             include: {
                 model: metoda
@@ -18,103 +19,99 @@ export const getDataRLTigaTitikDuaBelas = (req, res) => {
         },
         order: [[{ model: rlTigaTitikDuaBelasDetail }, 'metoda_id', 'ASC']]
     })
-    .then((results) => {
-        res.status(200).send({
-            status: true,
-            message: "data found",
-            data: results
+        .then((results) => {
+            res.status(200).send({
+                status: true,
+                message: "data found",
+                data: results
+            })
         })
-    })
-    .catch((err) => {
-        res.status(422).send({
-            status: false,
-            message: err
+        .catch((err) => {
+            res.status(422).send({
+                status: false,
+                message: err
+            })
+            return
         })
-        return
-    })
 }
 
 export const getDataRLTigaTitikDuaBelasDetail = (req, res) => {
     rlTigaTitikDuaBelasDetail.findAll({
-        attributes: ['id','rl_tiga_titik_dua_belas_id','user_id','metoda_id','konseling_anc','konseling_pasca_persalinan', 
-        'kb_baru_bukan_rujukan', 'kb_baru_rujukan_inap','kb_baru_rujukan_jalan', 'kb_baru_total','kb_baru_pasca_persalinan',
-        'kb_baru_abortus','kb_baru_lainnya','kunjungan_ulang','keluhan_efek_samping_jumlah','keluhan_efek_samping_dirujuk' ],
+        attributes: ['id', 'rl_tiga_titik_dua_belas_id', 'user_id', 'metoda_id', 'konseling_anc', 'konseling_pasca_persalinan',
+            'kb_baru_bukan_rujukan', 'kb_baru_rujukan_inap', 'kb_baru_rujukan_jalan', 'kb_baru_total', 'kb_baru_pasca_persalinan',
+            'kb_baru_abortus', 'kb_baru_lainnya', 'kunjungan_ulang', 'keluhan_efek_samping_jumlah', 'keluhan_efek_samping_dirujuk'],
     })
-    .then((results) => {
-        res.status(200).send({
-            status: true,
-            message: "data found",
-            data: results
+        .then((results) => {
+            res.status(200).send({
+                status: true,
+                message: "data found",
+                data: results
+            })
         })
-    })
-    .catch((err) => {
-        res.status(422).send({
-            status: false,
-            message: err
+        .catch((err) => {
+            res.status(422).send({
+                status: false,
+                message: err
+            })
+            return
         })
-        return
-    })
 }
 
-export const getRLTigaTitikDuaBelasById = async(req,res)=>{
+export const getRLTigaTitikDuaBelasById = async (req, res) => {
     rlTigaTitikDuaBelasDetail.findOne({
-       
-        where:{
-            // rs_id: req.user.rsId,
-            // tahun: req.query.tahun
-            id:req.params.id
+
+        where: {
+            id: req.params.id
         },
-        include:{
+        include: {
             model: metoda
-            // include: {
-            //     model: jenisKegiatan
-            // }
+
         }
     })
-    .then((results) => {
-        res.status(200).send({
-            status: true,
-            message: "data found",
-            data: results
+        .then((results) => {
+            res.status(200).send({
+                status: true,
+                message: "data found",
+                data: results
+            })
         })
-    })
-    .catch((err) => {
-        res.status(422).send({
-            status: false,
-            message: err
+        .catch((err) => {
+            res.status(422).send({
+                status: false,
+                message: err
+            })
+            return
         })
-        return
-    })
 }
 
-export const updateDataRLTigaTitikDuaBelas = async(req,res)=>{
-    try{
-        await rlTigaTitikDuaBelasDetail.update(req.body,{
-            where:{
+export const updateDataRLTigaTitikDuaBelas = async (req, res) => {
+    try {
+        await rlTigaTitikDuaBelasDetail.update(req.body, {
+            where: {
                 id: req.params.id
             }
         });
-        res.status(200).json({message: "RL 3.12 Updated"});
-    }catch(error){
+        res.status(200).json({ message: "RL 3.12 Updated" });
+    } catch (error) {
         console.log(error.message);
     }
 }
 
-export const deleteDataRLTigaTitikDuaBelas = async(req,res)=>{
-    try{
+export const deleteDataRLTigaTitikDuaBelas = async (req, res) => {
+    try {
         await rlTigaTitikDuaBelasDetail.destroy({
-            where:{
+            where: {
                 id: req.params.id
             }
         });
-        
-        res.status(200).json({message: "RL 3.12 Deleted"});
-    }catch(error){
+
+        res.status(200).json({ message: "RL 3.12 Deleted" });
+    } catch (error) {
         console.log(error.message);
     }
 }
 
-export const insertDataRLTigaTitikDuaBelas =  async (req, res) => {
+export const insertDataRLTigaTitikDuaBelas = async (req, res) => {
     const schema = Joi.object({
         tahun: Joi.number().required(),
         data: Joi.array()
@@ -133,12 +130,12 @@ export const insertDataRLTigaTitikDuaBelas =  async (req, res) => {
                     kunjunganUlang: Joi.number().min(0),
                     keluhanEfekSampingJumlah: Joi.number().min(0),
                     keluhanEfekSampingDirujuk: Joi.number().min(0)
-                    
+
                 })
             ).required()
     })
-
-    const { error, value } =  schema.validate(req.body)
+    //console.log(req);
+    const { error, value } = schema.validate(req.body)
     if (error) {
         res.status(404).send({
             status: false,
@@ -147,13 +144,14 @@ export const insertDataRLTigaTitikDuaBelas =  async (req, res) => {
         return
     }
 
-    const transaction = await databaseSIRS.transaction()
+    let transaction;
     try {
+        transaction = await databaseSIRS.transaction();
         const resultInsertHeader = await rlTigaTitikDuaBelas.create({
             rs_id: req.user.rsId,
             tahun: req.body.tahun,
             user_id: req.user.id
-        }, { transaction: transaction })
+        }, { transaction })
 
         const dataDetail = req.body.data.map((value, index) => {
             let jumlahKbBaruTotal = value.kbBaruBukanRujukan + value.kbBaruRujukanInap + value.kbBaruRujukanJalan
@@ -178,13 +176,14 @@ export const insertDataRLTigaTitikDuaBelas =  async (req, res) => {
             }
         })
 
-        const resultInsertDetail = await rlTigaTitikDuaBelasDetail.bulkCreate(dataDetail, { 
-            transaction: transaction
-            // updateOnDuplicate: ['konseling_anc','konseling_pasca_persalinan', 
-            // 'kb_baru_bukan_rujukan', 'kb_baru_rujukan_inap','kb_baru_rujukan_jalan', 'kb_baru_total','kb_baru_pasca_persalinan',
-            // 'kb_baru_abortus','kb_baru_lainnya','kunjungan_ulang','keluhan_efek_samping_jumlah','keluhan_efek_samping_dirujuk']
+        const resultInsertDetail = await rlTigaTitikDuaBelasDetail.bulkCreate(dataDetail, {
+
+            transaction,
+            updateOnDuplicate: ['konseling_anc', 'konseling_pasca_persalinan',
+                'kb_baru_bukan_rujukan', 'kb_baru_rujukan_inap', 'kb_baru_rujukan_jalan', 'kb_baru_total', 'kb_baru_pasca_persalinan',
+                'kb_baru_abortus', 'kb_baru_lainnya', 'kunjungan_ulang', 'keluhan_efek_samping_jumlah', 'keluhan_efek_samping_dirujuk']
         })
-        
+
         await transaction.commit()
         res.status(201).send({
             status: true,
@@ -195,17 +194,67 @@ export const insertDataRLTigaTitikDuaBelas =  async (req, res) => {
         })
     } catch (error) {
         console.log(error)
-        await transaction.rollback()
-        if(error.name === 'SequelizeUniqueConstraintError'){
-            res.status(400).send({
-                status: false,
-                message: "Duplicate Entry"
-            })
-        } else {
-            res.status(400).send({
-                status: false,
-                message: error
-            })
+        if (transaction) {
+            await transaction.rollback()
+            if (error.name === 'SequelizeUniqueConstraintError') {
+                res.status(400).send({
+                    status: false,
+                    message: "Fail Duplicate Entry"
+                    // reason: 'Duplicate Entry'
+                })
+            } else {
+                res.status(400).send({
+                    status: false,
+                    message: "error"
+                })
+            }
         }
     }
 }
+
+export const getDataRLTigaTitikDuaBelasKodeRSTahun = (req, res) => {
+    rumahSakit.findOne({
+        where: {
+            Propinsi: req.query.koders
+        }
+    })
+        .then((results) => {
+            rlTigaTitikDuaBelas
+                .findAll({
+                    include: {
+                        model: rlTigaTitikDuaBelasDetail,
+                        where: {
+                            rs_id: req.query.koders,
+                            tahun: req.query.tahun,
+                        },
+                        include: {
+                            model: metoda,
+
+
+                        },
+                    }
+                })
+                .then((resultsdata) => {
+                    res.status(200).send({
+                        status: true,
+                        message: "data found",
+                        dataRS: results,
+                        data: resultsdata,
+                    });
+                })
+                .catch((err) => {
+                    res.status(422).send({
+                        status: false,
+                        message: err
+                    })
+                    return
+                })
+        })
+        .catch((err) => {
+            res.status(422).send({
+                status: false,
+                message: err,
+            });
+            return;
+        });
+}; 

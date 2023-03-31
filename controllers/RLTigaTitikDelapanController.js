@@ -9,6 +9,7 @@ import {
   groupJenisKegiatanHeader,
   jenisKegiatan,
 } from "../models/JenisKegiatan.js";
+import { rumahSakit } from "../models/RumahSakit.js";
 
 export const getDataRLTigaTitikDelapan = (req, res) => {
   rlTigaTitikDelapan
@@ -240,4 +241,115 @@ export const deleteDataRLTigaTitikDelapan = async (req, res) => {
       message: error,
     });
   }
+};
+
+export const getDataRLTigaTitikDelapanKodeRSTahun = (req, res) => {
+
+  if (req.user.jenis_user_id == 2) {
+    rumahSakit
+      .findOne({
+        where: {
+          Propinsi: req.query.koders,
+          provinsi_id: req.user.rsId
+        },
+      })
+      .then((results) => {
+        const getkoders = results.dataValues.Propinsi;
+        rlTigaTitikDelapanDetail
+          .findAll({
+            where: {
+              rs_id: getkoders,
+              tahun: req.query.tahun,
+            },
+            include: {
+              model: jenisKegiatan,
+              attributes: ["id", "no", "nama"],
+              include: {
+                model: groupJenisKegiatan,
+                attributes: ["id", "no", "nama"],
+                include: {
+                  model: groupJenisKegiatanHeader,
+                },
+              },
+            },
+            order: [[jenisKegiatan, "id", "ASC"]],
+          })
+          .then((resultsdata) => {
+            res.status(200).send({
+              status: true,
+              message: "data found",
+              dataRS: results,
+              data: resultsdata,
+            });
+          })
+          .catch((err) => {
+            res.status(422).send({
+              status: false,
+              message: err,
+            });
+            return;
+          });
+      })
+      .catch((err) => {
+        res.status(422).send({
+          status: false,
+          message: err,
+        });
+        return;
+      });
+  }
+  else if (req.user.jenis_user_id == 3) {
+    rumahSakit
+      .findOne({
+        where: {
+          Propinsi: req.query.koders,
+          kab_kota_id: req.user.rsId
+        },
+      })
+      .then((results) => {
+        const getkoders = results.dataValues.Propinsi;
+        rlTigaTitikDelapanDetail
+          .findAll({
+            where: {
+              rs_id: getkoders,
+              tahun: req.query.tahun,
+            },
+            include: {
+              model: jenisKegiatan,
+              attributes: ["id", "no", "nama"],
+              include: {
+                model: groupJenisKegiatan,
+                attributes: ["id", "no", "nama"],
+                include: {
+                  model: groupJenisKegiatanHeader,
+                },
+              },
+            },
+            order: [[jenisKegiatan, "id", "ASC"]],
+          })
+          .then((resultsdata) => {
+            res.status(200).send({
+              status: true,
+              message: "data found",
+              dataRS: results,
+              data: resultsdata,
+            });
+          })
+          .catch((err) => {
+            res.status(422).send({
+              status: false,
+              message: err,
+            });
+            return;
+          });
+      })
+      .catch((err) => {
+        res.status(422).send({
+          status: false,
+          message: err,
+        });
+        return;
+      });
+  }
+  else { }
 };

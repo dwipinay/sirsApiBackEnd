@@ -46,7 +46,8 @@ export const login = (req, res) => {
     users.findAll({
         attributes: ['id','nama','email','password', 'rs_id','created_at', 'modified_at'],
         where: {
-            email: req.body.userName
+            email: req.body.userName,
+            jenis_user_id: 4
         }
     })
     .then((results) => {

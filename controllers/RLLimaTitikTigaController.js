@@ -5,6 +5,7 @@ import {
   noUrut,
 } from "../models/RLLimaTitikTiga.js";
 import Joi from "joi";
+import { rumahSakit } from "../models/RumahSakit.js";
 
 export const getDataRLLimaTitikTiga = (req, res) => {
   rlLimaTitikTiga
@@ -236,3 +237,46 @@ export const insertDataRLLimaTitikTiga = async (req, res) => {
     }
   }
 };
+
+export const getDataRLLimaTitikTigaKodeRSTahun = (req, res) => {
+  rumahSakit.findOne({
+      where: {
+          Propinsi: req.query.koders
+      }
+  })
+    .then((results) => {
+      rlLimaTitikTiga
+      .findAll({
+        include: {
+          model: rlLimaTitikTigaDetail,
+          where: {
+            rs_id: req.query.koders,
+            tahun: req.query.tahun,
+          },
+        },
+      })
+      .then((resultsdata) => {
+        res.status(200).send({
+          status: true,
+          message: "data found",
+          dataRS: results,
+          data: resultsdata,
+        });
+      })
+      .catch((err) => {
+        res.status(422).send({
+            status: false,
+            message: err
+        })
+        return
+    })
+    })
+    .catch((err) => {
+      res.status(422).send({
+        status: false,
+        message: err,
+      });
+      return;
+    });
+}; 
+

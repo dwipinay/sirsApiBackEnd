@@ -1,6 +1,7 @@
 import { databaseSIRS } from '../config/Database.js'
 import { rlSatuTitikDuaHeader, rlSatuTitikDuaDetail } from "../models/RLSatuTitikDua.js";
 import Joi from "joi";
+import { rumahSakit } from "../models/RumahSakit.js";
 
 export const getDatarlSatuTitikDua = (req, res) => {
     rlSatuTitikDuaHeader.findAll({
@@ -148,7 +149,7 @@ export const insertDataRLSatuTitikDua = async (req, res) => {
     } catch (error) {
         console.log(error)
         await transaction.rollback()
-        if(error.name === 'SequelizeUniqueConstraintError'){
+        if (error.name === 'SequelizeUniqueConstraintError') {
             res.status(400).send({
                 status: false,
                 message: "Duplicate Entry"
@@ -183,3 +184,45 @@ export const deleteDataRLSatuTitikDua = async (req, res) => {
         })
     }
 }
+
+export const getDataRLSatuTitikDuaKodeRSTahun = (req, res) => {
+    rumahSakit.findOne({
+        where: {
+            Propinsi: req.query.koders
+        }
+    })
+        .then((results) => {
+            rlSatuTitikDuaHeader
+                .findAll({
+                    include: {
+                        model: rlSatuTitikDuaDetail,
+                        where: {
+                            rs_id: req.query.koders,
+                            tahun: req.query.tahun,
+                        },
+                    },
+                })
+                .then((resultsdata) => {
+                    res.status(200).send({
+                        status: true,
+                        message: "data found",
+                        dataRS: results,
+                        data: resultsdata,
+                    });
+                })
+                .catch((err) => {
+                    res.status(422).send({
+                        status: false,
+                        message: err
+                    })
+                    return
+                })
+        })
+        .catch((err) => {
+            res.status(422).send({
+                status: false,
+                message: err,
+            });
+            return;
+        });
+};

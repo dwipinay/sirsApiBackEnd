@@ -311,3 +311,13 @@ Authorization:
     "tahun": "2022",
     "tahun"
 }
+
+### cek`12
+
+GET http://localhost:5000/apisirs/rlsatutitikduaadmin/?koders=1110075&tahun=2022
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTA1MCwiamVuaXNfdXNlcl9pZCI6MiwibmFtYSI6IkFjZWgiLCJlbWFpbCI6IjExIiwicnNJZCI6IjExIiwiaWF0IjoxNjgwMjQ4NDc3LCJleHAiOjE2ODU0MzI0Nzd9.zI_V0iPFvSZK4oFxFpAPJpGIHJOlPZCsWjzT0C3G3fQ
+
+### cek12
+
+GET http://localhost:5000/apisirs/rltigatitiksepuluhadmin/?koders=1110075&tahun=2022
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTA1MCwiamVuaXNfdXNlcl9pZCI6MiwibmFtYSI6IkFjZWgiLCJlbWFpbCI6IjExIiwicnNJZCI6IjExIiwiaWF0IjoxNjgwMjQ4NDc3LCJleHAiOjE2ODU0MzI0Nzd9.zI_V0iPFvSZK4oFxFpAPJpGIHJOlPZCsWjzT0C3G3fQ

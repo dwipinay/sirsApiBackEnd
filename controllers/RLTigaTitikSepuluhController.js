@@ -1,7 +1,7 @@
 import { databaseSIRS } from '../config/Database.js'
 import { rlTigaTitikSepuluhHeader, rlTigaTitikSepuluhDetail, jenisKegiatan } from '../models/RLTigaTitikSepuluh.js'
 import Joi from 'joi'
-
+import { rumahSakit } from "../models/RumahSakit.js";
 
 export const getDatarlTigaTitikSepuluh = (req, res) => {
     rlTigaTitikSepuluhHeader.findAll({
@@ -199,3 +199,50 @@ export const deleteDataRLTigaTitikSepuluh = async(req, res) => {
         })
     }
 }
+
+export const getDataRLTigaTitikSepuluhKodeRSTahun = (req, res) => {
+    rumahSakit.findOne({
+        where: {
+            Propinsi: req.query.koders
+        }
+    })
+      .then((results) => {
+        rlTigaTitikSepuluhHeader
+        .findAll({
+          include: {
+            model: rlTigaTitikSepuluhDetail,
+            where: {
+              rs_id: req.query.koders,
+              tahun: req.query.tahun,
+            },
+            include: {
+              model: jenisKegiatan,
+              attributes: ["no", "nama"],
+            },
+          },
+        })
+        .then((resultsdata) => {
+          res.status(200).send({
+            status: true,
+            message: "data found",
+            dataRS: results,
+            data: resultsdata,
+          });
+        })
+        .catch((err) => {
+          res.status(422).send({
+              status: false,
+              message: err
+          })
+          return
+      })
+      })
+      .catch((err) => {
+        res.status(422).send({
+          status: false,
+          message: err,
+        });
+        return;
+      });
+  }; 
+  

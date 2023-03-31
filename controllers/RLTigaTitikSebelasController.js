@@ -1,109 +1,110 @@
 import { databaseSIRS } from '../config/Database.js'
 import { rlTigaTitikSebelasHeader, rlTigaTitikSebelasDetail, jenisPelayanan } from '../models/RLTigaTitikSebelas.js'
 import Joi from 'joi'
+import { rumahSakit } from "../models/RumahSakit.js";
 
 export const getDatarlTigaTitikSebelas = (req, res) => {
     rlTigaTitikSebelasHeader.findAll({
-        attributes: ['id','tahun'],
-        where:{
+        attributes: ['id', 'tahun'],
+        where: {
             rs_id: req.user.rsId,
             tahun: req.query.tahun
         },
-        include:{
+        include: {
             model: rlTigaTitikSebelasDetail,
             include: {
                 model: jenisPelayanan
             }
         }
     })
-    .then((results) => {
-        res.status(200).send({
-            status: true,
-            message: "data found",
-            data: results
+        .then((results) => {
+            res.status(200).send({
+                status: true,
+                message: "data found",
+                data: results
+            })
         })
-    })
-    .catch((err) => {
-        res.status(422).send({
-            status: false,
-            message: err
+        .catch((err) => {
+            res.status(422).send({
+                status: false,
+                message: err
+            })
+            return
         })
-        return
-    })
 }
 
 export const getDatarlTigaTitikSebelasDetail = (req, res) => {
     rlTigaTitikSebelasDetail.findAll({
         attributes: [
-        'id',
-        'rl_tiga_titik_sebelas_id',
-        'user_id',
-        'jenis_pelayanan_id',
-        'jumlah'
-    ],
+            'id',
+            'rl_tiga_titik_sebelas_id',
+            'user_id',
+            'jenis_pelayanan_id',
+            'jumlah'
+        ],
     })
-    .then((results) => {
-        res.status(200).send({
-            status: true,
-            message: "data found",
-            data: results
+        .then((results) => {
+            res.status(200).send({
+                status: true,
+                message: "data found",
+                data: results
+            })
         })
-    })
-    .catch((err) => {
-        res.status(422).send({
-            status: false,
-            message: err
+        .catch((err) => {
+            res.status(422).send({
+                status: false,
+                message: err
+            })
+            return
         })
-        return
-    })
 }
 
-export const getrlTigaTitikSebelasById = async(req,res)=>{
+export const getrlTigaTitikSebelasById = async (req, res) => {
     rlTigaTitikSebelasDetail.findOne({
-       
-        where:{
+
+        where: {
             // rs_id: req.user.rsId,
             // tahun: req.query.tahun
-            id:req.params.id
+            id: req.params.id
         },
-        include:{
+        include: {
             model: jenisPelayanan
             // include: {
             //     model: jenisPelayanan
             // }
         }
     })
-    .then((results) => {
-        res.status(200).send({
-            status: true,
-            message: "data found",
-            data: results
+        .then((results) => {
+            res.status(200).send({
+                status: true,
+                message: "data found",
+                data: results
+            })
         })
-    })
-    .catch((err) => {
-        res.status(422).send({
-            status: false,
-            message: err
+        .catch((err) => {
+            res.status(422).send({
+                status: false,
+                message: err
+            })
+            return
         })
-        return
-    })
 }
 
-export const updateDatarlTigaTitikSebelas = async(req,res)=>{
-    try{
-        await rlTigaTitikSebelasDetail.update(req.body,{
-            where:{
+export const updateDatarlTigaTitikSebelas = async (req, res) => {
+    try {
+        await rlTigaTitikSebelasDetail.update(req.body, {
+            where: {
                 id: req.params.id
             }
         });
         console.log(req.body)
-        res.status(200).json({message: "Rekapitulasi Laporan Telah Diperbaharui"});
-    }catch(error){
+        res.status(200).json({ message: "Rekapitulasi Laporan Telah Diperbaharui" });
+    } catch (error) {
         console.log(error.message);
     }
 }
- 
-export const insertDataRLTigaTitikSebelas =  async (req, res) => {
+
+export const insertDataRLTigaTitikSebelas = async (req, res) => {
     const schema = Joi.object({
         tahun: Joi.number().required(),
         data: Joi.array()
@@ -115,7 +116,7 @@ export const insertDataRLTigaTitikSebelas =  async (req, res) => {
             ).required()
     })
 
-    const { error, value } =  schema.validate(req.body)
+    const { error, value } = schema.validate(req.body)
     if (error) {
         res.status(404).send({
             status: false,
@@ -123,14 +124,14 @@ export const insertDataRLTigaTitikSebelas =  async (req, res) => {
         })
         return
     }
-    
+
     const transaction = await databaseSIRS.transaction()
     try {
         const resultInsertHeader = await rlTigaTitikSebelasHeader.create({
             rs_id: req.user.rsId,
             tahun: req.body.tahun,
             user_id: req.user.id
-        }, { 
+        }, {
             transaction: transaction
         })
 
@@ -141,11 +142,11 @@ export const insertDataRLTigaTitikSebelas =  async (req, res) => {
                 rl_tiga_titik_sebelas_id: resultInsertHeader.id,
                 jenis_pelayanan_id: value.jenisPelayananId,
                 jumlah: value.jumlah,
-                user_id: req.user.id 
+                user_id: req.user.id
             }
         })
 
-        const resultInsertDetail = await rlTigaTitikSebelasDetail.bulkCreate(dataDetail, { 
+        const resultInsertDetail = await rlTigaTitikSebelasDetail.bulkCreate(dataDetail, {
             transaction: transaction
             // updateOnDuplicate:['jumlah']
         })
@@ -161,7 +162,7 @@ export const insertDataRLTigaTitikSebelas =  async (req, res) => {
     } catch (error) {
         console.log(error)
         await transaction.rollback()
-        if(error.name === 'SequelizeUniqueConstraintError'){
+        if (error.name === 'SequelizeUniqueConstraintError') {
             res.status(400).send({
                 status: false,
                 message: "Duplicate Entry"
@@ -175,7 +176,7 @@ export const insertDataRLTigaTitikSebelas =  async (req, res) => {
     }
 }
 
-export const deleteDataRLTigaTitikSebelas = async(req, res) => {
+export const deleteDataRLTigaTitikSebelas = async (req, res) => {
     try {
         const count = await rlTigaTitikSebelasDetail.destroy({
             where: {
@@ -196,3 +197,49 @@ export const deleteDataRLTigaTitikSebelas = async(req, res) => {
         })
     }
 }
+
+export const getDataRLTigaTitikSebelasKodeRSTahun = (req, res) => {
+    rumahSakit.findOne({
+        where: {
+            Propinsi: req.query.koders
+        }
+    })
+        .then((results) => {
+            rlTigaTitikSebelasHeader
+                .findAll({
+                    include: {
+                        model: rlTigaTitikSebelasDetail,
+                        where: {
+                            rs_id: req.query.koders,
+                            tahun: req.query.tahun,
+                        },
+                        include: {
+                            model: jenisPelayanan,
+                            attributes: ["no", "nama"],
+                        },
+                    },
+                })
+                .then((resultsdata) => {
+                    res.status(200).send({
+                        status: true,
+                        message: "data found",
+                        dataRS: results,
+                        data: resultsdata,
+                    });
+                })
+                .catch((err) => {
+                    res.status(422).send({
+                        status: false,
+                        message: err
+                    })
+                    return
+                })
+        })
+        .catch((err) => {
+            res.status(422).send({
+                status: false,
+                message: err,
+            });
+            return;
+        });
+};

@@ -36,11 +36,11 @@ import { getDataRLTigaTitikSatu, getDataRLTigaTitikSatuDetailById,
 
 // RL 3.2
 import { getDataRLTigaTitikDua, insertDataRLTigaTitikDua, deleteDataRLTigaTitikDua, 
-    getDataRLTigaTitikDuaDetail, updateDataRLTigaTitikDua } from '../controllers/RLTigaTitikDuaController.js'
+    getDataRLTigaTitikDuaDetail, updateDataRLTigaTitikDua, getDataRLTigaTitikDuaKodeRSTahun } from '../controllers/RLTigaTitikDuaController.js'
 
 // RL 3.3
 import { getDataRLTigaTitikTiga, insertDataRLTigaTitikTiga, getDataRLTigaTitikTigaDetail, 
-    getRLTigaTitikTigaById, updateDataRLTigaTitikTiga, deleteDataRLTigaTitikTiga } from '../controllers/RLTigaTitikTigaController.js'
+    getRLTigaTitikTigaById, updateDataRLTigaTitikTiga, deleteDataRLTigaTitikTiga, getDataRLTigaTitikTigaKodeRSTahun } from '../controllers/RLTigaTitikTigaController.js'
 
 // RL 3.4
 import { getDataRLTigaTitikEmpat, getRLTigaTitikEmpatById, 
@@ -89,7 +89,7 @@ import { insertDataRLTigaTitikTigaBelasB, getDataRLTigaTitikTigaBelasB, getRLTig
 
 // RL 3.14
 import { getDataRLTigaTitikEmpatBelas, insertDataRLTigaTitikEmpatBelas, getDataRLTigaTitikEmpatBelasDetail, 
-    getRLTigaTitikEmpatBelasById, updateDataRLTigaTitikEmpatBelas, deleteDataRLTigaTitikEmpatBelas } from '../controllers/RLTigaTitikEmpatBelasController.js'
+    getRLTigaTitikEmpatBelasById, updateDataRLTigaTitikEmpatBelas, deleteDataRLTigaTitikEmpatBelas, getDataRLTigaTitikEmpatBelasKodeRSTahun } from '../controllers/RLTigaTitikEmpatBelasController.js'
 
 // RL 3.15
 import { getDataRLTigaTitikLimaBelas, 
@@ -97,7 +97,7 @@ import { getDataRLTigaTitikLimaBelas,
     getDataRLTigaTitikLimaBelasDetail, 
     getRLTigaTitikLimaBelasById, 
     updateDataRLTigaTitikLimaBelas, 
-    deleteDataRLTigaTitikLimaBelas } from '../controllers/RLTigaTitikLimaBelasController.js'
+    deleteDataRLTigaTitikLimaBelas, getDataRLTigaTitikLimaBelasKodeRSTahun } from '../controllers/RLTigaTitikLimaBelasController.js'
 
 // RL 4a
 import {
@@ -475,6 +475,12 @@ router.get('/apisirs/rltigatitiksepuluhadmin', verifyToken, getDataRLTigaTitikSe
 router.get('/apisirs/rltigatitiksebelasadmin', verifyToken, getDataRLTigaTitikSebelasKodeRSTahun)
 router.get('/apisirs/rllimatitiktigaadmin',verifyToken, getDataRLLimaTitikTigaKodeRSTahun)
 router.get('/apisirs/rlsatutitikduaadmin',verifyToken, getDataRLSatuTitikDuaKodeRSTahun)
+
+// zulkifli
+router.get('/apisirs/rltigatitikduaadmin', verifyToken, getDataRLTigaTitikDuaKodeRSTahun)
+router.get('/apisirs/rltigatitiktigaadmin', verifyToken, getDataRLTigaTitikTigaKodeRSTahun)
+router.get('/apisirs/rltigatitikempatbelasadmin',verifyToken, getDataRLTigaTitikEmpatBelasKodeRSTahun)
+router.get('/apisirs/rltigatitiklimabelasadmin',verifyToken, getDataRLTigaTitikLimaBelasKodeRSTahun)
 
 // Validasi Data
 router.get('/apisirs/validasi', verifyToken, getDataValidasiByRsId)

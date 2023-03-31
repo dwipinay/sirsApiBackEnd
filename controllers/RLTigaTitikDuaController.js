@@ -5,6 +5,9 @@ import {
   jenisPelayanan,
 } from "../models/RLTigaTitikDua.js";
 import Joi from "joi";
+import { rumahSakit } from "../models/RumahSakit.js";   
+import { Sequelize } from "sequelize";
+const Op = Sequelize.Op 
 
 export const getDataRLTigaTitikDua = (req, res) => {
   rlTigaTitikDuaHeader
@@ -317,4 +320,52 @@ export const updateDataRLTigaTitikDua = async (req, res) => {
       message: "Gagal Memperbaharui Data",
     });
   }
+};
+
+export const getDataRLTigaTitikDuaKodeRSTahun = (req, res) => {
+  rumahSakit.findOne({
+      where: {
+          Propinsi: req.query.koders,
+          kab_kota_id : {[Op.like] : '%'+req.user.rsId+'%'}
+      },
+  })
+.then((results) => {
+  const getkoders = results.dataValues.Propinsi;
+  rlTigaTitikDuaHeader
+  .findAll({
+    include: {
+      model: rlTigaTitikDuaDetail,
+      where: {
+        rs_id: getkoders,
+        tahun: req.query.tahun,
+      },
+      include: {
+        model: jenisPelayanan,
+        attributes: ["no", "nama"],
+      },
+    },
+  })
+  .then((resultsdata) => {
+    res.status(200).send({
+      status: true,
+      message: "data found",
+      dataRS: results,
+      data: resultsdata,
+    });
+  })
+  .catch((err) => {
+    res.status(422).send({
+        status: false,
+        message: err
+    })
+    return
+  })
+})
+.catch((err) => {
+  res.status(422).send({
+    status: false,
+    message: err,
+  });
+  return;
+  });
 };

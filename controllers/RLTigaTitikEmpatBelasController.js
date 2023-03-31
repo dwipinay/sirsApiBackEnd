@@ -1,6 +1,9 @@
 import { databaseSIRS } from '../config/Database.js'
 import { rlTigaTitikEmpatBelasHeader, rlTigaTitikEmpatBelasDetail, jenisSpesialis } from '../models/RLTigaTitikEmpatBelas.js'
 import Joi from 'joi'
+import { rumahSakit } from "../models/RumahSakit.js";   
+import { Sequelize } from "sequelize";
+const Op = Sequelize.Op
 
 export const getDataRLTigaTitikEmpatBelas = (req, res) => {
     rlTigaTitikEmpatBelasHeader.findAll({
@@ -255,6 +258,55 @@ export const getRLTigaTitikEmpatBelasById = async(req,res)=>{
     })
 }
  
+export const getDataRLTigaTitikEmpatBelasKodeRSTahun = (req, res) => {
+    rumahSakit.findOne({
+        where: {
+            Propinsi: req.query.koders,
+            kab_kota_id : {[Op.like] : '%'+req.user.rsId+'%'}
+        },
+    })
+  .then((results) => {
+      const getkoders = results.dataValues.Propinsi;
+      console.log(getkoders)
+    rlTigaTitikEmpatBelasHeader
+    .findAll({
+      include: {
+        model: rlTigaTitikEmpatBelasDetail,
+        where: {
+          rs_id: getkoders,
+          tahun: req.query.tahun,
+        },
+        include: {
+          model: jenisSpesialis,
+          attributes: ["no", "nama"],
+        },
+      },
+    })
+    .then((resultsdata) => {
+      res.status(200).send({
+        status: true,
+        message: "data found",
+        dataRS: results,
+        data: resultsdata,
+      });
+    })
+    .catch((err) => {
+      res.status(422).send({
+          status: false,
+          message: err
+      })
+      return
+    })
+  })
+  .catch((err) => {
+    res.status(422).send({
+      status: false,
+      message: err,
+    });
+    return;
+    });
+    // console.log(req)
+};
 
 
 

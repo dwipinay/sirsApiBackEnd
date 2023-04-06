@@ -66,6 +66,9 @@ export const insertValidasi = async (req, res) => {
         res.status(201).send({
             status: true,
             message: "data berhasil di input",
+            data: {
+                id: rlInsertHeader.id
+            }
         });
     } catch (error) {
         console.log(error)

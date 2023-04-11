@@ -55,7 +55,8 @@ export const getDataRumahSakitFilterbyKabKotaId = (req, res) => {
     if(count==2){
         dataRumahSakit.findAll({
             where: {
-                kab_kota_id: req.query.kabkotaid
+                kab_kota_id: req.query.kabkotaid,
+                aktive: 1
             }
         })
         .then((results) => {

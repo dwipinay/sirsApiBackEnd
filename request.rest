@@ -6,6 +6,11 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsIm5hbWEiO
 GET http://localhost/apisirs/rumahsakit/3174063
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDMzLCJuYW1hIjoiUlMgS2Fua2VyIERoYXJtYWlzIiwiZW1haWwiOiIzMTc0MDYzIiwicnNJZCI6IjMxNzQwNjMiLCJpYXQiOjE2NzQ5NTkyMTksImV4cCI6MTY3NDk2MDExOX0.B26S0hQh72A2aAjpv_6u8ATlfoqrqHjx675zyeixeHY
 
+### Get Data Rumah Sakit
+http://localhost/apisirs/rumahsakit?kabkotaid=3275
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTI2OSwiamVuaXNfdXNlcl9pZCI6MywibmFtYSI6IktPVEEgQkVLQVNJIiwiZW1haWwiOiIzMjc1IiwicnNJZCI6IjMyNzUiLCJpYXQiOjE2ODEzNTc0NzcsImV4cCI6MTY4MTM1ODM3N30.2qfW08XDy3IQbo3caWtBNnvL-Sb83PgKXxCZO8F52Zk
+
+
 ### Insert New User
 POST http://localhost/apisirs/users
 Content-Type: application/json
@@ -33,7 +38,7 @@ POST http://localhost:5000/apisirs/loginadmin
 Content-Type: application/json
 
 {
-    "userName": "1111",
+    "userName": "3275",
     "password": "12345"
 }
 

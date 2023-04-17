@@ -125,6 +125,14 @@ export const insertDataRLTigaTitikSebelas = async (req, res) => {
         return
     }
 
+    const data = {
+        rs_id: req.user.rsId,
+        tahun: req.body.tahun,
+        user_id: req.user.id
+    }
+
+    console.log(data)
+
     const transaction = await databaseSIRS.transaction()
     try {
         const resultInsertHeader = await rlTigaTitikSebelasHeader.create({

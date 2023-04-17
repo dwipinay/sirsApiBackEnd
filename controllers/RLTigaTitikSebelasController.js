@@ -125,70 +125,63 @@ export const insertDataRLTigaTitikSebelas = async (req, res) => {
         return
     }
 
-    const data = {
-        rs_id: req.user.rsId,
-        tahun: req.body.tahun,
-        user_id: req.user.id
-    }
-
-    console.log('hello')
-
-
-    res.status(201).send({
-        status: true,
-        message: "data created",
-        data: data
-    })
-
-    // const transaction = await databaseSIRS.transaction()
-    // try {
-    //     const resultInsertHeader = await rlTigaTitikSebelasHeader.create({
-    //         rs_id: req.user.rsId,
-    //         tahun: req.body.tahun,
-    //         user_id: req.user.id
-    //     }, {
-    //         transaction: transaction
-    //     })
-
-    //     const dataDetail = req.body.data.map((value, index) => {
-    //         return {
-    //             rs_id: req.user.rsId,
-    //             tahun: req.body.tahun,
-    //             rl_tiga_titik_sebelas_id: resultInsertHeader.id,
-    //             jenis_pelayanan_id: value.jenisPelayananId,
-    //             jumlah: value.jumlah,
-    //             user_id: req.user.id
-    //         }
-    //     })
-
-    //     const resultInsertDetail = await rlTigaTitikSebelasDetail.bulkCreate(dataDetail, {
-    //         transaction: transaction
-    //         // updateOnDuplicate:['jumlah']
-    //     })
-
-    //     await transaction.commit()
-    //     res.status(201).send({
-    //         status: true,
-    //         message: "data created",
-    //         data: {
-    //             id: resultInsertHeader.id
-    //         }
-    //     })
-    // } catch (error) {
-    //     console.log(error)
-    //     await transaction.rollback()
-    //     if (error.name === 'SequelizeUniqueConstraintError') {
-    //         res.status(400).send({
-    //             status: false,
-    //             message: "Duplicate Entry"
-    //         })
-    //     } else {
-    //         res.status(400).send({
-    //             status: false,
-    //             message: error
-    //         })
-    //     }
+    // const data = {
+    //     rs_id: req.user.rsId,
+    //     tahun: req.body.tahun,
+    //     user_id: req.user.id
     // }
+
+    // console.log(data)
+
+    const transaction = await databaseSIRS.transaction()
+    try {
+        const resultInsertHeader = await rlTigaTitikSebelasHeader.create({
+            rs_id: req.user.rsId,
+            tahun: req.body.tahun,
+            user_id: req.user.id
+        }, {
+            transaction: transaction
+        })
+
+        const dataDetail = req.body.data.map((value, index) => {
+            return {
+                rs_id: req.user.rsId,
+                tahun: req.body.tahun,
+                rl_tiga_titik_sebelas_id: resultInsertHeader.id,
+                jenis_pelayanan_id: value.jenisPelayananId,
+                jumlah: value.jumlah,
+                user_id: req.user.id
+            }
+        })
+
+        const resultInsertDetail = await rlTigaTitikSebelasDetail.bulkCreate(dataDetail, {
+            transaction: transaction
+            // updateOnDuplicate:['jumlah']
+        })
+
+        await transaction.commit()
+        res.status(201).send({
+            status: true,
+            message: "data created",
+            data: {
+                id: resultInsertHeader.id
+            }
+        })
+    } catch (error) {
+        console.log(error)
+        await transaction.rollback()
+        if (error.name === 'SequelizeUniqueConstraintError') {
+            res.status(400).send({
+                status: false,
+                message: "Duplicate Entry"
+            })
+        } else {
+            res.status(400).send({
+                status: false,
+                message: error
+            })
+        }
+    }
 }
 
 export const deleteDataRLTigaTitikSebelas = async (req, res) => {

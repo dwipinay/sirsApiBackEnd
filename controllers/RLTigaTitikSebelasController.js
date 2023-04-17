@@ -131,7 +131,14 @@ export const insertDataRLTigaTitikSebelas = async (req, res) => {
         user_id: req.user.id
     }
 
-    console.log(data)
+    console.log('hello')
+
+
+    res.status(201).send({
+        status: true,
+        message: "data created",
+        data: data
+    })
 
     // const transaction = await databaseSIRS.transaction()
     // try {

@@ -51,7 +51,7 @@ export const login = (req, res) => {
         }
     })
     .then((results) => {
-        console.log(results[0].password)
+        console.log(results)
         if (!results.length) {
             res.status(404).send({
                 status: false,

@@ -295,7 +295,6 @@ export const loginadmin = (req, res) => {
         }
     })
     .then((results) => {
-        console.log(results)
         if (!results.length) {
             res.status(404).send({
                 status: false,
@@ -305,7 +304,7 @@ export const loginadmin = (req, res) => {
         }
         bcrypt.compare(req.body.password, results[0].password, (error, compareResult) => {
             if (compareResult == false) {
-                res.status(401).send({
+                res.status(404).send({
                     status: false,
                     message: 'wrong password'
                 })

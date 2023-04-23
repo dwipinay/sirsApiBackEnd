@@ -295,6 +295,7 @@ export const loginadmin = (req, res) => {
         }
     })
     .then((results) => {
+        console.log(results)
         if (!results.length) {
             res.status(404).send({
                 status: false,

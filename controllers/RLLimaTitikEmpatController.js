@@ -181,15 +181,12 @@ export const insertDataRLLimaTitikEmpat = async (req, res) => {
 
         if (dataDetail[0].jumlah_kunjungan >= dataDetail[0].jumlah_kasus_baru) {
             const resultInsertDetail = await rlLimaTitikEmpatDetail.bulkCreate(dataDetail,
-
                 {
 
                     transaction,
                     updateOnDuplicate: ['kode_icd_10', 'deskripsi', 'kasus_baru_Lk', 'kasus_baru_Pr',
                         'jumlah_kasus_baru', 'jumlah_kunjungan']
                 })
-
-
             await transaction.commit()
             res.status(201).send({
                 status: true,

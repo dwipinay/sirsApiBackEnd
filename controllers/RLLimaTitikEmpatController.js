@@ -196,6 +196,7 @@ export const insertDataRLLimaTitikEmpat = async (req, res) => {
                 }
             })
         } else {
+            await transaction.rollback()
             res.status(400).send({
                 status: false,
                 message: " Data Jumlah Kunjungan kurang dari jumlah kasus baru"

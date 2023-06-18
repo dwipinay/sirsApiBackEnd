@@ -144,7 +144,7 @@ import { insertDataRLLimaTitikEmpat, getDataRLLimaTitikEmpat, getRLLimaTitikEmpa
 const router = express.Router()
 
 // Rumah Sakit
-router.get('/apisirs/rumahsakit/:id', verifyToken, getDataRumahSakit)
+router.get('/apisirs/rumahsakit/:id', getDataRumahSakit)
 router.get('/apisirs/rumahsakit', verifyToken, getDataRumahSakitFilterbyKabKotaId)
 
 // User

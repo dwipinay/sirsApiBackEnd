@@ -3,6 +3,7 @@ import axios from 'axios'
 import bcrypt from 'bcrypt'
 import jsonWebToken from 'jsonwebtoken'
 import Joi from 'joi'
+import passwordValidator from 'password-validator'
 import { Sequelize } from "sequelize";
 const Op = Sequelize.Op
 
@@ -59,7 +60,7 @@ export const login = async (req, res) => {
 
     if (reCaptchaRes.data.success === true) {
         users.findAll({
-            attributes: ['id','nama','email','password', 'rs_id','created_at', 'modified_at'],
+            attributes: ['id','nama','email','password', 'rs_id', 'jenis_user_id','created_at', 'modified_at'],
             where: {
                 email: req.body.userName,
                 jenis_user_id: 4
@@ -85,7 +86,8 @@ export const login = async (req, res) => {
                     id: results[0].id,
                     nama: results[0].nama,
                     email: results[0].email,
-                    rsId: results[0].rs_id
+                    rsId: results[0].rs_id,
+                    jenisUserId: results[0].jenis_user_id
                 }
     
                 const accessToken = jsonWebToken.sign(payloadObject, process.env.ACCESS_TOKEN_SECRET, {expiresIn: process.env.ACCESS_TOKEN_EXPIRESIN})
@@ -181,8 +183,8 @@ export const insertDataUser = (req, res) => {
             .required(),
         password: Joi.string()
             .required(),
-        rsId: Joi.string()
-            .required().allow(null)
+        kriteriaUserId: Joi.number()
+            .required()
     })
 
     const { error, value } =  schema.validate(req.body)
@@ -191,6 +193,25 @@ export const insertDataUser = (req, res) => {
         res.status(404).send({
             status: false,
             message: error.details[0].message
+        })
+        return
+    }
+
+    const schemaPasswordValidator = new passwordValidator()
+    schemaPasswordValidator
+    .is().min(8)
+    .is().max(8)
+    .has().uppercase()
+    .has().lowercase()                              
+    .has().digits()
+    .has().symbols()
+    .has().not().spaces()
+
+    const passwordValidationResults = schemaPasswordValidator.validate(req.body.password, { details: true })
+    if (passwordValidationResults.length) {
+        res.status(400).send({
+            status: false,
+            message: passwordValidationResults
         })
         return
     }
@@ -210,7 +231,9 @@ export const insertDataUser = (req, res) => {
             req.body.nama,
             req.body.email,
             hash,
-            req.body.rsId
+            req.user.rsId,
+            req.user.jenisUserId,
+            req.body.kriteriaUserId
         ]
         
         insertData(data, (err, results) => {

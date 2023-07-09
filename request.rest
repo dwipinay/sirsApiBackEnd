@@ -14,12 +14,14 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTI2OSwiamVua
 ### Insert New User
 POST http://localhost/apisirs/users
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDAxLCJuYW1hIjoiUlMgS2Fua2VyIERoYXJtYWlzIiwiZW1haWwiOiIzMTc0MDYzIiwicnNJZCI6IjMxNzQwNjMiLCJqZW5pc1VzZXJJZCI6NCwiaWF0IjoxNjg4ODg3MDkwLCJleHAiOjE2ODg4ODc5OTB9.uZQD0uNCMzbqD0ijjR4vnPerBuPuM94EDjgSDu2bqsQ
+
 
 {
-    "nama": "keane",
-    "email": "keane@gmail.com",
-    "password": "12345",
-    "rsId": null
+    "nama": "toshiba",
+    "email": "toshiba@gmail.com",
+    "password": "p5fuNGd!",
+    "kriteriaUserId": 1
 }
 
 ### Change Password
@@ -34,11 +36,11 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsIm5hbWEiO
 }
 
 ### Login
-POST http://localhost:5000/apisirs/loginadmin
+POST http://localhost:5000/apisirs/login
 Content-Type: application/json
 
 {
-    "userName": "3275",
+    "userName": "3174063",
     "password": "12345"
 }
 

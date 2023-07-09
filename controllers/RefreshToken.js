@@ -30,7 +30,8 @@ export const refreshToken = (req, res) => {
                 jenis_user_id: jwtRes.jenis_user_id,
                 nama: jwtRes.nama,
                 email: jwtRes.email,
-                rsId: jwtRes.rsId
+                rsId: jwtRes.rsId,
+                jenisUserId: jwtRes.jenisUserId
             }
             const accessToken = jsonWebToken.sign(payloadObject, process.env.ACCESS_TOKEN_SECRET, {expiresIn: process.env.ACCESS_TOKEN_EXPIRESIN})
             res.json({ accessToken })

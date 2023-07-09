@@ -21,6 +21,7 @@ import { getDataJenisGolonganSebabPenyakit, getDataJenisGolonganSebabPenyakitB, 
 import { getDataJenisGolonganPenyakitB, getDataJenisGolonganPenyakitBId} from '../controllers/JenisGolonganPenyakitController.js'
 import { getDataKabKota, getDataKabKotabyID } from '../controllers/KabKotaController.js'
 import { getDataValidasiByRsId, insertValidasi, updateValidasi, getStatusValidasi } from '../controllers/ValidasiController.js'
+import { getKriteriaUser } from '../controllers/KriteriaUserController.js'
 
 // RL 1.2
 import { getDatarlSatuTitikDua, insertDataRLSatuTitikDua,updateDatarlSatuTitikDua, 
@@ -149,8 +150,11 @@ router.get('/apisirs/rumahsakit', verifyToken, getDataRumahSakitFilterbyKabKotaI
 
 // User
 router.get('/apisirs/users', verifyToken, getDataUser)
-router.post('/apisirs/users', insertDataUser)
+router.post('/apisirs/users', verifyToken, insertDataUser)
 router.patch('/apisirs/users/:id/admin', verifyToken, changePassword)
+
+// Kriteria User
+router.get('/apisirs/kriteriauser', verifyToken, getKriteriaUser)
 
 // Token
 router.post('/apisirs/login', login)

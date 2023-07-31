@@ -27,14 +27,14 @@ export const getDataUser = (req, res) => {
     })
 }
 
-const reCaptchaToken = async (req) => {
-    const reCaptchaSecretKey = process.env.GOOGLE_RECAPTCHA_SECRET_KEY
-    try {
-        return await  axios.post(`https://www.google.com/recaptcha/api/siteverify?secret=6Le2kKUmAAAAADk8Pw4Rt35YLph2lx0uxYxPBkfX&response=${req}`)
-    } catch (error) {
-        console.error(error)
-    }
-}
+// const reCaptchaToken = async (req) => {
+//     const reCaptchaSecretKey = process.env.GOOGLE_RECAPTCHA_SECRET_KEY
+//     try {
+//         return await  axios.post(`https://www.google.com/recaptcha/api/siteverify?secret=6Le2kKUmAAAAADk8Pw4Rt35YLph2lx0uxYxPBkfX&response=${req}`)
+//     } catch (error) {
+//         console.error(error)
+//     }
+// }
 
 export const login = async (req, res) => {
     const schema = Joi.object({
@@ -42,8 +42,8 @@ export const login = async (req, res) => {
             .required(),
         password: Joi.string()
             .required(),
-        reCaptchaToken:Joi.string()
-            .required()
+        // reCaptchaToken:Joi.string()
+        //     .required()
     })
 
     const { error, value } =  schema.validate(req.body)
@@ -56,88 +56,158 @@ export const login = async (req, res) => {
         return
     }
 
-    const reCaptchaRes = await reCaptchaToken(req.body.reCaptchaToken)
-
-    if (reCaptchaRes.data.success === true) {
-        users.findAll({
-            attributes: ['id','nama','email','password', 'rs_id', 'jenis_user_id','created_at', 'modified_at'],
-            where: {
-                email: req.body.userName,
-                jenis_user_id: 4
-            }
-        })
-        .then((results) => {
-            if (!results.length) {
+    users.findAll({
+        attributes: ['id','nama','email','password', 'rs_id', 'jenis_user_id','created_at', 'modified_at'],
+        where: {
+            email: req.body.userName,
+            jenis_user_id: 4
+        }
+    })
+    .then((results) => {
+        if (!results.length) {
+            res.status(404).send({
+                status: false,
+                message: 'email not found'
+            })
+            return
+        }
+        bcrypt.compare(req.body.password, results[0].password, (error, compareResult) => {
+            if (compareResult == false) {
                 res.status(404).send({
                     status: false,
-                    message: 'email not found'
+                    message: 'wrong password'
                 })
                 return
             }
-            bcrypt.compare(req.body.password, results[0].password, (error, compareResult) => {
-                if (compareResult == false) {
-                    res.status(404).send({
-                        status: false,
-                        message: 'wrong password'
+            const payloadObject = {
+                id: results[0].id,
+                nama: results[0].nama,
+                email: results[0].email,
+                rsId: results[0].rs_id,
+                jenisUserId: results[0].jenis_user_id
+            }
+
+            const accessToken = jsonWebToken.sign(payloadObject, process.env.ACCESS_TOKEN_SECRET, {expiresIn: process.env.ACCESS_TOKEN_EXPIRESIN})
+            jsonWebToken.verify(accessToken, process.env.ACCESS_TOKEN_SECRET, (err, result) => {
+                const refreshToken = jsonWebToken.sign(payloadObject, process.env.REFRESH_TOKEN_SECRET, {expiresIn: process.env.REFRESH_TOKEN_EXPIRESIN})
+                users.update({refresh_token: refreshToken},{
+                    where: {
+                        id: results[0].id
+                    }
+                })
+                .then(() => {
+                    res.cookie('refreshToken', refreshToken, {
+                        httpOnly: true,
+                        // maxAge: 24 * 60 * 60 * 1000
+                        maxAge: 1000 * 60 * 60 * 24
                     })
-                    return
-                }
-                const payloadObject = {
-                    id: results[0].id,
-                    nama: results[0].nama,
-                    email: results[0].email,
-                    rsId: results[0].rs_id,
-                    jenisUserId: results[0].jenis_user_id
-                }
-    
-                const accessToken = jsonWebToken.sign(payloadObject, process.env.ACCESS_TOKEN_SECRET, {expiresIn: process.env.ACCESS_TOKEN_EXPIRESIN})
-                jsonWebToken.verify(accessToken, process.env.ACCESS_TOKEN_SECRET, (err, result) => {
-                    const refreshToken = jsonWebToken.sign(payloadObject, process.env.REFRESH_TOKEN_SECRET, {expiresIn: process.env.REFRESH_TOKEN_EXPIRESIN})
-                    users.update({refresh_token: refreshToken},{
-                        where: {
-                            id: results[0].id
+                    res.status(201).send({
+                        status: true,
+                        message: "access token created",
+                        data: {
+                            name: results[0].nama,
+                            access_token: accessToken
                         }
                     })
-                    .then(() => {
-                        res.cookie('refreshToken', refreshToken, {
-                            httpOnly: true,
-                            // maxAge: 24 * 60 * 60 * 1000
-                            maxAge: 1000 * 60 * 60 * 24
-                        })
-                        res.status(201).send({
-                            status: true,
-                            message: "access token created",
-                            data: {
-                                name: results[0].nama,
-                                access_token: accessToken
-                            }
-                        })
+                })
+                .catch((err) => {
+                    res.status(404).send({
+                        status: false,
+                        message: err
                     })
-                    .catch((err) => {
-                        res.status(404).send({
-                            status: false,
-                            message: err
-                        })
-                        return
-                    })
+                    return
                 })
             })
         })
-        .catch((err) => {
-            res.status(404).send({
-                status: false,
-                message: err
-            })
-            return
-        })
-    } else {
+    })
+    .catch((err) => {
         res.status(404).send({
             status: false,
-            message: 're Captcha not valid'
+            message: err
         })
-    }
+        return
+    })
 
+    // const reCaptchaRes = await reCaptchaToken(req.body.reCaptchaToken)
+
+    // if (reCaptchaRes.data.success === true) {
+    //     users.findAll({
+    //         attributes: ['id','nama','email','password', 'rs_id', 'jenis_user_id','created_at', 'modified_at'],
+    //         where: {
+    //             email: req.body.userName,
+    //             jenis_user_id: 4
+    //         }
+    //     })
+    //     .then((results) => {
+    //         if (!results.length) {
+    //             res.status(404).send({
+    //                 status: false,
+    //                 message: 'email not found'
+    //             })
+    //             return
+    //         }
+    //         bcrypt.compare(req.body.password, results[0].password, (error, compareResult) => {
+    //             if (compareResult == false) {
+    //                 res.status(404).send({
+    //                     status: false,
+    //                     message: 'wrong password'
+    //                 })
+    //                 return
+    //             }
+    //             const payloadObject = {
+    //                 id: results[0].id,
+    //                 nama: results[0].nama,
+    //                 email: results[0].email,
+    //                 rsId: results[0].rs_id,
+    //                 jenisUserId: results[0].jenis_user_id
+    //             }
     
+    //             const accessToken = jsonWebToken.sign(payloadObject, process.env.ACCESS_TOKEN_SECRET, {expiresIn: process.env.ACCESS_TOKEN_EXPIRESIN})
+    //             jsonWebToken.verify(accessToken, process.env.ACCESS_TOKEN_SECRET, (err, result) => {
+    //                 const refreshToken = jsonWebToken.sign(payloadObject, process.env.REFRESH_TOKEN_SECRET, {expiresIn: process.env.REFRESH_TOKEN_EXPIRESIN})
+    //                 users.update({refresh_token: refreshToken},{
+    //                     where: {
+    //                         id: results[0].id
+    //                     }
+    //                 })
+    //                 .then(() => {
+    //                     res.cookie('refreshToken', refreshToken, {
+    //                         httpOnly: true,
+    //                         // maxAge: 24 * 60 * 60 * 1000
+    //                         maxAge: 1000 * 60 * 60 * 24
+    //                     })
+    //                     res.status(201).send({
+    //                         status: true,
+    //                         message: "access token created",
+    //                         data: {
+    //                             name: results[0].nama,
+    //                             access_token: accessToken
+    //                         }
+    //                     })
+    //                 })
+    //                 .catch((err) => {
+    //                     res.status(404).send({
+    //                         status: false,
+    //                         message: err
+    //                     })
+    //                     return
+    //                 })
+    //             })
+    //         })
+    //     })
+    //     .catch((err) => {
+    //         res.status(404).send({
+    //             status: false,
+    //             message: err
+    //         })
+    //         return
+    //     })
+    // } else {
+    //     res.status(404).send({
+    //         status: false,
+    //         message: 're Captcha not valid'
+    //     })
+    // }
 }
 
 export const logout = (req, res) => {

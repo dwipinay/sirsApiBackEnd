@@ -52,7 +52,7 @@ export const getDataRumahSakit = (req, res) => {
 
 export const getDataRumahSakitFilterbyKabKotaId = (req, res) => {
     const count = req.user.rsId.length;
-    if(count==2){
+    if(req.user.rsId == 'dto'){
         dataRumahSakit.findAll({
             where: {
                 kab_kota_id: req.query.kabkotaid,
@@ -74,27 +74,52 @@ export const getDataRumahSakitFilterbyKabKotaId = (req, res) => {
             })
             return
         })
-    } else if(count > 2){
-        dataRumahSakit.findAll({
-            where: {
-                kab_kota_id: req.user.rsId,
-                aktive: 1
-            }
-        })
-        .then((results) => {
-            const message = results.length ? 'data found' : 'data not found'
-            res.status(200).send({
-                status: true,
-                message: message,
-                data: results
+    } else {
+        if(count==2){
+            dataRumahSakit.findAll({
+                where: {
+                    kab_kota_id: req.query.kabkotaid,
+                    aktive: 1
+                }
             })
-        })
-        .catch((err) => {
-            res.status(422).send({
-                status: false,
-                message: err
+            .then((results) => {
+                const message = results.length ? 'data found' : 'data not found'
+                res.status(200).send({
+                    status: true,
+                    message: message,
+                    data: results
+                })
             })
-            return
-        })
+            .catch((err) => {
+                res.status(422).send({
+                    status: false,
+                    message: err
+                })
+                return
+            })
+        } else if(count > 2){
+            dataRumahSakit.findAll({
+                where: {
+                    kab_kota_id: req.user.rsId,
+                    aktive: 1
+                }
+            })
+            .then((results) => {
+                const message = results.length ? 'data found' : 'data not found'
+                res.status(200).send({
+                    status: true,
+                    message: message,
+                    data: results
+                })
+            })
+            .catch((err) => {
+                res.status(422).send({
+                    status: false,
+                    message: err
+                })
+                return
+            })
+        }
     }
+    
 }

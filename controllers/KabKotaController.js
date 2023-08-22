@@ -56,6 +56,29 @@ export const getDataKabKota = (req, res) => {
         });
         return;
     });
+  } else if (kategori === 5){
+    kabKota.findAll({
+        where: {
+            // provinsi_id: req.user.rsId
+            provinsi_id:{
+              [Op.like] : '%'+req.query.provid+'%'
+            }, 
+        }
+    })    
+    .then((results) => {
+        res.status(200).send({
+          status: true,
+          message: "data found",
+          data: results,
+        });
+    })
+    .catch((err) => {
+        res.status(422).send({
+          status: false,
+          message: err,
+        });
+        return;
+    });
   } else {
     res.status(200).send({
       message: req.user
@@ -70,4 +93,22 @@ export const getDataKabKotabyID = (req, res) => {
 
     }
   })
+}
+
+export const getDataProvinsi = (req, res) => {
+  propinsi.findAll()
+  .then((results) => {
+        res.status(200).send({
+          status: true,
+          message: "data found",
+          data: results,
+        });
+    })
+    .catch((err) => {
+        res.status(422).send({
+          status: false,
+          message: err,
+        });
+        return;
+      });
 }

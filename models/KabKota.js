@@ -17,6 +17,10 @@ export const kabKota = databaseRSOnline.define(`kab_kota`,
 
 export const propinsi = databaseRSOnline.define(`provinsi`, 
 {
+    id: {
+        type: DataTypes.STRING,
+        primaryKey: true
+    },
     nama : {
         type: DataTypes.STRING
     }

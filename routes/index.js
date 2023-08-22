@@ -19,7 +19,7 @@ import { getIcd10 } from '../controllers/Icd10Controller.js'
 import { getDataJenisGolSebabPenyakit, getDataJenisGolSebabPenyakitA, getDataJenisGolSebabPenyakitAbyId, getDataJenisGolSebabPenyakitASebab} from "../controllers/JenisGolSebabPenyakitController.js"
 import { getDataJenisGolonganSebabPenyakit, getDataJenisGolonganSebabPenyakitB, getDataJenisGolonganSebabPenyakitBId } from '../controllers/JenisGolonganSebabPenyakitController.js'
 import { getDataJenisGolonganPenyakitB, getDataJenisGolonganPenyakitBId} from '../controllers/JenisGolonganPenyakitController.js'
-import { getDataKabKota, getDataKabKotabyID } from '../controllers/KabKotaController.js'
+import { getDataKabKota, getDataKabKotabyID, getDataProvinsi } from '../controllers/KabKotaController.js'
 import { getDataValidasiByRsId, insertValidasi, updateValidasi, getStatusValidasi } from '../controllers/ValidasiController.js'
 import { getKriteriaUser } from '../controllers/KriteriaUserController.js'
 
@@ -442,6 +442,9 @@ router.get('/apisirs/geticd10', verifyToken, getIcd10)
 
 // KabKota
 router.get('/apisirs/kabkota', verifyToken, getDataKabKota)
+
+// Provinsi
+router.get('/apisirs/provinsi', verifyToken, getDataProvinsi)
 
 // Admin Login
 router.post('/apisirs/loginadmin', loginadmin)

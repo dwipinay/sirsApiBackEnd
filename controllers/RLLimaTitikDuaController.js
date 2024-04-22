@@ -44,6 +44,8 @@ export const insertDataRLLimaTitikDua =  async (req, res) => {
             .items(
                 Joi.object().keys({
                     jenisKegiatanId: Joi.number().required(),
+                    jumlahLakiLaki: Joi.number().required(),
+                    jumlahPerempuan: Joi.number().required(),
                     jumlah: Joi.number().required()
                 }).required()
             ).required()
@@ -72,6 +74,8 @@ export const insertDataRLLimaTitikDua =  async (req, res) => {
                 tahun: req.body.tahunDanBulan,
                 rl_lima_titik_dua_id: resultInsertHeader.id,
                 jenis_kegiatan_id: value.jenisKegiatanId,
+                jumlahLakiLaki: value.jumlahLakiLaki,
+                jumlahPerempuan: value.jumlahPerempuan,
                 jumlah: value.jumlah,
                 user_id: req.user.id
             }

@@ -28,6 +28,12 @@ export const rlLimaTitikDuaDetail = databaseSIRS.define('rl_lima_titik_dua_detai
     jenis_kegiatan_id: {
         type: DataTypes.INTEGER
     },
+    jumlahLakiLaki: {
+        type: DataTypes.INTEGER
+    },
+    jumlahPerempuan: {
+        type: DataTypes.INTEGER
+    },
     jumlah: {
         type: DataTypes.INTEGER
     },
